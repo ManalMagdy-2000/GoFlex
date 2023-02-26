@@ -1,15 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+﻿import { Component } from '@angular/core';
 
-@Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
-})
-export class HomeComponent implements OnInit {
+import { Role, Department, Employee } from '@app/_models';
+import { AccountService, DepartmentService } from '@app/_services';
 
-  constructor() { }
+@Component({ templateUrl: 'home.component.html' })
+export class HomeComponent {
+    employee: Employee;
+    department: Department;
+    isAdmin: boolean;
 
-  ngOnInit(): void {
-  }
+    constructor(private accountService: AccountService, private departmentService: DepartmentService) {
+        this.employee = this.accountService.employeeValue;
+        console.log(this.employee)
+        this.isAdmin = this.employee && this.employee.role === Role.Admin;
+        if(this.isAdmin) {
+          this.departmentService.getDepartmentById(this.employee.department).subscribe(department => {
+            this.department = department;
+            console.log( this.department.name )
+          });
+        }
+    }
 
+
+    logout() {
+        this.accountService.logout();
+    }
 }

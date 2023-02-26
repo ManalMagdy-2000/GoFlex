@@ -1,10 +1,63 @@
-<mat-drawer-container>
-  <mat-drawer mode="side" [opened]="sideBarOpen">
-    <!-- <mat-drawer mode="side" opened="true"> -->
-    <app-sidenav></app-sidenav>
-  </mat-drawer>
-  <mat-drawer-content>
-    <app-header (toggleSidebarForMe)="sideBarToggler()"></app-header>
-    <router-outlet></router-outlet>
-  </mat-drawer-content>
-</mat-drawer-container>
+﻿<!-- nav -->
+<!-- <nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="employee">
+    <div class="navbar-nav">
+        <a class="nav-item nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+        <a class="nav-item nav-link" routerLink="/employees" routerLinkActive="active">Employees</a>
+        <a class="nav-item nav-link" routerLink="/Admin" *ngIf="isAdmin">Admin</a>
+        <a class="nav-item nav-link" routerLink="/departments" >Admin</a>
+        <a class="nav-item nav-link" (click)="logout()">Logout</a>
+    </div>
+</nav> -->
+<c-sidebar visible *ngIf="employee">
+    <c-sidebar-brand [brandFull]="{
+      src: '../assets/logo2.jpg',
+      width: 255,
+      alt: 'CoreUI Logo'
+    }">
+
+  </c-sidebar-brand>
+  <!-- <div class="sidebar-employee">
+  <h4>{{department.name}}</h4>
+  </div> -->
+    <c-sidebar-nav [navItems]="navItems"></c-sidebar-nav>
+
+  </c-sidebar>
+
+<!-- main app container -->
+
+<div class="wrapper d-flex flex-column min-vh-100 bg-light dark:bg-transparent">
+  <c-header>
+    <c-container fluid *ngIf="employee">
+      <c-header-brand *ngIf="employee.role === 'Admin'" [routerLink]>{{employee?.position}} at {{department?.name}}</c-header-brand>
+      <c-header-brand *ngIf="employee.role === 'Admin'" [routerLink]>HR Admin</c-header-brand>
+      <c-header-nav class="ms-auto">
+        <!-- <c-nav-item>
+          <a cNavLink routerLink="/components/alert">{{employee.fullname}}</a>
+        </c-nav-item> -->
+        <c-nav-item>
+          <c-sidebar-toggler toggle="unfoldable" csidebartoggle="sidebar1" role="button" class="sidebar-toggler"></c-sidebar-toggler>
+        </c-nav-item>
+        <c-dropdown alignment="end">
+          <a cHeaderToggler cDropdownToggle cNavLink [caret]="false">
+            {{employee?.fullname}}
+            <c-avatar color="secondary">{{employee?.fullname[0]}}</c-avatar>
+          </a>
+          <ul cDropdownMenu>
+            <li><a routerLink='/employees/edit/{{employee?.id}}' cDropdownItem>Edit profile</a></li>
+            <li>
+              <hr cDropdownDivider>
+            </li>
+            <li><a [routerLink] cDropdownItem (click)="logout()">Sign Out</a></li>
+          </ul>
+        </c-dropdown>
+      </c-header-nav>
+    </c-container>
+  </c-header>
+    <div class="body flex-grow-1 px-3 center-it">
+      <c-container breakpoint="lg" class="h-auto">
+        <alert></alert>
+        <router-outlet></router-outlet>
+      </c-container>
+    </div>
+
+  </div>
