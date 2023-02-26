@@ -1,9 +1,9 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
 
-import { AccountService, AlertService, DepartmentService } from '@app/_services';
+import { AccountService, AlertService, DepartmentService } from '../_services';
 import { FormBuilder, FormGroup, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { Department, Request } from '@app/_models';
+import { Department, Request } from '../_models';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({ templateUrl: 'request.component.html' })

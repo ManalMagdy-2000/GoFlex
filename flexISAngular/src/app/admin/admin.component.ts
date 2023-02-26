@@ -1,8 +1,8 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
 
-import { Employee } from '@app/_models';
-import { AccountService } from '@app/_services';
+import { Employee } from '../_models';
+import { AccountService } from '../_services';
 
 @Component({ templateUrl: 'admin.component.html' })
 export class AdminComponent implements OnInit {

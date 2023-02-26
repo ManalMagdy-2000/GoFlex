@@ -1,9 +1,9 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
 
-import { AccountService, AlertService, DepartmentService } from '@app/_services';
+import { AccountService, AlertService, DepartmentService } from '../_services';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { Role, Department } from '@app/_models';
+import { Role, Department } from '../_models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalService } from '@coreui/angular';
 

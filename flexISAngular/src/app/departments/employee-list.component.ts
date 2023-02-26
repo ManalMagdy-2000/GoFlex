@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
-import { EmployeeService } from '@app/_services/employee.service';
-import { Employee } from '@app/_models';
+import { EmployeeService } from '../_services/employee.service';
+import { Employee } from '../_models';
 @Component({ templateUrl: 'employee-list.component.html' })
 export class EmployeeListComponent implements OnInit {
     employees = null;

@@ -2,8 +2,9 @@
 import { Router, NavigationStart } from '@angular/router';
 import { Subscription } from 'rxjs';
 
-import { Alert, AlertType } from '@app/_models';
-import { AlertService } from '@app/_services';
+import { Alert } from '../_models';
+import { AlertType } from '../_models';
+import { AlertService } from '../_services';
 
 @Component({ selector: 'alert', templateUrl: 'alert.component.html' })
 export class AlertComponent implements OnInit, OnDestroy {
@@ -75,7 +76,7 @@ export class AlertComponent implements OnInit, OnDestroy {
         if (!alert) return;
 
         const classes = [];
-                
+
         const alertTypeClass = {
             [AlertType.Success]: 'success',
             [AlertType.Error]: 'danger',

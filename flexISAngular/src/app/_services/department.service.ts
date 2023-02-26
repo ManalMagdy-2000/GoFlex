@@ -3,9 +3,11 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-// هنا المدارس هتكون ال DPT
-import { environment } from '@environments/environment';
-import { Department, Request, Employee, Offer } from '@app/_models';
+import { environment } from 'src/environments/environment';
+import { Department } from '../_models';
+import { Employee } from '../_models';
+import { Offer } from '../_models';
+import { Request } from '../_models';
 
 @Injectable({ providedIn: 'root' })
 export class DepartmentService {

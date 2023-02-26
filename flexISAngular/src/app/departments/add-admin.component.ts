@@ -3,8 +3,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
-import { DepartmentService, AlertService, AccountService } from '@app/_services';
-import { Role, Department } from '@app/_models';
+import { DepartmentService, AlertService, AccountService } from '../_services';
+import { Role, Department } from '../_models';
 
 @Component({ templateUrl: 'add-admin.component.html' })
 export class AddAdminComponent implements OnInit {

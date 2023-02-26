@@ -2,7 +2,7 @@
 import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { delay, materialize, dematerialize } from 'rxjs/operators';
-import { Role } from '@app/_models';
+import { Role } from '../_models/role';
 
 // array in local storage for registered employees
 const employeesKey = 'employees';

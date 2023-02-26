@@ -4,8 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { environment } from '@environments/environment';
-import { Employee } from '@app/_models';
+import { environment } from 'src/environments/environment';
+import { Employee } from '../_models';
 
 @Injectable({ providedIn: 'root' })
 export class AccountService {

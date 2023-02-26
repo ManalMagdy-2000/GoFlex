@@ -1,7 +1,7 @@
 ﻿import { Component } from '@angular/core';
 
-import { Role, Department, Employee } from '@app/_models';
-import { AccountService, DepartmentService } from '@app/_services';
+import { Role, Department, Employee } from '../_models';
+import { AccountService, DepartmentService } from '../_services';
 
 @Component({ templateUrl: 'home.component.html' })
 export class HomeComponent {
