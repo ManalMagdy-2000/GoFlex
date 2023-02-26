@@ -2,8 +2,14 @@
 import { Router, NavigationStart } from '@angular/router';
 import { Subscription } from 'rxjs';
 
+<<<<<<< HEAD:src/app/_components/alert.component.ts
 import { Alert, AlertType } from '@app/_models';
 import { AlertService } from '@app/_services';
+=======
+import { Alert } from '../_models';
+import { AlertType } from '../_models';
+import { AlertService } from '../_services';
+>>>>>>> eed15adc5212a539c856651b6545744b256b06f9:flexISAngular/src/app/_components/alert.component.ts
 
 @Component({ selector: 'alert', templateUrl: 'alert.component.html' })
 export class AlertComponent implements OnInit, OnDestroy {
@@ -75,7 +81,11 @@ export class AlertComponent implements OnInit, OnDestroy {
         if (!alert) return;
 
         const classes = [];
+<<<<<<< HEAD:src/app/_components/alert.component.ts
                 
+=======
+
+>>>>>>> eed15adc5212a539c856651b6545744b256b06f9:flexISAngular/src/app/_components/alert.component.ts
         const alertTypeClass = {
             [AlertType.Success]: 'success',
             [AlertType.Error]: 'danger',
@@ -91,4 +101,8 @@ export class AlertComponent implements OnInit, OnDestroy {
 
         return classes.join(' ');
     }
+<<<<<<< HEAD:src/app/_components/alert.component.ts
 }
+=======
+}
+>>>>>>> eed15adc5212a539c856651b6545744b256b06f9:flexISAngular/src/app/_components/alert.component.ts

@@ -1,7 +1,11 @@
 ﻿import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
+<<<<<<< HEAD:src/app/_helpers/auth.guard.ts
 import { AccountService } from '@app/_services';
+=======
+import { AccountService } from '../_services';
+>>>>>>> eed15adc5212a539c856651b6545744b256b06f9:flexISAngular/src/app/_helpers/auth.guard.ts
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {

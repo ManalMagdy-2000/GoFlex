@@ -1,9 +1,15 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
 
+<<<<<<< HEAD:src/app/request/request.component.ts
 import { AccountService, AlertService, DepartmentService } from '@app/_services';
 import { FormBuilder, FormGroup, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Department, Request } from '@app/_models';
+=======
+import { AccountService, AlertService, DepartmentService } from '../_services';
+import { FormBuilder, FormGroup, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { Department, Request } from '../_models';
+>>>>>>> eed15adc5212a539c856651b6545744b256b06f9:flexISAngular/src/app/request/request.component.ts
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({ templateUrl: 'request.component.html' })

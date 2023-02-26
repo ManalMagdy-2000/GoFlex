@@ -1,9 +1,15 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
 
+<<<<<<< HEAD:src/app/departments/list.component.ts
 import { AccountService, AlertService, DepartmentService } from '@app/_services';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Role, Department } from '@app/_models';
+=======
+import { AccountService, AlertService, DepartmentService } from '../_services';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { Role, Department } from '../_models';
+>>>>>>> eed15adc5212a539c856651b6545744b256b06f9:flexISAngular/src/app/departments/list.component.ts
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalService } from '@coreui/angular';
 

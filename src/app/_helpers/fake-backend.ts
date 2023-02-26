@@ -2,7 +2,11 @@
 import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { delay, materialize, dematerialize } from 'rxjs/operators';
+<<<<<<< HEAD:src/app/_helpers/fake-backend.ts
 import { Role } from '@app/_models';
+=======
+import { Role } from '../_models/role';
+>>>>>>> eed15adc5212a539c856651b6545744b256b06f9:flexISAngular/src/app/_helpers/fake-backend.ts
 
 // array in local storage for registered employees
 const employeesKey = 'employees';

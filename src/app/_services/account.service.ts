@@ -4,8 +4,13 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+<<<<<<< HEAD:src/app/_services/account.service.ts
 import { environment } from '@environments/environment';
 import { Employee } from '@app/_models';
+=======
+import { environment } from 'src/environments/environment';
+import { Employee } from '../_models';
+>>>>>>> eed15adc5212a539c856651b6545744b256b06f9:flexISAngular/src/app/_services/account.service.ts
 
 @Injectable({ providedIn: 'root' })
 export class AccountService {

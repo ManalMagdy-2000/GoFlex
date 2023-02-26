@@ -3,8 +3,13 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
+<<<<<<< HEAD:src/app/departments/add-admin.component.ts
 import { DepartmentService, AlertService, AccountService } from '@app/_services';
 import { Role, Department } from '@app/_models';
+=======
+import { DepartmentService, AlertService, AccountService } from '../_services';
+import { Role, Department } from '../_models';
+>>>>>>> eed15adc5212a539c856651b6545744b256b06f9:flexISAngular/src/app/departments/add-admin.component.ts
 
 @Component({ templateUrl: 'add-admin.component.html' })
 export class AddAdminComponent implements OnInit {

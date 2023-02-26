@@ -3,8 +3,14 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
+<<<<<<< HEAD:src/app/account/register.component.ts
 import { AccountService, AlertService } from '@app/_services';
 import { Role } from '@app/_models';
+=======
+import { AccountService } from '../_services';
+import { AlertService } from '../_services';
+import { Role } from '../_models';
+>>>>>>> eed15adc5212a539c856651b6545744b256b06f9:flexISAngular/src/app/account/register.component.ts
 
 @Component({ templateUrl: 'register.component.html' })
 export class RegisterComponent implements OnInit {

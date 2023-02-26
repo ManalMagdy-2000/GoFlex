@@ -1,7 +1,11 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
 
+<<<<<<< HEAD:src/app/users/list.component.ts
 import { AccountService } from '@app/_services';
+=======
+import { AccountService } from '../_services';
+>>>>>>> eed15adc5212a539c856651b6545744b256b06f9:flexISAngular/src/app/users/list.component.ts
 import { Employee } from '../_models/employee';
 
 @Component({ templateUrl: 'list.component.html' })

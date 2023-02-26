@@ -3,7 +3,12 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
+<<<<<<< HEAD:src/app/users/add-department.component.ts
 import { AccountService, AlertService } from '@app/_services';
+=======
+import { AccountService } from '../_services';
+import { AlertService } from '../_services';
+>>>>>>> eed15adc5212a539c856651b6545744b256b06f9:flexISAngular/src/app/users/add-department.component.ts
 
 @Component({ templateUrl: 'add-department.component.html' })
 export class AddDepartmentComponent implements OnInit {

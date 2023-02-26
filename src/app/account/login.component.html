@@ -1,9 +1,16 @@
 ﻿
+<<<<<<< HEAD:src/app/account/login.component.html
 
 <c-card id="info" class="u-border u-border--bottom-right">
     <c-card-body>
         <h5 cCardTitle id="loginTitle">Login</h5>
         <h6 cCardSubtitle style="color: grey !important;" class="mb-2 text-medium-emphasis">
+=======
+<c-card id="info" class="u-border u-border--bottom-right">
+    <c-card-body>
+        <h5 cCardTitle id="loginTitle">Login</h5>
+        <h6 cCardSubtitle style="color: #6F8A9E !important;" class="mb-2 text-medium-emphasis">
+>>>>>>> eed15adc5212a539c856651b6545744b256b06f9:flexISAngular/src/app/account/login.component.html
             Please sign in to your account
           </h6>
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
@@ -26,6 +33,10 @@
                     <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
                     Login
                 </button>
+<<<<<<< HEAD:src/app/account/login.component.html
+=======
+                <a routerLink="../register" class="btn btn-link" id="register">Register As Volunteer</a>
+>>>>>>> eed15adc5212a539c856651b6545744b256b06f9:flexISAngular/src/app/account/login.component.html
             </div>
         </form>
     </c-card-body>

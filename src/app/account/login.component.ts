@@ -3,7 +3,12 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
+<<<<<<< HEAD:src/app/account/login.component.ts
 import { AccountService, AlertService } from '@app/_services';
+=======
+import { AccountService } from '../_services';
+import { AlertService } from '../_services';
+>>>>>>> eed15adc5212a539c856651b6545744b256b06f9:flexISAngular/src/app/account/login.component.ts
 
 @Component({ templateUrl: 'login.component.html' })
 export class LoginComponent implements OnInit {

@@ -2,7 +2,12 @@
 import { Observable, Subject } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
+<<<<<<< HEAD:src/app/_services/alert.service.ts
 import { Alert, AlertType } from '@app/_models';
+=======
+import { Alert } from '../_models';
+import { AlertType } from '../_models';
+>>>>>>> eed15adc5212a539c856651b6545744b256b06f9:flexISAngular/src/app/_services/alert.service.ts
 
 @Injectable({ providedIn: 'root' })
 export class AlertService {
@@ -31,7 +36,11 @@ export class AlertService {
         this.alert(new Alert({ ...options, type: AlertType.Warning, message }));
     }
 
+<<<<<<< HEAD:src/app/_services/alert.service.ts
     // main alert method    
+=======
+    // main alert method
+>>>>>>> eed15adc5212a539c856651b6545744b256b06f9:flexISAngular/src/app/_services/alert.service.ts
     alert(alert: Alert) {
         alert.id = alert.id || this.defaultId;
         this.subject.next(alert);
@@ -41,4 +50,8 @@ export class AlertService {
     clear(id = this.defaultId) {
         this.subject.next(new Alert({ id }));
     }
+<<<<<<< HEAD:src/app/_services/alert.service.ts
 }
+=======
+}
+>>>>>>> eed15adc5212a539c856651b6545744b256b06f9:flexISAngular/src/app/_services/alert.service.ts
