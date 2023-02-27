@@ -66,24 +66,24 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         // route functions
 
         function authenticate() {
-            const { employeeid, password } = body;
-            const employee = employees.find(x => x.employeeid === employeeid && x.password === password);
-            if (!employee) return error('Employeename or password is incorrect');
+            const { employeeID, password } = body;
+            const employee = employees.find(x => x.employeeID === employeeID && x.password === password);
+            if (!employee) return error('Employee ID or password is incorrect');
             return ok({
                 ...basicDetails(employee),
-                token: `fake-jwt-token.${employee.id}`
+                token: `fake-jwt-token.${employee.employeeID}`
             })
         }
 
         function register() {
             const employee = body
 
-            if (employees.find(x => x.employeeid === employee.employeeid)) {
-                return error('Employeename "' + employee.employeeid + '" is already taken')
+            if (employees.find(x => x.employeeID === employee.employeeID)) {
+                return error('Employee ID "' + employee.employeeID + '" is already taken')
             }
 
 
-            employee.id = employees.length ? Math.max(...employees.map(x => x.id)) + 1 : 1;
+            employee.employeeID = employees.length ? Math.max(...employees.map(x => x.employeeID)) + 1 : 1;
             employees.push(employee);
             localStorage.setItem(employeesKey, JSON.stringify(employees));
             return ok();
@@ -97,7 +97,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         function getEmployeeById() {
             if (!isLoggedIn()) return unauthorized();
 
-            const employee = employees.find(x => x.id === idFromUrl());
+            const employee = employees.find(x => x.employeeID === idFromUrl());
             return ok(basicDetails(employee));
         }
 
@@ -149,13 +149,16 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             return { id, employeeid, fullname, email, role, department, dateOfBirth, occupation, position };
         }
 
+
         function isAdmin() {
             return isLoggedIn() && currentEmployee().role === Role.Admin;
         }
-
-        function Admin() {
-            return isLoggedIn() && currentEmployee().role === Role.Admin;
-        }
+        function isSupervisor() {
+          return isLoggedIn() && currentEmployee().role === Role.SuperVisor;
+      }
+      function isEmployee() {
+        return isLoggedIn() && currentEmployee().role === Role.Employee;
+    }
 
         function currentEmployee() {
             if (!isLoggedIn()) return;

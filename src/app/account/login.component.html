@@ -8,10 +8,10 @@
           </h6>
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
             <div class="form-group">
-                <label for="employeeid">Employeename</label>
+                <label for="employeeid">Employee ID</label>
                 <input type="text" formControlName="employeeid" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.employeeid.errors }" />
                 <div *ngIf="submitted && f.employeeid.errors" class="invalid-feedback">
-                    <div *ngIf="f.employeeid.errors.required">Employeename is required</div>
+                    <div *ngIf="f.employeeid.errors.required">Employee ID is required</div>
                 </div>
             </div>
             <div class="form-group">

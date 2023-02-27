@@ -139,7 +139,7 @@ a { cursor: pointer }
 
   .accordion-button:focus {
      border-color: #FEE659;
-     box-shadow: 0 0 0 0.25rem rgb(110, 240, 155, 0.25);
+     box-shadow: 0 0 0 0.25rem #d6b602
   }
 
   .accordion-button:not(.collapsed) {
@@ -172,12 +172,12 @@ a { cursor: pointer }
   .space {
     margin-top: 2rem;
     text-align: center;
-    color: #6F8A9E;
+    color: #51545C;
   }
 
   .infotext {
     text-align: center;
-    color: #6F8A9E;
+    color: #51545C;
     margin-bottom: 0;
   }
 
@@ -204,7 +204,7 @@ a { cursor: pointer }
   button.btn-secondary {
     background-color: #F0F4F9 !important;
     border-color: #F0F4F9 !important;
-    color: #6F8A9E !important;
+    color: #51545C !important;
     font-family: "Mulish", sans-serif !important;
     font-weight: 700;
     display: flex;
@@ -215,12 +215,12 @@ a { cursor: pointer }
   }
 
   button.btn-primary:focus {
-    box-shadow: 0 0 0 0.25rem rgb(110, 240, 155, 0.25);
+    box-shadow: 0 0 0 0.25rem #d6b602;
     border-color: #fee659;
   }
 
   button.btn-primary:not(:disabled):not(.disabled):active:focus {
-    box-shadow: 0 0 0 0.25rem #51d88090;
+    box-shadow: 0 0 0 0.25rem #d6b602;
     border-color: #fee659;
   }
 
@@ -242,7 +242,7 @@ a { cursor: pointer }
   .card {
     background-color: #2D2828;
     border-radius: 16px;
-    color: #6F8A9E;
+    color: #51545C;
     box-shadow: 0 100px 80px rgb(0 0 0 / 7%), 0 41.7776px 33.4221px rgb(0 0 0 / 5%), 0 22.3363px 17.869px rgb(0 0 0 / 4%), 0 12.5216px 10.0172px rgb(0 0 0 / 4%), 0 6.6501px 5.32008px rgb(0 0 0 / 3%), 0 2.76726px 2.21381px rgb(0 0 0 / 2%);
 
     label {
@@ -346,7 +346,7 @@ a { cursor: pointer }
 
   .form-control:focus {
     border-color: #FEE659;
-    box-shadow: 0 0 0 0.25rem rgb(110, 240, 155, 0.25);
+    box-shadow: 0 0 0 0.25rem #d6b602;
   }
 
   label {

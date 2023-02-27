@@ -52,17 +52,18 @@ export class ListComponent implements OnInit {
             emailVal.push(Validators.required);
         }
 
+
         this.form = this.formBuilder.group({
             name: ['', Validators.required],
             requests: [[]],
-            Admins: [[]]
+            admins: [[]]
         });
 
         console.log(this.departmentID)
         this.form2 = this.formBuilder.group({
             fullname: ['', Validators.required],
             email: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')]],
-            employeeid: ['', Validators.required],
+            employeeID: ['', Validators.required],
             password: ['', passwordValidators],
             position: ['', Validators.required],
             role: [Role.Admin],
@@ -82,9 +83,6 @@ export class ListComponent implements OnInit {
 
     get f2() { return this.form2.controls; }
 
-    set setStatus(status : string){
-
-    }
     onSubmit() {
         this.submitted = true;
         console.log(this.form)
@@ -102,7 +100,7 @@ export class ListComponent implements OnInit {
 
             this.createDepartment();
         // } else {
-        //     this.updateEmployee();
+        //     this.updateUser();
         // }
 
     }
@@ -111,7 +109,6 @@ export class ListComponent implements OnInit {
 
     onSubmit2() {
         this.submitted = true;
-
         // reset alerts on submit
         this.alertService.clear();
 
@@ -126,9 +123,9 @@ export class ListComponent implements OnInit {
         //toggle modal
 
         this.form2.patchValue({department: this.departmentID});
-        this.createEmployee();
+        this.createUser();
         // } else {
-        //     this.updateEmployee();
+        //     this.updateUser();
         // }
 
     }
@@ -139,11 +136,13 @@ export class ListComponent implements OnInit {
     }
 
     private createDepartment() {
+
         this.departmentService.addDepartment(this.form.value)
             .pipe(first())
             .subscribe({
                 next: () => {
                     this.alertService.success('Department added successfully', { keepAfterRouteChange: true });
+
                 },
                 error: error => {
                     this.alertService.error(error);
@@ -167,7 +166,7 @@ export class ListComponent implements OnInit {
             });
     }
 
-    private createEmployee() {
+    private createUser() {
         this.accountService.register(this.form2.value)
             .pipe(first())
             .subscribe({

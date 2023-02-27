@@ -15,7 +15,7 @@
             <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
             <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
                 <div *ngIf="f.email.errors.required">Email is required</div>
-                <div *ngIf="f.email.errors.pattern">Email must contains @mail.com</div>
+                <div *ngIf="f.email.errors.pattern">Email must contains @mail.com</div>zz
             </div>
         </div>
     </div>

@@ -3,7 +3,7 @@ import { Role } from "./role";
 import { Department } from "./department";
 
 export class Employee {
-    employeeid: string;
+    employeeID: string;
     password: string;
     fullname: string;
     email: string;
