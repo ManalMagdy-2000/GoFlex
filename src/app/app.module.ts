@@ -44,7 +44,7 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
         DropdownModule,
         AvatarModule,
         CardModule,
-        NgxMaterialTimepickerModule
+        NgxMaterialTimepickerModule ,
     ],
     declarations: [
         AppComponent,

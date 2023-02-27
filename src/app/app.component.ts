@@ -65,11 +65,11 @@ export class AppComponent {
       //   url: '/',
       //   iconComponent: { name: 'cil-home' },
       // },
-      {
+     /* {
         name: 'Requests',
         url: '/offers',
         iconComponent: { name: 'cil-list-numbered' },
-      },
+      },*/
 
       // {
       //   name: 'Profile',
@@ -108,7 +108,7 @@ export class AppComponent {
         )
       }
 
-      if (this.isAdmin) {    //supervisor or employee
+   /*   if (this.isAdmin) {    //supervisor or employee
         this.navItems.push(
           {
             name: 'Offers',
@@ -121,7 +121,7 @@ export class AppComponent {
             // }
           },
         )
-      }
+      }*/
 
     }
 

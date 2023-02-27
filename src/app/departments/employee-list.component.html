@@ -15,8 +15,9 @@
             <td>{{employee.employeeid}}</td>
             <td>{{employee.email}}</td>
             <td>{{employee.email}}</td>
-            <td><button [cModalToggle]="addSupervisor.supervisorID" class="btn btn-sm btn-primary mr-1" cButton (click)="setID(department.departmentID, request.requestID)">Add Supervisor</button></td>
-        </tr>
+            <td align="center" colSpan="7">
+              <button [cModalToggle]="addAdmin.id" cButton size="lg" (click)="setID(employee.employeeID)"><img width="20px" src="../../assets/user-svgrepo-com (1).svg" alt="arrow" loading="lazy">Add </button>
+            </td>        </tr>
         <tr *ngIf="!employees">
             <td colspan="4" class="text-center">
                 <span class="spinner-border spinner-border-lg align-center"></span>

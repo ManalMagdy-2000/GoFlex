@@ -3,10 +3,10 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <th style="width: 30%">Fullname</th>
-            <th style="width: 30%">Employee ID</th>
+            <th style="width: 28%">Fullname</th>
+            <th style="width: 28%">Employee ID</th>
             <th style="width: 28%">Email</th>
-            <th style="width: 30%"></th>
+            <th style="width: 28%"></th>
         </tr>
     </thead>
     <tbody>
@@ -14,7 +14,7 @@
             <td>{{user.fullname}}</td>
             <td>{{user.id}}</td>
             <td>{{user.email}}</td>
-            <td><button>Add Supervisor</button></td>
+            <td><button  cButton size="lg"><img width="20px" src="../../assets/user-svgrepo-com (1).svg" alt="arrow">Add Supervisor</button></td>
         </tr>
         <tr *ngIf="!employees">
             <td colspan="4" class="text-center">
@@ -23,3 +23,7 @@
         </tr>
     </tbody>
 </table>
+
+
+<!-- HERE <c-modal> doen't work-->
+

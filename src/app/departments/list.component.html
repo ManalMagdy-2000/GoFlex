@@ -40,7 +40,7 @@
                       <tbody>
                     <tr *ngFor="let Admin of department.Admins">
                       <ng-container>
-                        <td>{{Admin.employeename}}</td>
+                        <td>{{Admin.employeeID}}</td>
                         <td>{{Admin.fullname}}</td>
                         <td>{{Admin.email}}</td>
                         <td>{{Admin.position}}</td>
@@ -87,7 +87,7 @@
 
 <c-modal #addAdmin id="addAdmin" alignment="center" scrollable>
   <c-modal-header>
-    <h5 cModalTitle>Add supervisor</h5>
+    <h5 cModalTitle>Add Employee</h5>
     <button [cModalToggle]="addAdmin.id" cButtonClose></button>
   </c-modal-header>
   <form cForm [formGroup]="form2" (ngSubmit)="onSubmit2()">
@@ -111,7 +111,7 @@
     </div>
     <div class="form-group">
         <label for="employeeID">Employee ID</label>
-        <input type="text" formControlName="employeename" class="form-control" [ngClass]="{ 'is-invalid': submitted && f2.employeeID.errors }" />
+        <input type="text" formControlName="employeeID" class="form-control" [ngClass]="{ 'is-invalid': submitted && f2.employeeID.errors }" />
         <div *ngIf="submitted && f2.employeeID.errors" class="invalid-feedback">
             <div *ngIf="f2.employeeID.errors.required">Employee ID is required</div>
         </div>
