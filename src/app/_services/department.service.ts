@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from '@environments/environment';
-import { Department, Request, Employee, Offer } from '../_models';
+import { Department, Request, Admin, Offer } from '../_models';
 
 @Injectable({ providedIn: 'root' })
 export class DepartmentService {
@@ -34,7 +34,7 @@ export class DepartmentService {
         return this.http.get<Request>(`${environment.apiUrl}/departments/${departmentID}/request/${requestID}`);
     }
 
-    addEmployee(id: string, Admin: Employee) {
+    addAdmin(id: string, Admin: Admin) {
         return this.http.post(`${environment.apiUrl}/departments/Admin/${id}`, { Admin });
     }
 

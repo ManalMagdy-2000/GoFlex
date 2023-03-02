@@ -1,5 +1,5 @@
 ﻿export * from './alert';
-export * from './employee';
+export * from './admin';
 export * from './role';
 export * from './offer';
 export * from './request';

@@ -62,7 +62,7 @@ export class AddDepartmentComponent implements OnInit {
         if (this.isAddMode) {
             this.createDepartment();
         // } else {
-        //     this.updateEmployee();
+        //     this.updateAdmin();
         // }
         }
     }

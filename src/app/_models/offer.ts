@@ -1,10 +1,10 @@
-import { Employee } from "./employee";
+import { Admin } from "./admin";
 
 export class Offer {
     offerID: string;
     offerStatus: string;
     remarks: string;
     offerDate: string;
-    volunteer: Employee;
+    volunteer: Admin;
     request: string;
 }

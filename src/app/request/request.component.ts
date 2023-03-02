@@ -32,14 +32,14 @@ export class RequestComponent implements OnInit {
 
 
     ngOnInit() {
-        console.log(this.accountService.employeeValue);
-        this.departmentService.getDepartmentById(this.accountService.employeeValue.department).subscribe(department => {
+        console.log(this.accountService.adminValue);
+        this.departmentService.getDepartmentById(this.accountService.adminValue.department).subscribe(department => {
             this.department = department;
             this.requests = department.requests;
         });
 
 
-        this.departmentID = this.accountService.employeeValue.department;
+        this.departmentID = this.accountService.adminValue.department;
         // this.requestID = this.route.snapshot.params['requestID'];
         this.isAddMode = !this.departmentID;
 
@@ -97,7 +97,7 @@ export class RequestComponent implements OnInit {
 
             this.addRequest();
         // } else {
-        //     this.updateEmployee();
+        //     this.updateAdmin();
         // }
 
     }

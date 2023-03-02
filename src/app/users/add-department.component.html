@@ -1,5 +1,5 @@
 ﻿
-<h1 *ngIf="isAddMode">Add Employee</h1>
+<h1 *ngIf="isAddMode">Add Admin</h1>
 <h1 *ngIf="!isAddMode">Edit Profile</h1>
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="form-row">
@@ -43,7 +43,7 @@
     </div>
 </div>
     <div class="form-group edit-flex">
-        <button routerLink="/employees" class="btn btn-secondary" id="scAdminCancel">
+        <button routerLink="/admins" class="btn btn-secondary" id="scAdminCancel">
             <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1" ></span>
             Cancel
         </button>

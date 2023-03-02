@@ -2,8 +2,8 @@
 import { Role } from "./role";
 import { Department } from "./department";
 
-export class Employee {
-    employeeID: string;
+export class Admin {
+    username: string;
     password: string;
     fullname: string;
     email: string;

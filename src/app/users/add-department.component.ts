@@ -25,7 +25,7 @@ export class AddDepartmentComponent implements OnInit {
     ngOnInit() {
         this.id = this.route.snapshot.params['id'];
         this.isAddMode = !this.id;
-        this.isAdmin = this.accountService.employeeValue.role === 'Admin';
+        this.isAdmin = this.accountService.adminValue.role === 'Admin';
 
         // password not required in edit mode
         const passwordValidators = [Validators.pattern('(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}')];
@@ -81,18 +81,18 @@ export class AddDepartmentComponent implements OnInit {
 
         this.loading = true;
         if (this.isAddMode) {
-            this.createEmployee();
+            this.createAdmin();
         } else {
-            this.updateEmployee();
+            this.updateAdmin();
         }
     }
 
-    private createEmployee() {
+    private createAdmin() {
         this.accountService.register(this.form.value)
             .pipe(first())
             .subscribe({
                 next: () => {
-                    this.alertService.success('Employee added successfully', { keepAfterRouteChange: true });
+                    this.alertService.success('Admin added successfully', { keepAfterRouteChange: true });
                     this.router.navigate(['../'], { relativeTo: this.route });
                 },
                 error: error => {
@@ -102,7 +102,7 @@ export class AddDepartmentComponent implements OnInit {
             });
     }
 
-    private updateEmployee() {
+    private updateAdmin() {
         this.accountService.update(this.id, this.form.value)
             .pipe(first())
             .subscribe({

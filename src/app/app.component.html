@@ -1,14 +1,14 @@
 ﻿<!-- nav -->
-<!-- <nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="employee">
+<!-- <nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="admin">
     <div class="navbar-nav">
         <a class="nav-item nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
-        <a class="nav-item nav-link" routerLink="/employees" routerLinkActive="active">Employees</a>
+        <a class="nav-item nav-link" routerLink="/admins" routerLinkActive="active">Admins</a>
         <a class="nav-item nav-link" routerLink="/Admin" *ngIf="isAdmin">Admin</a>
         <a class="nav-item nav-link" routerLink="/departments" >Admin</a>
         <a class="nav-item nav-link" (click)="logout()">Logout</a>
     </div>
 </nav> -->
-<c-sidebar visible *ngIf="employee">
+<c-sidebar visible *ngIf="admin">
     <c-sidebar-brand [brandFull]="{
       src: '../assets/gologoBlack.png',
       width: 200,
@@ -16,7 +16,7 @@
     }">
 
   </c-sidebar-brand>
-  <!-- <div class="sidebar-employee">
+  <!-- <div class="sidebar-admin">
   <h4>{{department.name}}</h4>
   </div> -->
     <c-sidebar-nav [navItems]="navItems"></c-sidebar-nav>
@@ -27,23 +27,23 @@
 
 <div class="wrapper d-flex flex-column min-vh-100 bg-light dark:bg-transparent">
   <c-header>
-    <c-container fluid *ngIf="employee">
-      <c-header-brand *ngIf="employee.role === 'Admin'" [routerLink]>{{employee?.position}} at {{department?.name}}</c-header-brand>
-      <c-header-brand *ngIf="employee.role === 'Admin'" [routerLink]>HR Admin</c-header-brand>
+    <c-container fluid *ngIf="admin">
+      <c-header-brand *ngIf="admin.role === 'Admin'" [routerLink]>{{admin?.position}} at {{department?.name}}</c-header-brand>
+      <c-header-brand *ngIf="admin.role === 'Admin'" [routerLink]>HR Admin</c-header-brand>
       <c-header-nav class="ms-auto">
         <!-- <c-nav-item>
-          <a cNavLink routerLink="/components/alert">{{employee.fullname}}</a>
+          <a cNavLink routerLink="/components/alert">{{admin.fullname}}</a>
         </c-nav-item> -->
         <c-nav-item>
           <c-sidebar-toggler toggle="unfoldable" csidebartoggle="sidebar1" role="button" class="sidebar-toggler"></c-sidebar-toggler>
         </c-nav-item>
         <c-dropdown alignment="end">
           <a cHeaderToggler cDropdownToggle cNavLink [caret]="false">
-            {{employee?.fullname}}
-            <c-avatar color="secondary">{{employee?.fullname[0]}}</c-avatar>
+            {{admin?.fullname}}
+            <c-avatar color="secondary">{{admin?.fullname[0]}}</c-avatar>
           </a>
           <ul cDropdownMenu>
-            <li><a routerLink='/employees/edit/{{employee?.id}}' cDropdownItem>Edit profile</a></li>
+            <li><a routerLink='/admins/edit/{{admin?.id}}' cDropdownItem>Edit profile</a></li>
             <li>
               <hr cDropdownDivider>
             </li>

@@ -24,11 +24,11 @@ export class RegisterComponent implements OnInit {
         this.form = this.formBuilder.group({
             fullname: ['', Validators.required],
             email: ['', Validators.required],
-            employeeid: ['', Validators.required],
+            adminid: ['', Validators.required],
             password: ['', [Validators.required, Validators.minLength(6)]],
             occupation: ['', Validators.required],
             dateOfBirth: ['', Validators.required],
-            role: Role.Employee,
+            role: Role.Admin,
             offers: [[]],
         });
     }

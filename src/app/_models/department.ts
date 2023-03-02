@@ -1,9 +1,9 @@
-import { Employee } from "./employee";
+import { Admin } from "./admin";
 import { Request } from "./request";
 
 export class Department {
     departmentID: string;
     name: string;
-    Admins: Employee[];
+    Admins: Admin[];
     requests: Request[];
 }

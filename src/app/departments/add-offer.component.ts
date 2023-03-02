@@ -40,7 +40,7 @@ export class AddOfferComponent implements OnInit {
             offerStatus: ['', Validators.required],
             offerDate: ['', Validators.required],
             remarks: ['', Validators.required],
-            volunteer: this.accountService.employeeValue,
+            volunteer: this.accountService.adminValue,
             request: [this.requestID]
         });
 
@@ -69,7 +69,7 @@ export class AddOfferComponent implements OnInit {
 
             this.addOffer();
         // } else {
-        //     this.updateEmployee();
+        //     this.updateAdmin();
         // }
 
     }

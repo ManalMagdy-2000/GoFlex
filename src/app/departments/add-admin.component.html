@@ -1,5 +1,5 @@
-﻿<h1 *ngIf="isAddMode">Add Employee</h1>
-<h1 *ngIf="!isAddMode">Edit Employee</h1>
+﻿<h1 *ngIf="isAddMode">Add Admin</h1>
+<h1 *ngIf="!isAddMode">Edit Admin</h1>
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="form-row">
         <div class="form-group col">
@@ -19,10 +19,10 @@
     </div>
     <div class="form-row">
         <div class="form-group col">
-            <label for="employeeid">Employeename</label>
-            <input type="text" formControlName="employeeid" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.employeeid.errors }" />
-            <div *ngIf="submitted && f.employeeid.errors" class="invalid-feedback">
-                <div *ngIf="f.employeeid.errors.required">Employeename is required</div>
+            <label for="adminid">Adminname</label>
+            <input type="text" formControlName="adminid" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.adminid.errors }" />
+            <div *ngIf="submitted && f.adminid.errors" class="invalid-feedback">
+                <div *ngIf="f.adminid.errors.required">Adminname is required</div>
             </div>
         </div>
         <div class="form-group col">
@@ -42,6 +42,6 @@
             <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
             Save
         </button>
-        <a routerLink="/employees" class="btn btn-link">Cancel</a>
+        <a routerLink="/admins" class="btn btn-link">Cancel</a>
     </div>
 </form>

@@ -64,7 +64,7 @@ export class AddRequestComponent implements OnInit {
 
             this.addRequest();
         // } else {
-        //     this.updateEmployee();
+        //     this.updateAdmin();
         // }
 
     }

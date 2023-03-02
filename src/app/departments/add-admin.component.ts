@@ -46,7 +46,7 @@ export class AddAdminComponent implements OnInit {
         this.form = this.formBuilder.group({
             firstName: ['', Validators.required],
             lastName: ['', Validators.required],
-            employeeid: ['', Validators.required],
+            adminid: ['', Validators.required],
             password: ['', passwordValidators],
             role: [Role.Admin],
             department: [this.departmentID]
@@ -75,15 +75,15 @@ export class AddAdminComponent implements OnInit {
 
         this.loading = true;
 
-            this.createEmployee();
+            this.createAdmin();
         // } else {
-        //     this.updateEmployee();
+        //     this.updateAdmin();
         // }
 
     }
 
-    private addEmployee() {
-        this.departmentService.addEmployee(this.departmentID, this.form.value)
+    private addAdmin() {
+        this.departmentService.addAdmin(this.departmentID, this.form.value)
             .pipe(first())
             .subscribe({
                 next: () => {
@@ -99,13 +99,13 @@ export class AddAdminComponent implements OnInit {
             });
     }
 
-    private createEmployee() {
+    private createAdmin() {
         this.accountService.register(this.form.value)
             .pipe(first())
             .subscribe({
                 next: () => {
-                    this.alertService.success('Employee added successfully', { keepAfterRouteChange: true });
-                    this.addEmployee();
+                    this.alertService.success('Admin added successfully', { keepAfterRouteChange: true });
+                    this.addAdmin();
                     this.router.navigate(['../'], { relativeTo: this.route });
 
                 },

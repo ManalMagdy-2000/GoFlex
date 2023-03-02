@@ -2,25 +2,25 @@
 import { first } from 'rxjs/operators';
 
 import { AccountService } from '@app/_services';
-import { Employee } from '../_models/employee';
+import { Admin } from '../_models/admin';
 
 @Component({ templateUrl: 'list.component.html' })
 export class ListComponent implements OnInit {
-    employees = null;
-    employee: Employee[] = [];
+    admins = null;
+    admin: Admin[] = [];
     constructor(private accountService: AccountService) {}
 
     ngOnInit() {
         this.accountService.getAll()
             .pipe(first())
-            .subscribe(employees => this.employees = employees);
+            .subscribe(admins => this.admins = admins);
     }
 
-    deleteEmployee(id: string) {
-        const employee = this.employees.find(x => x.id === id);
-        employee.isDeleting = true;
+    deleteAdmin(id: string) {
+        const admin = this.admins.find(x => x.id === id);
+        admin.isDeleting = true;
         this.accountService.delete(id)
             .pipe(first())
-            .subscribe(() => this.employees = this.employees.filter(x => x.id !== id));
+            .subscribe(() => this.admins = this.admins.filter(x => x.id !== id));
     }
 }

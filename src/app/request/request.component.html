@@ -56,7 +56,7 @@
                           <c-badge *ngIf="offer.offerStatus == 'CLOSED'" color="danger">{{offer.offerStatus}}</c-badge>
                         </td>
                         <td>{{offer.offerDate}}</td>
-                        <td>{{offer.volunteer.employeeid}}</td>
+                        <td>{{offer.volunteer.adminid}}</td>
                         <td>{{offer.remarks}}</td>
                         <td *ngIf="request.status != 'CLOSED'"><button  style="color: white;" class="btn btn-sm btn-success mr-1" cButton (click)="setID(request.requestID, offer.offerID, 'ACCEPTED')"><img width="18px" src="../../assets/tick-svgrepo-com.svg" alt="arrow" loading="lazy">Accept</button>
                           <!-- <button style="color: white;" class="btn btn-sm btn-danger mr-1" cButton (click)="setID(request.requestID, offer.offerID, 'ACCEPTED')">Close</button></td> -->

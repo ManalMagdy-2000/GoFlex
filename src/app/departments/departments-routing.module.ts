@@ -7,7 +7,7 @@ import { AddDepartmentComponent } from './add-department.component';
 import { AddRequestComponent } from './add-request.component';
 import { AddAdminComponent } from './add-admin.component';
 import { AddOfferComponent } from './add-offer.component';
-import { EmployeeListComponent } from './employee-list.component';
+import { AdminListComponent } from './admin-list.component';
 
 const routes: Routes = [
     {
@@ -18,7 +18,7 @@ const routes: Routes = [
             { path: 'request/:id', component: AddRequestComponent },
             { path: 'Admin/:id', component: AddAdminComponent },
             { path: ':departmentID/request/:requestID', component: AddOfferComponent },
-            { path: 'employees', component: EmployeeListComponent },
+            { path: 'admins', component: AdminListComponent },
         ]
     }
 ];

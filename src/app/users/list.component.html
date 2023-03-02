@@ -1,22 +1,22 @@
-﻿<h1>Employees</h1>
+﻿<h1>Admins</h1>
 <!-- <a routerLink="add" class="btn btn-sm btn-success mb-2">Add User</a> -->
 <table class="table table-striped">
     <thead>
         <tr>
             <th style="width: 28%">Fullname</th>
-            <th style="width: 28%">Employee ID</th>
+            <th style="width: 28%">Admin ID</th>
             <th style="width: 28%">Email</th>
             <th style="width: 28%"></th>
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let user of employees">
+        <tr *ngFor="let user of admins">
             <td>{{user.fullname}}</td>
             <td>{{user.id}}</td>
             <td>{{user.email}}</td>
             <td><button  cButton size="lg"><img width="20px" src="../../assets/user-svgrepo-com (1).svg" alt="arrow">Add Supervisor</button></td>
         </tr>
-        <tr *ngIf="!employees">
+        <tr *ngIf="!admins">
             <td colspan="4" class="text-center">
                 <span class="spinner-border spinner-border-lg align-center"></span>
             </td>

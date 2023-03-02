@@ -1,21 +1,21 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
 
-import { Employee } from '@app/_models';
+import { Admin } from '@app/_models';
 import { AccountService } from '@app/_services';
 
 @Component({ templateUrl: 'admin.component.html' })
 export class AdminComponent implements OnInit {
     loading = false;
-    employees: Employee[] = [];
+    admins: Admin[] = [];
 
-    constructor(private employeeService: AccountService) { }
+    constructor(private adminService: AccountService) { }
 
     ngOnInit() {
         this.loading = true;
-        this.employeeService.getAll().pipe(first()).subscribe(employees => {
+        this.adminService.getAll().pipe(first()).subscribe(admins => {
             this.loading = false;
-            this.employees = employees;
+            this.admins = admins;
         });
     }
 }

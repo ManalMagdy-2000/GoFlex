@@ -1,7 +1,7 @@
 ﻿import { Component } from '@angular/core';
 
 import { AccountService, DepartmentService } from './_services';
-import { Role, Department, Employee } from './_models';
+import { Role, Department, Admin } from './_models';
 import { INavData } from '@coreui/angular';
 import { IconSetService } from '@coreui/icons-angular';
 import { cilListNumbered, cilPaperPlane, cilHome, cilBank, cilUser, brandSet } from '@coreui/icons';
@@ -9,15 +9,15 @@ import { cilListNumbered, cilPaperPlane, cilHome, cilBank, cilUser, brandSet } f
 
 @Component({ selector: 'app', templateUrl: 'app.component.html', providers: [IconSetService] })
 export class AppComponent {
-    employee: Employee;
+    admin: Admin;
     department: Department;
     departmentsCount: number = 0;
     navItems: INavData[] = [];
 
     constructor(private accountService: AccountService, public iconSet: IconSetService, private departmentService: DepartmentService) {
-        this.accountService.employee.subscribe(x => this.employee = x)
-        if(this.employee && this.employee.role === Role.Admin) {
-          this.departmentService.getDepartmentById(this.employee.department).subscribe(department => {
+        this.accountService.admin.subscribe(x => this.admin = x)
+        if(this.admin && this.admin.role === Role.Admin) {
+          this.departmentService.getDepartmentById(this.admin.department).subscribe(department => {
             this.department = department;
             console.log( this.department.name )
           });
@@ -29,29 +29,29 @@ export class AppComponent {
         iconSet.icons = { cilListNumbered, cilPaperPlane, cilHome, cilBank, cilUser, ...brandSet };
     }
 
-    get isAdmin() {
-        return this.employee && this.employee.role === Role.Admin;
+    get isSuperAdmin() {
+        return this.admin && this.admin.role === Role.SuperAdmin;
     }
 
-    get Admin() {
-        return this.employee && this.employee.role === Role.Admin;
+    get isAdmin() {
+        return this.admin && this.admin.role === Role.Admin;
     }
 
     ngOnInit() {
 
       this.navItems.push(
       //   {
-      //   name: 'Employee',
+      //   name: 'Admin',
       //   title: true
       // },
       // {
-      //   name: this.employee.fullname,
+      //   name: this.admin.fullname,
       //   url: '#',
       //   attributes: { disabled: true },
-      //   iconComponent: { name: 'cil-employee' },
+      //   iconComponent: { name: 'cil-admin' },
       // },
       // {
-      //   name: this.employee.position,
+      //   name: this.admin.position,
       //   url: '#',
       //   attributes: { disabled: true },
       //   iconComponent: { name: 'cil-bank' },
@@ -73,12 +73,12 @@ export class AppComponent {
 
       // {
       //   name: 'Profile',
-      //   url: `/employees/edit/${this.employee?.id}`,
-      //   iconComponent: { name: 'cil-employee' },
+      //   url: `/admins/edit/${this.admin?.id}`,
+      //   iconComponent: { name: 'cil-admin' },
       // },
       )
 
-      if (this.Admin) { //HR Admin
+      if (this.isSuperAdmin) { //HR Admin
         this.navItems.push(
           {
             name: 'Departments',
@@ -93,11 +93,11 @@ export class AppComponent {
         )
       }
 
-      if (this.Admin) { //HR Admin
+      if (this.isSuperAdmin) { //HR Admin
         this.navItems.push(
           {
-            name: 'Employees',
-            url: '/employees',
+            name: 'Admins',
+            url: '/admins',
             iconComponent: { name: 'cil-user' },
             // badge: {
             //   color: 'success',
@@ -108,7 +108,7 @@ export class AppComponent {
         )
       }
 
-   /*   if (this.isAdmin) {    //supervisor or employee
+   /*   if (this.isAdmin) {    //supervisor or admin
         this.navItems.push(
           {
             name: 'Offers',

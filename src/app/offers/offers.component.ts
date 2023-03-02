@@ -3,7 +3,7 @@ import { first } from 'rxjs/operators';
 
 import { AccountService, AlertService, DepartmentService } from '@app/_services';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { Department, Employee } from '@app/_models';
+import { Department, Admin } from '@app/_models';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({ templateUrl: 'offers.component.html' })
@@ -19,7 +19,7 @@ export class OfferComponent implements OnInit {
     requestsCount: number;
     countNewReq: number;
     submitted = false;
-    employee: Employee;
+    admin: Admin;
 
     constructor(
         private formBuilder: UntypedFormBuilder,
@@ -36,7 +36,7 @@ export class OfferComponent implements OnInit {
             .pipe(first())
             .subscribe(departments => this.departments = departments);
 
-        this.employee = this.accountService.employeeValue;
+        this.admin = this.accountService.adminValue;
 
 
         // this.departmentID = this.route.snapshot.params['departmentID'];
@@ -51,7 +51,7 @@ export class OfferComponent implements OnInit {
 
         this.form = this.formBuilder.group({
             remarks: ['', Validators.required],
-            volunteer: this.accountService.employeeValue,
+            volunteer: this.accountService.adminValue,
             request: [this.requestID]
         });
 
@@ -82,7 +82,7 @@ export class OfferComponent implements OnInit {
 
             this.addOffer();
         // } else {
-        //     this.updateEmployee();
+        //     this.updateAdmin();
         // }
 
     }
