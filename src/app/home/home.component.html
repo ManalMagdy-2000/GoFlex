@@ -1,0 +1,42 @@
+﻿
+<div class="p-4">
+    <div class="container">
+
+
+        <c-container fluid>
+            <h1>Hi, {{user.fullname}}!</h1>
+          <h5>Welcome To Flex Information System</h5>
+            <c-row [xs]="1" [lg]="3">
+              <c-col>
+                <c-card id="info" class="u-border u-border--bottom-right">
+                    <c-card-body>
+                        <h5 cCardTitle id="info">Departments</h5>
+                        <p cCardText>
+                        Departments are the main building blocks of Flex Information system.
+                        They are the place where developers work .
+                        </p>
+                    </c-card-body>
+                </c-card>
+              </c-col>
+              <c-col>
+                <c-card id="info" class="u-border u-border--bottom-right" style="padding-bottom: 20px ">
+                    <c-card-body>
+                        <h5 cCardTitle id="info">Requests</h5>
+                        <p cCardText>
+                        Department employees submit requests for flexible working arrangements.
+                        </p>
+                    </c-card-body>
+                </c-card>
+              </c-col>
+              <c-col>
+              </c-col>
+            </c-row>
+          </c-container>
+
+
+        <!-- <h3 *ngIf="isAdmin">Position: {{user.position}}!</h3>
+        <h3 *ngIf="isAdmin">Department: {{department.name}}!</h3>
+
+        <p><button cButton (click)="logout()" color="primary" style="color: white;">Log out</button></p>        -->
+    </div>
+</div>
