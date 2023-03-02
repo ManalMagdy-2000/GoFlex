@@ -1,1 +1,36 @@
-<p>employees works!</p>
+
+
+<!----------------------
+
+<h1>Employees</h1>
+<table class="table table-striped">
+  <thead *ngIf="department.admins?.length != 0">
+    <tr>
+      <th scope="col" style="width: 16%">Username</th>
+      <th scope="col" style="width: 16%">Fullname</th>
+      <th scope="col" style="width: 16%">Email</th>
+      <th scope="col" style="width: 16%">Position</th>
+      <th scope="col" style="width: 16%">Password</th>
+    </tr>
+    </thead>
+    <tbody>
+      <td colSpan="7" *ngIf="department.admins?.length == 0">
+        <h5 id="departmentErrMsg" class="infotext">No employee has been assigned yet!</h5>
+      </td>
+  <tr *ngFor="let admin of department.admins">
+    <ng-container>
+      <td>{{admin.username}}</td>
+      <td>{{admin.fullname}}</td>
+      <td>{{admin.email}}</td>
+      <td>{{admin.position}}</td>
+      <td>{{admin.password}}</td>
+</ng-container>
+</tr>
+</tbody>
+</table>
+
+
+
+-->
+
+

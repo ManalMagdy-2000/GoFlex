@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 
 import { environment } from '@environments/environment';
 import { Department, Request, User, Offer } from '@app/_models';
+import { Role } from '../_models/role';
 
 @Injectable({ providedIn: 'root' })
 export class DepartmentService {
@@ -37,6 +38,9 @@ export class DepartmentService {
 
     addAdmin(id: string, admin: User) {
         return this.http.post(`${environment.apiUrl}/departments/admin/${id}`, { admin });
+    }
+    getAllAdmins(){
+      return this.http.get<User[]>(`${environment.apiUrl}/employees`);
     }
 
     addOffer(departmentID: string, requestID: string, offer: Offer) {
