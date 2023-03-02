@@ -45,7 +45,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return getDepartmentById();
                 case url.match(/\/departments\/request\/\d+$/) && method === 'POST':
                     return addRequest();
-                //add admin to department
+                //add employee to department
                 case url.match(/\/departments\/admin\/\d+$/) && method === 'POST':
                     return addAdmin();
                 //add offer to request as departments/:departmentID/request/:requestID/offer

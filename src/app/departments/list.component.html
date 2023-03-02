@@ -40,7 +40,7 @@
                       </thead>
                       <tbody>
                         <td colSpan="7" *ngIf="department.admins?.length == 0">
-                          <h5 id="departmentErrMsg" class="infotext">No department admin has been assigned yet!</h5>
+                          <h5 id="departmentErrMsg" class="infotext">No employee has been assigned yet!</h5>
                         </td>
                     <tr *ngFor="let admin of department.admins">
                       <ng-container>
@@ -54,7 +54,7 @@
                   </tr>
                   <tr>
                     <td align="center" colSpan="7">
-                      <button [cModalToggle]="addAdmin.id" cButton size="lg" (click)="setID(department.departmentID)"><img width="20px" src="../../assets/user-svgrepo-com (1).svg" alt="arrow" loading="lazy">Add Admin</button>
+                      <button [cModalToggle]="addAdmin.id" cButton size="lg" (click)="setID(department.departmentID)"><img width="20px" src="../../assets/user-svgrepo-com (1).svg" alt="arrow" loading="lazy">Add Employee</button>
                     </td>
                   </tr>
                 </tbody>
@@ -93,7 +93,7 @@
 
 <c-modal #addAdmin id="addAdmin" alignment="center" scrollable>
   <c-modal-header>
-    <h5 cModalTitle>Add Admin to Department</h5>
+    <h5 cModalTitle>Add Employee to Department</h5>
     <button [cModalToggle]="addAdmin.id" cButtonClose></button>
   </c-modal-header>
   <form cForm [formGroup]="form2" (ngSubmit)="onSubmit2()">
