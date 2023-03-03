@@ -73,6 +73,7 @@ export class AccountService {
             }));
     }
 
+
     delete(id: string) {
         return this.http.delete(`${environment.apiUrl}/users/${id}`)
             .pipe(map(x => {
