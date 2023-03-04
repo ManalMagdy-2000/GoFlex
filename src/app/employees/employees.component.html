@@ -4,13 +4,18 @@
     <thead>
         <tr>
             <th style="width: 30%">Fullname</th>
-            <th style="width: 30%">Username</th>
+            <th style="width: 30%">Employee ID</th>
+            <th style="width: 30%"></th>
         </tr>
     </thead>
     <tbody>
         <tr *ngFor="let employee of users">
-            <td *ngIf="employee.role != 'SuperAdmin'">{{employee.fullname}}</td>
-            <td *ngIf="employee.role != 'SuperAdmin'">{{employee.username}}</td>
+            <td *ngIf="employee.role == 'Admin'">{{employee.fullname}}</td>
+            <td *ngIf="employee.role == 'Admin'">{{employee.username}}</td>
+            <td *ngIf="employee.role == 'Admin'">
+              <button  cButton size="lg"><img width="20px" src="../../assets/user-svgrepo-com (1).svg" alt="arrow" loading="lazy">Add Supervisor</button>
+            </td>
         </tr>
+
     </tbody>
 </table>
