@@ -10,7 +10,7 @@ export class AddEditComponent implements OnInit {
     form: UntypedFormGroup;
     id: string;
     isAddMode: boolean;
-    isAdmin: boolean;
+    isEmployee: boolean;
     loading = false;
     submitted = false;
 
@@ -25,7 +25,7 @@ export class AddEditComponent implements OnInit {
     ngOnInit() {
         this.id = this.route.snapshot.params['id'];
         this.isAddMode = !this.id;
-        this.isAdmin = this.accountService.userValue.role === 'Admin';
+        this.isEmployee = this.accountService.userValue.role === 'Employee';
 
         // password not required in edit mode
         const passwordValidators = [Validators.pattern('(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}')];
@@ -38,7 +38,7 @@ export class AddEditComponent implements OnInit {
             emailVal.push(Validators.required);
         }
 
-        if(this.isAdmin) {
+        if(this.isEmployee) {
             this.form = this.formBuilder.group({
                 fullname: ['', Validators.required],
                 email: ['', emailVal],

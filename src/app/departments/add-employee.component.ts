@@ -6,8 +6,8 @@ import { first } from 'rxjs/operators';
 import { DepartmentService, AlertService, AccountService } from '@app/_services';
 import { Role, Department } from '@app/_models';
 
-@Component({ templateUrl: 'add-admin.component.html' })
-export class AddAdminComponent implements OnInit {
+@Component({ templateUrl: 'add-Employee.component.html' })
+export class  AddEmployeeComponent implements OnInit {
     form: UntypedFormGroup;
     departmentID: string;
     isAddMode: boolean;
@@ -46,7 +46,7 @@ export class AddAdminComponent implements OnInit {
             lastName: ['', Validators.required],
             username: ['', Validators.required],
             password: ['', passwordValidators],
-            role: [Role.Admin],
+            role: [Role.Employee],
             department: [this.departmentID]
         });
 
@@ -80,8 +80,8 @@ export class AddAdminComponent implements OnInit {
 
     }
 
-    private addAdmin() {
-        this.departmentService.addAdmin(this.departmentID, this.form.value)
+    private addEmployee() {
+        this.departmentService.addEmployee(this.departmentID, this.form.value)
             .pipe(first())
             .subscribe({
                 next: () => {
@@ -103,7 +103,7 @@ export class AddAdminComponent implements OnInit {
             .subscribe({
                 next: () => {
                     this.alertService.success('User added successfully', { keepAfterRouteChange: true });
-                    this.addAdmin();
+                    this.addEmployee();
                     this.router.navigate(['../'], { relativeTo: this.route });
 
                 },
@@ -114,3 +114,4 @@ export class AddAdminComponent implements OnInit {
             });
     }
 }
+

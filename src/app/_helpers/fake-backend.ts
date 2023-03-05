@@ -7,7 +7,7 @@ import { Role } from '@app/_models';
 // array in local storage for registered users
 const usersKey = 'users';
 let users = JSON.parse(localStorage.getItem(usersKey)) || [];
-users.push({ id: 1, username: 'admin', password: 'admin', fullname: 'Admin', department: 0, role: Role.SuperAdmin });
+users.push({ id: 1, username: 'admin', password: 'admin', fullname: 'HR Admin', department: 0, role: Role.HRAdmin });
 
 //array in local storage for departments
 const departmentsKey = 'departments';
@@ -46,8 +46,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 case url.match(/\/departments\/request\/\d+$/) && method === 'POST':
                     return addRequest();
                 //add employee to department
-                case url.match(/\/departments\/admin\/\d+$/) && method === 'POST':
-                    return addAdmin();
+                case url.match(/\/departments\/Employee\/\d+$/) && method === 'POST':
+                    return addEmployee();
                 //add offer to request as departments/:departmentID/request/:requestID/offer
                 case url.match(/\/departments\/\d+\/request\/\d+\/offer$/) && method === 'POST':
                     return addOffer();
@@ -150,12 +150,12 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             return { id, username, fullname, email, role, department,  position };
         }
 
-        function isAdmin() {
-            return isLoggedIn() && currentUser().role === Role.Admin;
+        function isEmployee() {
+            return isLoggedIn() && currentUser().role === Role.Employee;
         }
 
-        function isSuperAdmin() {
-            return isLoggedIn() && currentUser().role === Role.SuperAdmin;
+        function isHRAdmin() {
+            return isLoggedIn() && currentUser().role === Role.HRAdmin;
         }
 
         function currentUser() {
@@ -180,8 +180,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         function departmentDetails(department) {
-            const { departmentID, name, address, city, admins, requests } = department;
-            return { departmentID, name, address, city, admins, requests };
+            const { departmentID, name, address, city, employees, requests } = department;
+            return { departmentID, name, address, city, employees, requests };
         }
 
         function addDepartment() {
@@ -229,17 +229,19 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             return ok(request);
         }
 
-        function addAdmin() {
+        function addEmployee() {
             if (!isLoggedIn()) return unauthorized();
 
             let params = body;
             let department = departments.find(x => x.departmentID === idFromUrl());
 
-            department.admins.push(params.admin);
+            department.employees.push(params.Employee);
             localStorage.setItem(departmentsKey, JSON.stringify(departments));
 
             return ok();
         }
+
+
 
         function addOffer() {
             if (!isLoggedIn()) return unauthorized();

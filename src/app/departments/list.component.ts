@@ -15,6 +15,7 @@ export class ListComponent implements OnInit {
     departmentID: string;
     requestID: string;
     isAddMode: boolean;
+    isSupervisor = false;
     department: Department;
     requests: Request[];
     loading = false;
@@ -56,7 +57,8 @@ export class ListComponent implements OnInit {
         this.form = this.formBuilder.group({
             name: ['', Validators.required],
             requests: [[]],
-            admins: [[]]
+            employees: [[]],
+            supervisors: [[]]
         });
 
         console.log(this.departmentID)
@@ -66,8 +68,12 @@ export class ListComponent implements OnInit {
             username: ['', Validators.required],
             password: ['', passwordValidators],
             position: ['', Validators.required],
-            role: [Role.Admin],
-            department: [this.departmentID]
+            role: [Role.Employee],
+            department: [this.departmentID],
+            role2:['' , this.isSupervisor], //supervisor
+            supervisorID : ['' , this.isSupervisor ? Validators.required : ''] ,
+            supervisorName : ['' , this.isSupervisor ? Validators.required : ''] ,
+            status :"NEW",
         });
 
 
@@ -105,7 +111,9 @@ export class ListComponent implements OnInit {
 
     }
 
-
+    reset(){
+      this.isSupervisor = false;
+    }
 
     onSubmit2() {
         this.submitted = true;
@@ -149,8 +157,8 @@ export class ListComponent implements OnInit {
             });
     }
 
-    private addAdmin() {
-        this.departmentService.addAdmin(this.departmentID, this.form2.value)
+    private addEmployee() {
+        this.departmentService.addEmployee(this.departmentID, this.form2.value)
             .pipe(first())
             .subscribe({
                 next: () => {
@@ -163,14 +171,23 @@ export class ListComponent implements OnInit {
                 }
             });
     }
+    addSuperEmp() {
+      //toggle isResource
+      if(this.isSupervisor) {
+          this.isSupervisor = false;
+      }
+      else {
+          this.isSupervisor = true;
+      }
+    }
 
     private createUser() {
         this.accountService.register(this.form2.value)
             .pipe(first())
             .subscribe({
                 next: () => {
-                    this.alertService.success('Admin added successfully', { keepAfterRouteChange: true });
-                    this.addAdmin();
+                    this.alertService.success('Employee added successfully', { keepAfterRouteChange: true });
+                    this.addEmployee();
                     this.router.navigate(['../'], { relativeTo: this.route });
                 },
                 error: error => {

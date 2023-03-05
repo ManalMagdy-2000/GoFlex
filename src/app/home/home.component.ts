@@ -7,13 +7,13 @@ import { AccountService, DepartmentService } from '@app/_services';
 export class HomeComponent {
     user: User;
     department: Department;
-    isAdmin: boolean;
+    isEmployee: boolean;
 
     constructor(private accountService: AccountService, private departmentService: DepartmentService) {
         this.user = this.accountService.userValue;
         console.log(this.user)
-        this.isAdmin = this.user && this.user.role === Role.Admin;
-        if(this.isAdmin) {
+        this.isEmployee = this.user && this.user.role === Role.Employee;
+        if(this.isEmployee) {
           this.departmentService.getDepartmentById(this.user.department).subscribe(department => {
             this.department = department;
             console.log( this.department.name )

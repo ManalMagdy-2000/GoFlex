@@ -4,7 +4,7 @@ import { EmployeesComponent } from './employees.component';
 import { AuthGuard } from '@app/_helpers';
 import { Role } from '@app/_models';
 const routes: Routes = [
-  { path: 'employees', component: EmployeesComponent, canActivate: [AuthGuard], data: { roles: [Role.SuperAdmin] } },
+  { path: 'employees', component: EmployeesComponent, canActivate: [AuthGuard], data: { roles: [Role.HRAdmin] } },
 ];
 
 @NgModule({

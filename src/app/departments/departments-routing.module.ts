@@ -6,9 +6,10 @@ import { LayoutComponent } from './layout.component';
 import { ListComponent } from './list.component';
 import { AddEditComponent } from './add-edit.component';
 import { AddRequestComponent } from './add-request.component';
-import { AddAdminComponent } from './add-admin.component';
+import {  AddEmployeeComponent } from './add-Employee.component';
 import { AddOfferComponent } from './add-offer.component';
 import { EmployeesComponent } from '../employees/employees.component';
+import { SupervisorsComponent } from '../supervisors/supervisors.component';
 
 const routes: Routes = [
     {
@@ -17,9 +18,11 @@ const routes: Routes = [
             { path: '', component: ListComponent },
             { path: 'add', component: AddEditComponent },
             { path: 'request/:id', component: AddRequestComponent },
-            { path: 'admin/:id', component: AddAdminComponent },
+            { path: 'Employee/:id', component:  AddEmployeeComponent },
             { path: ':departmentID/request/:requestID', component: AddOfferComponent },
-            { path: 'employees', component: EmployeesComponent, canActivate: [AuthGuard], data: { roles: [Role.SuperAdmin] } },
+            { path: 'employees', component: EmployeesComponent, canActivate: [AuthGuard], data: { roles: [Role.HRAdmin] } },
+            { path: 'supervisors', component: SupervisorsComponent, canActivate: [AuthGuard], data: { roles: [Role.HRAdmin] } },
+
         ]
     }
 ];

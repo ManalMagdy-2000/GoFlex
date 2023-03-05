@@ -12,8 +12,8 @@
           <h5 style="margin: 0 1rem;"><c-badge color="dark">ID: {{ department.departmentID }}</c-badge></h5>
           <h5 style="margin: 0 1rem"><c-badge color="dark">Name: {{ department.name }}</c-badge></h5>
           <h5 style="margin: 0 1rem">
-            <c-badge *ngIf="department.admins?.length == 0" color="light" shape="rounded-pill">{{ department.admins?.length }}</c-badge>
-            <c-badge *ngIf="department.admins?.length > 0" color="success" shape="rounded-pill">{{ department.admins?.length }}</c-badge>
+            <c-badge *ngIf="department.employees?.length == 0" color="light" shape="rounded-pill">{{ department.employees?.length }}</c-badge>
+            <c-badge *ngIf="department.employees?.length > 0" color="success" shape="rounded-pill">{{ department.employees?.length }}</c-badge>
           </h5>
         </div>
         </button>
@@ -28,7 +28,7 @@
           cTable
           class="mb-0"
         >
-                    <thead *ngIf="department.admins?.length != 0">
+                    <thead *ngIf="department.employees?.length != 0">
                       <tr>
                         <th scope="col" style="width: 16%">Username</th>
                         <th scope="col" style="width: 16%">Fullname</th>
@@ -39,22 +39,22 @@
                       </tr>
                       </thead>
                       <tbody>
-                        <td colSpan="7" *ngIf="department.admins?.length == 0">
+                        <td colSpan="7" *ngIf="department.employees?.length == 0">
                           <h5 id="departmentErrMsg" class="infotext">No employee has been assigned yet!</h5>
                         </td>
-                    <tr *ngFor="let admin of department.admins">
+                    <tr *ngFor="let Employee of department.employees">
                       <ng-container>
-                        <td>{{admin.username}}</td>
-                        <td>{{admin.fullname}}</td>
-                        <td>{{admin.email}}</td>
-                        <td>{{admin.position}}</td>
-                        <td>{{admin.password}}</td>
-                        <!-- <td><button [cModalToggle]="addAdmin.id" class="btn btn-sm btn-primary mr-1" cButton (click)="setID(department.departmentID, request.requestID)">Offer</button></td> -->
+                        <td>{{Employee.username}}</td>
+                        <td>{{Employee.fullname}}</td>
+                        <td>{{Employee.email}}</td>
+                        <td>{{Employee.position}}</td>
+                        <td>{{Employee.password}}</td>
+                        <!-- <td><button [cModalToggle]="addEmployee.id" class="btn btn-sm btn-primary mr-1" cButton (click)="setID(department.departmentID, request.requestID)">Offer</button></td> -->
                   </ng-container>
                   </tr>
                   <tr>
                     <td align="center" colSpan="7">
-                      <button [cModalToggle]="addAdmin.id" cButton size="lg" (click)="setID(department.departmentID)"><img width="20px" src="../../assets/user-svgrepo-com (1).svg" alt="arrow" loading="lazy">Add Employee</button>
+                      <button [cModalToggle]="addEmployee.id" cButton size="lg" (click)="setID(department.departmentID)"><img width="20px" src="../../assets/user-svgrepo-com (1).svg" alt="arrow" loading="lazy">Add Employee</button>
                     </td>
                   </tr>
                 </tbody>
@@ -83,7 +83,7 @@
     </ng-container>
   </c-modal-body>
   <c-modal-footer>
-    <button [cModalToggle]="scrollableLongContentModal.id" cButton color="secondary" id="closeBtn">
+    <button [cModalToggle]="addEmployee.id" cButton color="secondary" id="closeBtn">
       Close
     </button>
     <button cButton color="primary" type="submit" id="saveBtn">Save changes</button>
@@ -91,23 +91,24 @@
 </form>
 </c-modal>
 
-<c-modal #addAdmin id="addAdmin" alignment="center" scrollable>
+<c-modal #addEmployee id="addEmployee" alignment="center" scrollable>
   <c-modal-header>
-    <h5 cModalTitle>Add Employee to Department</h5>
-    <button [cModalToggle]="addAdmin.id" cButtonClose></button>
+    <h5 cModalTitle *ngIf="!isSupervisor">Add Employee </h5>
+    <h5 cModalTitle *ngIf="isSupervisor">Add Supervisor </h5>
+    <button [cModalToggle]="addEmployee.id" cButtonClose></button>
   </c-modal-header>
-  <form cForm [formGroup]="form2" (ngSubmit)="onSubmit2()">
+  <form cForm [formGroup]="form2" (ngSubmit)= "onSubmit2()" >
   <c-modal-body>
     <ng-container>
 
-      <div class="form-group">
+      <div class="form-group" *ngIf="!isSupervisor">
         <label for="fullname">Fullname</label>
         <input type="text" formControlName="fullname" class="form-control" [ngClass]="{ 'is-invalid': submitted && f2.fullname.errors }" />
         <div *ngIf="submitted && f2.fullname.errors" class="invalid-feedback">
             <div *ngIf="f2.fullname.errors.required">Fullname is required</div>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" *ngIf="!isSupervisor">
         <label for="email">Email</label>
         <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f2.email.errors }" />
         <div *ngIf="submitted && f2.email.errors" class="invalid-feedback">
@@ -115,14 +116,14 @@
             <div *ngIf="f2.email.errors.pattern">Email must contains @mail.com</div>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" *ngIf="!isSupervisor">
         <label for="username">Username</label>
         <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f2.username.errors }" />
         <div *ngIf="submitted && f2.username.errors" class="invalid-feedback">
             <div *ngIf="f2.username.errors.required">Username is required</div>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" *ngIf="!isSupervisor">
         <label for="password">Password</label>
         <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f2.password.errors }" />
         <div *ngIf="submitted && f2.password.errors" class="invalid-feedback">
@@ -131,20 +132,54 @@
         </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group" *ngIf="!isSupervisor">
       <label for="position">Position</label>
       <input type="text" formControlName="position" class="form-control" [ngClass]="{ 'is-invalid': submitted && f2.position.errors }" />
       <div *ngIf="submitted && f2.position.errors" class="invalid-feedback">
           <div *ngIf="f2.position.errors.required">Position is required</div>
       </div>
   </div>
+
+
+  <div class="form-group col" *ngIf="!isSupervisor">
+
+    <a style="color: blue;" (click)="addSuperEmp()">
+      + Add Supervisor
+    </a>
+  </div>
+
+  <div class="form-group" *ngIf="isSupervisor">
+    <label for="supervisorID">Employee ID</label>
+    <input type="text" formControlName="supervisorID" class="form-control" [ngClass]="{ 'is-invalid': submitted && f2.supervisorID.errors }" />
+    <div *ngIf="submitted && f2.supervisorID.errors" class="invalid-feedback">
+        <div *ngIf="f2.supervisorID.errors.required">Employee ID  is required</div>
+    </div>
+  </div>
+
+  <div class="form-group" *ngIf="isSupervisor">
+    <label for="supervisorName">Full Name</label>
+    <input type="text" formControlName="supervisorName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f2.supervisorName.errors }" />
+    <div *ngIf="submitted && f2.supervisorName.errors" class="invalid-feedback">
+      <div *ngIf="f2.supervisorName.errors.required">Full Name is required</div>
+   </div>
+  </div>
+
+
+  <div class="form-group col" *ngIf="isSupervisor">
+
+    <a style="color: blue;" (click)="addSuperEmp()">
+      + Add Employee
+    </a>
+  </div>
+
+
     </ng-container>
   </c-modal-body>
   <c-modal-footer>
-    <button [cModalToggle]="addAdmin.id" cButton color="secondary" id="closeBtn">
+    <button [cModalToggle]="addEmployee.id" cButton color="secondary" id="closeBtn " (click)="reset()">
       Close
     </button>
-    <button cButton color="primary" type="submit" id="saveBtn">Save changes</button>
+    <button cButton color="primary" type="submit" id="saveBtn" data-dismiss="addEmployee.id" >Save changes</button>
   </c-modal-footer>
 </form>
 </c-modal>
