@@ -32,7 +32,7 @@
             </div>
         </div>
     </div>
-    <div class="form-row" *ngIf="isAdmin">
+    <div class="form-row" *ngIf="isEmployee">
     <div class="form-group col">
         <label for="position">Position</label>
         <input type="text" formControlName="position" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.position.errors }" />

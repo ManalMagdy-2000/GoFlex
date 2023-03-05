@@ -36,10 +36,11 @@ export class DepartmentService {
         return this.http.get<Request>(`${environment.apiUrl}/departments/${departmentID}/request/${requestID}`);
     }
 
-    addAdmin(id: string, admin: User) {
-        return this.http.post(`${environment.apiUrl}/departments/admin/${id}`, { admin });
+    addEmployee(id: string, Employee: User) {
+        return this.http.post(`${environment.apiUrl}/departments/Employee/${id}`, { Employee });
     }
-    getAllAdmins(){
+
+    getAllEmployees(){
       return this.http.get<User[]>(`${environment.apiUrl}/employees`);
     }
 

@@ -18,7 +18,7 @@ export class AppComponent {
 
     constructor(private accountService: AccountService, public iconSet: IconSetService, private departmentService: DepartmentService) {
         this.accountService.user.subscribe(x => this.user = x)
-        if(this.user && this.user.role === Role.Admin) {
+        if(this.user && this.user.role === Role.Employee) {
           this.departmentService.getDepartmentById(this.user.department).subscribe(department => {
             this.department = department;
             console.log( this.department.name )
@@ -31,37 +31,22 @@ export class AppComponent {
         iconSet.icons = { cilListNumbered, cilPaperPlane, cilHome, cilBank, cilUser, ...brandSet };
     }
 
-    get isAdmin() {
-        return this.user && this.user.role === Role.Admin;
+    get isEmployee() {
+        return this.user && this.user.role === Role.Employee;
     }
 
-    get isSuperAdmin() {
-        return this.user && this.user.role === Role.SuperAdmin;
+    get isHRAdmin() {
+        return this.user && this.user.role === Role.HRAdmin;
     }
 
     ngOnInit() {
 
       this.navItems.push(
-      //   {
-      //   name: 'User',
-      //   title: true
-      // },
-      // {
-      //   name: this.user.fullname,
-      //   url: '#',
-      //   attributes: { disabled: true },
-      //   iconComponent: { name: 'cil-user' },
-      // },
-      // {
-      //   name: this.user.position,
-      //   url: '#',
-      //   attributes: { disabled: true },
-      //   iconComponent: { name: 'cil-bank' },
-      // },
       {
         name: 'Menu',
         title: true
       },
+
       // {
       //   name: 'Home',
       //   url: '/',
@@ -73,29 +58,21 @@ export class AppComponent {
         iconComponent: { name: 'cil-list-numbered' },
       },
     */
-      // {
-      //   name: 'Profile',
-      //   url: `/users/edit/${this.user?.id}`,
-      //   iconComponent: { name: 'cil-user' },
-      // },
+
       )
 
-      if (this.isSuperAdmin) {
+      if (this.isHRAdmin) {
         this.navItems.push(
           {
             name: 'Departments',
             url: '/departments',
             iconComponent: { name: 'cil-bank' },
-            // badge: {
-            //   color: 'success',
-            //   text: ""+this.departmentsCount,
-            //   size: 'lg',
-            // }
+           /* badge: {
+              color: 'success',
+              text: ""+this.departmentsCount,
+              size: 'lg',
+               }*/
           },
-        )
-      }
-      if (this.isSuperAdmin) {
-        this.navItems.push(
           {
             name: 'Employees',
             url: '/employees',
@@ -106,10 +83,20 @@ export class AppComponent {
             //   size: 'lg',
             // }
           },
+          {
+            name: 'Supervisors',
+            url: '/supervisors',
+            iconComponent: { name: 'cil-user' },
+            // badge: {
+            //   color: 'success',
+            //   text: ""+this.departmentsCount,
+            //   size: 'lg',
+            // }
+          },
         )
       }
 
-      if (this.isAdmin) {
+      if (this.isEmployee) {
         this.navItems.push(
           {
             name: 'Offers',
@@ -120,6 +107,21 @@ export class AppComponent {
             //   text: 'NEW',
             //   size: 'lg',
             // }
+          },
+          {
+            name: 'Requests',
+            url: '/offers',
+            iconComponent: { name: 'cil-paper-plane' },
+            // badge: {
+            //   color: 'success',
+            //   text: 'NEW',
+            //   size: 'lg',
+            // }
+          },
+          {
+            name: 'Profile',
+            url: `/users/edit/${this.user?.id}`,
+            iconComponent: { name: 'cil-user' },
           },
         )
       }

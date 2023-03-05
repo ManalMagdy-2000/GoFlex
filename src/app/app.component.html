@@ -3,8 +3,8 @@
     <div class="navbar-nav">
         <a class="nav-item nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
         <a class="nav-item nav-link" routerLink="/users" routerLinkActive="active">Users</a>
-        <a class="nav-item nav-link" routerLink="/admin" *ngIf="isAdmin">Admin</a>
-        <a class="nav-item nav-link" routerLink="/departments" >Admin</a>
+        <a class="nav-item nav-link" routerLink="/Employee" *ngIf="isEmployee">Employee</a>
+        <a class="nav-item nav-link" routerLink="/departments" >Employee</a>
         <a class="nav-item nav-link" (click)="logout()">Logout</a>
     </div>
 </nav> -->
@@ -29,8 +29,8 @@
 <div class="wrapper d-flex flex-column min-vh-100 bg-light dark:bg-transparent">
   <c-header>
     <c-container fluid *ngIf="user">
-      <c-header-brand *ngIf="user.role === 'Admin'" [routerLink]>{{user?.position}} at {{department?.name}}</c-header-brand>
-      <c-header-brand *ngIf="user.role === 'SuperAdmin'" [routerLink]>HR Admin</c-header-brand>
+      <c-header-brand *ngIf="user.role === 'Employee'" [routerLink]>{{user?.position}} at {{department?.name}}</c-header-brand>
+      <c-header-brand *ngIf="user.role === 'HRAdmin'" [routerLink]>HR Admin</c-header-brand>
       <c-header-nav class="ms-auto">
         <!-- <c-nav-item>
           <a cNavLink routerLink="/components/alert">{{user.fullname}}</a>

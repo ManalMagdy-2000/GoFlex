@@ -11,7 +11,7 @@ import { JwtInterceptor, ErrorInterceptor } from './_helpers';
 import { AppComponent } from './app.component';
 import { AlertComponent } from './_components';
 import { HomeComponent } from './home';
-import { AdminComponent } from './admin';
+import {UserComponent } from './user';
 import { RequestComponent } from './request/request.component';
 import { AccordionModule, AlertModule, AvatarModule, BadgeModule, ButtonModule, CardModule, DropdownModule, FormModule, GridModule, HeaderModule, ModalModule, NavModule, SharedModule, SidebarModule, TableModule, ToastModule, UtilitiesModule } from '@coreui/angular';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -19,6 +19,7 @@ import { IconModule } from '@coreui/icons-angular';
 import { OfferComponent } from './offers';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { EmployeesComponent } from './employees/employees.component';
+import { SupervisorsComponent } from './supervisors/supervisors.component';
 
 @NgModule({
     imports: [
@@ -50,10 +51,11 @@ import { EmployeesComponent } from './employees/employees.component';
         AppComponent,
         AlertComponent,
         HomeComponent,
-        AdminComponent,
+       UserComponent,
         RequestComponent,
         OfferComponent,
-        EmployeesComponent
+        EmployeesComponent,
+        SupervisorsComponent
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

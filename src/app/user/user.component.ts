@@ -4,8 +4,8 @@ import { first } from 'rxjs/operators';
 import { User } from '@app/_models';
 import { AccountService } from '@app/_services';
 
-@Component({ templateUrl: 'admin.component.html' })
-export class AdminComponent implements OnInit {
+@Component({ templateUrl: 'user.component.html' })
+export class UserComponent implements OnInit {
     loading = false;
     users: User[] = [];
 

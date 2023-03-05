@@ -7,7 +7,7 @@ import { LayoutComponent } from './layout.component';
 import { ListComponent } from './list.component';
 import { AddEditComponent } from './add-edit.component';
 import { AddRequestComponent } from './add-request.component';
-import { AddAdminComponent } from './add-admin.component';
+import {  AddEmployeeComponent } from './add-Employee.component';
 import { AddOfferComponent } from './add-offer.component';
 import { AccordionModule, BadgeModule, ButtonModule, FormModule, ModalModule, SharedModule, TableModule, UtilitiesModule } from '@coreui/angular';
 
@@ -30,7 +30,7 @@ import { AccordionModule, BadgeModule, ButtonModule, FormModule, ModalModule, Sh
         ListComponent,
         AddEditComponent,
         AddRequestComponent,
-        AddAdminComponent,
+         AddEmployeeComponent,
         AddOfferComponent
     ]
 })

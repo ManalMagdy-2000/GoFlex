@@ -4,6 +4,6 @@ import { Request } from "./request";
 export class Department {
     departmentID: string;
     name: string;
-    admins: User[];
+    employees: User[];
     requests: Request[];
 }
