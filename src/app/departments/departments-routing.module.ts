@@ -7,7 +7,7 @@ import { ListComponent } from './list.component';
 import { AddEditComponent } from './add-edit.component';
 import { AddRequestComponent } from './add-request.component';
 import {  AddEmployeeComponent } from './add-Employee.component';
-import { AddReviewComponent } from './add-offer.component';
+import { AddReviewComponent } from './add-review.component';
 import { EmployeesComponent } from '../employees/employees.component';
 import { SupervisorsComponent } from '../supervisors/supervisors.component';
 

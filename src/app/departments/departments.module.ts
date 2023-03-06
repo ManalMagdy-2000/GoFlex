@@ -8,7 +8,7 @@ import { ListComponent } from './list.component';
 import { AddEditComponent } from './add-edit.component';
 import { AddRequestComponent } from './add-request.component';
 import {  AddEmployeeComponent } from './add-Employee.component';
-import { AddReviewComponent } from './add-offer.component';
+import { AddReviewComponent } from './add-review.component';
 import { AccordionModule, BadgeModule, ButtonModule, FormModule, ModalModule, SharedModule, TableModule, UtilitiesModule } from '@coreui/angular';
 
 @NgModule({
