@@ -6,7 +6,7 @@ import {UserComponent } from './user';
 import { AuthGuard } from './_helpers';
 import { Role } from './_models';
 import { RequestComponent } from './request/request.component';
-import { OfferComponent } from './offers/offers.component';
+import { ReviewComponent } from './reviews/reviews.component';
 import { EmployeesComponent } from './employees/employees.component';
 import { SupervisorsComponent } from './supervisors/supervisors.component';
 
@@ -20,7 +20,7 @@ const routes: Routes = [
     { path: 'departments', loadChildren: departmentsModule, canActivate: [AuthGuard], data: { roles: [Role.HRAdmin] } },
     { path: 'account', loadChildren: accountModule },
     { path: 'requests', component: RequestComponent, canActivate: [AuthGuard], data: { roles: [Role.Employee] }  },
-    { path: 'offers', component: OfferComponent},
+    { path: 'reviews', component: ReviewComponent},
     { path: 'Employee', component:UserComponent, canActivate: [AuthGuard], data: { roles: [Role.Employee] } },
     { path: 'employees', component: EmployeesComponent, canActivate: [AuthGuard], data: { roles: [Role.HRAdmin] } },
     { path: 'supervisors', component: SupervisorsComponent, canActivate: [AuthGuard], data: { roles: [Role.HRAdmin] } },
@@ -28,7 +28,7 @@ const routes: Routes = [
 
 
     // otherwise redirect to home
-    { path: '**', redirectTo: '/offers' }
+    { path: '**', redirectTo: '/reviews' }
 ];
 
 @NgModule({

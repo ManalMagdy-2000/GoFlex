@@ -6,8 +6,8 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms
 import { Department, User } from '@app/_models';
 import { ActivatedRoute, Router } from '@angular/router';
 
-@Component({ templateUrl: 'offers.component.html' })
-export class OfferComponent implements OnInit {
+@Component({ templateUrl: 'reviews.component.html' })
+export class ReviewComponent implements OnInit {
     departments = null;
     form: UntypedFormGroup;
     departmentID: string;
@@ -80,7 +80,7 @@ export class OfferComponent implements OnInit {
 
         this.loading = true;
 
-            this.addOffer();
+            this.addReview();
         // } else {
         //     this.updateUser();
         // }
@@ -155,8 +155,8 @@ export class OfferComponent implements OnInit {
         }
     }
 
-    private addOffer() {
-        this.departmentService.addOffer(this.departmentID, this.requestID, this.form.value)
+    private addReview() {
+        this.departmentService.addReview(this.departmentID, this.requestID, this.form.value)
             .pipe(first())
             .subscribe({
                 next: () => {

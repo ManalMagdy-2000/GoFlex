@@ -7,7 +7,7 @@ import { ListComponent } from './list.component';
 import { AddEditComponent } from './add-edit.component';
 import { AddRequestComponent } from './add-request.component';
 import {  AddEmployeeComponent } from './add-Employee.component';
-import { AddOfferComponent } from './add-offer.component';
+import { AddReviewComponent } from './add-offer.component';
 import { EmployeesComponent } from '../employees/employees.component';
 import { SupervisorsComponent } from '../supervisors/supervisors.component';
 
@@ -19,7 +19,7 @@ const routes: Routes = [
             { path: 'add', component: AddEditComponent },
             { path: 'request/:id', component: AddRequestComponent },
             { path: 'Employee/:id', component:  AddEmployeeComponent },
-            { path: ':departmentID/request/:requestID', component: AddOfferComponent },
+            { path: ':departmentID/request/:requestID', component: AddReviewComponent },
             { path: 'employees', component: EmployeesComponent, canActivate: [AuthGuard], data: { roles: [Role.HRAdmin] } },
             { path: 'supervisors', component: SupervisorsComponent, canActivate: [AuthGuard], data: { roles: [Role.HRAdmin] } },
 

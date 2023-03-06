@@ -5,7 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { environment } from '@environments/environment';
-import { Department, Request, User, Offer } from '@app/_models';
+import { Department, Request, User, Review } from '@app/_models';
 import { Role } from '../_models/role';
 
 @Injectable({ providedIn: 'root' })
@@ -44,12 +44,12 @@ export class DepartmentService {
       return this.http.get<User[]>(`${environment.apiUrl}/employees`);
     }
 
-    addOffer(departmentID: string, requestID: string, offer: Offer) {
-        return this.http.post(`${environment.apiUrl}/departments/${departmentID}/request/${requestID}/offer`, offer);
+    addReview(departmentID: string, requestID: string, review: Review) {
+        return this.http.post(`${environment.apiUrl}/departments/${departmentID}/request/${requestID}/review`, review);
     }
 
-    updateStatus(departmentID: string, requestID: string, offerID: string, status: string) {
-        console.log(departmentID, requestID, offerID, status);
-        return this.http.post(`${environment.apiUrl}/departments/${departmentID}/request/${requestID}/offer/${offerID}`, { status });
+    updateStatus(departmentID: string, requestID: string, reviewID: string, status: string) {
+        console.log(departmentID, requestID, reviewID, status);
+        return this.http.post(`${environment.apiUrl}/departments/${departmentID}/request/${requestID}/review/${reviewID}`, { status });
     }
 }

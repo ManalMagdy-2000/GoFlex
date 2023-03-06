@@ -1,4 +1,4 @@
-import { Offer } from "./offer";
+import { Review } from "./review";
 
 export class Request {
     requestID: string;
@@ -8,5 +8,5 @@ export class Request {
     studentLevel: string;
     numberOfStudents: number;
     status: string;
-    offers: Offer[];
+    reviews: Review[];
 }

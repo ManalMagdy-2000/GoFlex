@@ -35,6 +35,10 @@ export class AppComponent {
         return this.user && this.user.role === Role.Employee;
     }
 
+    get isSupervisor() {
+      return this.user && this.user.role === Role.User;
+  }
+
     get isHRAdmin() {
         return this.user && this.user.role === Role.HRAdmin;
     }
@@ -54,7 +58,7 @@ export class AppComponent {
       // },
      /* {
         name: 'Requests',
-        url: '/offers',
+        url: '/reviews',
         iconComponent: { name: 'cil-list-numbered' },
       },
     */
@@ -99,7 +103,12 @@ export class AppComponent {
       if (this.isEmployee) {
         this.navItems.push(
           {
-            name: 'Offers',
+            name: 'Profile',
+            url: `/users/edit/${this.user?.id}`,
+            iconComponent: { name: 'cil-user' },
+          },
+          {
+            name: 'Submit Request',
             url: '/requests',
             iconComponent: { name: 'cil-paper-plane' },
             // badge: {
@@ -108,21 +117,22 @@ export class AppComponent {
             //   size: 'lg',
             // }
           },
-          {
-            name: 'Requests',
-            url: '/offers',
-            iconComponent: { name: 'cil-paper-plane' },
+        )
+      }
+
+      if (!this.isSupervisor) {
+        this.navItems.push(
+          /*{
+            name: 'View Requests',
+            url: '/reviews',
+            iconComponent: { name: 'cil-list-numbered' },
             // badge: {
             //   color: 'success',
             //   text: 'NEW',
             //   size: 'lg',
             // }
-          },
-          {
-            name: 'Profile',
-            url: `/users/edit/${this.user?.id}`,
-            iconComponent: { name: 'cil-user' },
-          },
+          },*/
+
         )
       }
 

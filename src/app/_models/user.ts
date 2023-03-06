@@ -1,4 +1,4 @@
-﻿import { Offer } from "./offer";
+﻿import { Review } from "./review";
 import { Role } from "./role";
 import { Department } from "./department";
 
@@ -10,7 +10,7 @@ export class User {
     email: string;
     role: Role;
     department?: string;
-    offers?: Offer[];
+    reviews?: Review[];
     position?: string;
     token: string;
 }

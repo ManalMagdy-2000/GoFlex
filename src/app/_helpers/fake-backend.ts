@@ -48,14 +48,14 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 //add employee to department
                 case url.match(/\/departments\/Employee\/\d+$/) && method === 'POST':
                     return addEmployee();
-                //add offer to request as departments/:departmentID/request/:requestID/offer
-                case url.match(/\/departments\/\d+\/request\/\d+\/offer$/) && method === 'POST':
-                    return addOffer();
+                //add review to request as departments/:departmentID/request/:requestID/review
+                case url.match(/\/departments\/\d+\/request\/\d+\/review$/) && method === 'POST':
+                    return addReview();
                 //get request by id as departments/:departmentID/request/:requestID
                 case url.match(/\/departments\/\d+\/request\/\d+$/) && method === 'GET':
                     return getRequestById();
-                //update status /departments/${departmentID}/request/${requestID}/offer/${offerID}
-                case url.match(/\/departments\/\d+\/request\/\d+\/offer\/\d+$/) && method === 'POST':
+                //update status /departments/${departmentID}/request/${requestID}/review/${reviewID}
+                case url.match(/\/departments\/\d+\/request\/\d+\/review\/\d+$/) && method === 'POST':
                     return updateStatus();
                 default:
                     // pass through any requests not handled above
@@ -153,6 +153,9 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         function isEmployee() {
             return isLoggedIn() && currentUser().role === Role.Employee;
         }
+        function isSupervisor(){
+          return isLoggedIn() && currentUser().role === Role.User;
+        }
 
         function isHRAdmin() {
             return isLoggedIn() && currentUser().role === Role.HRAdmin;
@@ -243,7 +246,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
 
 
-        function addOffer() {
+        function addReview() {
             if (!isLoggedIn()) return unauthorized();
 
             let params = body;
@@ -256,14 +259,14 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             let rID = url.split('/')[6];
             let request = department.requests.find(x => x.requestID === parseInt(rID));
             console.log(rID)
-            console.log(request.offers.length)
-            params.offerID = request.offers.length + 1;
-            params.offerStatus = "PENDING";
-            params.offerDate = new Date().getDate() + "/" + (new Date().getMonth() + 1) + "/" + new Date().getFullYear();
-            request.offers.push(params);
+            console.log(request.reviews.length)
+            params.reviewID = request.reviews.length + 1;
+            params.reviewStatus = "PENDING";
+            params.reviewDate = new Date().getDate() + "/" + (new Date().getMonth() + 1) + "/" + new Date().getFullYear();
+            request.reviews.push(params);
 
             let user = users.find(x => x.id === params.volunteer.id);
-            user.offers.push(params);
+            user.reviews.push(params);
             localStorage.setItem(usersKey, JSON.stringify(users));
             localStorage.setItem(departmentsKey, JSON.stringify(departments));
 
@@ -289,8 +292,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             let oID = url.split('/')[8];
 
             if(oID != null){
-                let offer = request.offers.find(x => x.offerID === parseInt(oID));
-                offer.offerStatus = params.status;
+                let review = request.reviews.find(x => x.reviewID === parseInt(oID));
+                review.reviewStatus = params.status;
             }
 
             localStorage.setItem(departmentsKey, JSON.stringify(departments));

@@ -16,7 +16,7 @@ import { RequestComponent } from './request/request.component';
 import { AccordionModule, AlertModule, AvatarModule, BadgeModule, ButtonModule, CardModule, DropdownModule, FormModule, GridModule, HeaderModule, ModalModule, NavModule, SharedModule, SidebarModule, TableModule, ToastModule, UtilitiesModule } from '@coreui/angular';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IconModule } from '@coreui/icons-angular';
-import { OfferComponent } from './offers';
+import { ReviewComponent } from './reviews';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { EmployeesComponent } from './employees/employees.component';
 import { SupervisorsComponent } from './supervisors/supervisors.component';
@@ -53,7 +53,7 @@ import { SupervisorsComponent } from './supervisors/supervisors.component';
         HomeComponent,
        UserComponent,
         RequestComponent,
-        OfferComponent,
+        ReviewComponent,
         EmployeesComponent,
         SupervisorsComponent
     ],

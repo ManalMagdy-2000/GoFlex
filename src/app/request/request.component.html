@@ -1,6 +1,6 @@
 ﻿<div class="p-4">
   <div class="container">
-<h1 style="margin: 0 0 2rem 0;">Department Requests & Offers</h1>
+<h1 style="margin: 0 0 2rem 0;">FWA Requests</h1>
 
 <button *ngIf="requests.length >= 0" [cModalToggle]="scrollableLongContentModal.id" cButton size="lg" (click)="setID(department.departmentID, request.requestID)"><img width="18px" src="../../assets/swarm-request-svgrepo-com.svg" alt="arrow" loading="lazy">Create request</button>
 <c-accordion *ngFor="let request of requests" disabled>
@@ -19,8 +19,8 @@
           <h5 style="margin: 0 1rem"><c-badge color="dark"><img width="18px" src="../../assets/volume-level-indicator-svgrepo-com.svg" alt="arrow" loading="lazy">{{ request.studentLevel }}</c-badge></h5>
           <h5 style="margin: 0 1rem"><c-badge color="dark"><img width="18px" src="../../assets/graduate-boy-svgrepo-com.svg" alt="arrow" loading="lazy">{{ request.numberOfStudents }}</c-badge></h5>
           <h5 style="margin: 0 1rem">
-            <c-badge *ngIf="request.offers.length == 0" color="light" shape="rounded-pill">{{ request.offers.length }}</c-badge>
-            <c-badge *ngIf="request.offers.length > 0" color="success" shape="rounded-pill">{{ request.offers.length }}</c-badge>
+            <c-badge *ngIf="request.reviews.length == 0" color="light" shape="rounded-pill">{{ request.reviews.length }}</c-badge>
+            <c-badge *ngIf="request.reviews.length > 0" color="success" shape="rounded-pill">{{ request.reviews.length }}</c-badge>
           </h5>
           </div>
           <div class="stats-2" *ngIf="request.resourceType != ''">
@@ -35,8 +35,8 @@
           <h5 style="margin: 0 1rem"><c-badge color="dark"></c-badge></h5>
           <h5 style="margin: 0 1rem"><c-badge color="dark"></c-badge></h5>
           <h5 style="margin: 0 1rem">
-            <c-badge *ngIf="request.offers.length == 0" color="light" shape="rounded-pill">{{ request.offers.length }}</c-badge>
-            <c-badge *ngIf="request.offers.length > 0" color="success" shape="rounded-pill">{{ request.offers.length }}</c-badge>
+            <c-badge *ngIf="request.reviews.length == 0" color="light" shape="rounded-pill">{{ request.reviews.length }}</c-badge>
+            <c-badge *ngIf="request.reviews.length > 0" color="success" shape="rounded-pill">{{ request.reviews.length }}</c-badge>
           </h5>
           </div>
         </button>
@@ -53,30 +53,32 @@
         >
                     <thead>
                       <tr>
-                        <th scope="col" style="width: 20%">Status</th>
+                        <th scope="col" style="width: 20%">Description</th>
+                        <th scope="col" style="width: 20%">Reason</th>
+                        <th scope="col" style="width: 20%">Work Type</th>
                         <th scope="col" style="width: 20%">Date</th>
-                        <th scope="col" style="width: 20%">By</th>
-                        <th scope="col" style="width: 20%">Remarks</th>
+                        <th scope="col" style="width: 20%">status</th>
+
                         <th *ngIf="request.status != 'CLOSED'" scope="col" style="width: 20%">Action</th>
                       </tr>
                       </thead>
                       <tbody>
-                        <td colSpan="7" *ngIf="request.offers.length == 0">
+                        <td colSpan="7" *ngIf="request.reviews.length == 0">
                           <h5 style="margin: 0.5rem; text-align: center;" >There is no requests for this department!</h5>
                         </td>
-                    <tr *ngFor="let offer of request.offers">
+                    <tr *ngFor="let review of request.reviews">
                       <ng-container>
                         <td>
-                          <c-badge *ngIf="offer.offerStatus == 'PENDING' && request.status != 'CLOSED'" color="warning">{{offer.offerStatus}}</c-badge>
-                          <c-badge *ngIf="offer.offerStatus == 'PENDING' && request.status == 'CLOSED'" color="dark">NOT SELECTED</c-badge>
-                          <c-badge *ngIf="offer.offerStatus == 'ACCEPTED'" color="success">{{offer.offerStatus}}</c-badge>
-                          <c-badge *ngIf="offer.offerStatus == 'CLOSED'" color="danger">{{offer.offerStatus}}</c-badge>
+                          <c-badge *ngIf="review.reviewStatus == 'PENDING' && request.status != 'CLOSED'" color="warning">{{review.reviewStatus}}</c-badge>
+                          <c-badge *ngIf="review.reviewStatus == 'PENDING' && request.status == 'CLOSED'" color="dark">NOT SELECTED</c-badge>
+                          <c-badge *ngIf="review.reviewStatus == 'ACCEPTED'" color="success">{{review.reviewStatus}}</c-badge>
+                          <c-badge *ngIf="review.reviewStatus == 'CLOSED'" color="danger">{{review.reviewStatus}}</c-badge>
                         </td>
-                        <td>{{offer.offerDate}}</td>
-                        <td>{{offer.volunteer.username}}</td>
-                        <td>{{offer.remarks}}</td>
-                        <td *ngIf="request.status != 'CLOSED'"><button  style="color: white;" class="btn btn-sm btn-success mr-1" cButton (click)="setID(request.requestID, offer.offerID, 'ACCEPTED')"><img width="18px" src="../../assets/tick-svgrepo-com.svg" alt="arrow" loading="lazy">Accept</button>
-                          <!-- <button style="color: white;" class="btn btn-sm btn-danger mr-1" cButton (click)="setID(request.requestID, offer.offerID, 'ACCEPTED')">Close</button></td> -->
+                        <td>{{review.reviewDate}}</td>
+                        <td>{{review.volunteer.username}}</td>
+                        <td>{{review.remarks}}</td>
+                        <td *ngIf="request.status != 'CLOSED'"><button  style="color: white;" class="btn btn-sm btn-success mr-1" cButton (click)="setID(request.requestID, review.reviewID, 'ACCEPTED')"><img width="18px" src="../../assets/tick-svgrepo-com.svg" alt="arrow" loading="lazy">Accept</button>
+                          <!-- <button style="color: white;" class="btn btn-sm btn-danger mr-1" cButton (click)="setID(request.requestID, review.reviewID, 'ACCEPTED')">Close</button></td> -->
                   </ng-container>
                   </tr>
                 </tbody>
@@ -104,84 +106,21 @@
               <div *ngIf="f.description.errors.required">Description is required</div>
           </div>
       </div>
-      <div class="form-group col" *ngIf="!isResource">
-        <label for="date">Date</label>
-        <input type="date" formControlName="date" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.date.errors }" />
-        <div *ngIf="submitted && f.date.errors" class="invalid-feedback">
-            <div *ngIf="f.date.errors.required">Date is required</div>
+
+
+      <div class="form-group col">
+        <label for="description">Reason</label>
+        <input type="text" formControlName="reason" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.reason.errors }" />
+        <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+            <div *ngIf="f.reason.errors.required">reason is required</div>
         </div>
-      </div>
-      <div class="form-group col" *ngIf="!isResource">
-        <label for="time">Time</label>
-        <input [ngxTimepicker]="picker" type="text" formControlName="time" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.time.errors }" />
-        <div *ngIf="submitted && f.time.errors" class="invalid-feedback">
-            <div *ngIf="f.time.errors.required">Time is required</div>
-        </div>
-      </div>
-      <div class="form-group col" *ngIf="!isResource">
-        <label for="studentLevel">Student Level</label>
-        <input type="text" formControlName="studentLevel" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.studentLevel.errors }" />
-        <div *ngIf="submitted && f.studentLevel.errors" class="invalid-feedback">
-            <div *ngIf="f.studentLevel.errors.required">Student Level is required</div>
-        </div>
-      </div>
-      <div class="form-group col" *ngIf="!isResource">
-        <label for="numberOfStudents">Number of Students</label>
-        <input type="number" formControlName="numberOfStudents" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.numberOfStudents.errors }" />
-        <div *ngIf="submitted && f.numberOfStudents.errors" class="invalid-feedback">
-            <div *ngIf="f.numberOfStudents.errors.required">Number of Students is required</div>
-        </div>
-      </div>
-
-
-      <div class="form-group col" *ngIf="!isResource">
-
-        <a style="color: blue;" (click)="addResource()">
-          + Add Resource Request
-        </a>
-      </div>
-
-      <!-- <div class="form-group col" *ngIf="isResource">
-        <label for="resourceType">Resource Type</label>
-        <input type="text" formControlName="resourceType" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.resourceType.errors }" />
-        <div *ngIf="submitted && f.resourceType.errors" class="invalid-feedback">
-            <div *ngIf="f.resourceType.errors.required">Resource Type is required</div>
-        </div>
-      </div> -->
-
-      <div class="form-group col" *ngIf="isResource">
-        <label for="resourceType">Resource Type</label>
-        <select formControlName="resourceType" [ngClass]="{ 'is-invalid': submitted && f.resourceType.errors }" class="form-control" aria-label="Default select example" cSelect>
-          <option>Select resource type</option>
-          <option value="1">Mobile</option>
-          <option value="2">PC</option>
-          <option value="3">Networking</option>
-        </select>
-        <div *ngIf="submitted && f.resourceQuantity.errors" class="invalid-feedback">
-            <div *ngIf="f.resourceQuantity.errors.required">Resource Type is required</div>
-        </div>
-      </div>
-
-      <div class="form-group col" *ngIf="isResource">
-        <label for="resourceQuantity">Resource Quantity</label>
-        <input type="number" formControlName="resourceQuantity" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.resourceQuantity.errors }" />
-        <div *ngIf="submitted && f.resourceQuantity.errors" class="invalid-feedback">
-            <div *ngIf="f.resourceQuantity.errors.required">Resource Quantity is required</div>
-        </div>
-      </div>
-
-      <div class="form-group col" *ngIf="isResource">
-
-        <a style="color: blue;" (click)="addResource()">
-          + Add Tutor Request
-        </a>
-      </div>
+    </div>
 
     </ng-container>
   </c-modal-body>
 
   <c-modal-footer>
-    <button [cModalToggle]="scrollableLongContentModal.id" cButton color="secondary" (click)="reset()">
+    <button [cModalToggle]="scrollableLongContentModal.id" cButton color="secondary" >
       Close
     </button>
     <button cButton color="primary" data-dismiss="scrollableLongContentModal.id" type="submit">Save changes</button>
@@ -191,4 +130,3 @@
 
 </div>
 </div>
-<ngx-material-timepicker #picker></ngx-material-timepicker>

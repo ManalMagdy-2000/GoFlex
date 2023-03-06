@@ -36,10 +36,8 @@
                     <thead >
                       <tr>
                         <th scope="col" style="width: 10%">Request ID</th>
-                        <th scope="col" style="width: 15%">Date</th>
-                        <th scope="col" style="width: 15%">Time</th>
-                        <th scope="col" style="width: 20%">Student Level</th>
-                        <th scope="col" style="width: 25%">Number of students</th>
+                        <th scope="col" style="width: 20%">Description</th>
+                        <th scope="col" style="width: 25%">Reason</th>
                         <th scope="col" style="width: 15%">Status</th>
                         <th scope="col" style="width: 15%">Action</th>
                       </tr>
@@ -52,15 +50,14 @@
                     <tr *ngFor="let request of department.requests" >
                       <ng-container *ngIf="request.status !='CLOSED'">
                         <td>{{request.requestID}}</td>
-                        <td>{{request.date}}</td>
-                        <td>{{request.time}}</td>
-                        <td>{{request.studentLevel}}</td>
-                        <td>{{request.numberOfStudents}}</td>
+                        <td>{{request.description}}</td>
+                        <td>{{request.reason}}</td>
+
                         <td>
                           <c-badge *ngIf="request.status == 'NEW'" color="success">{{request.status}}</c-badge>
                             <c-badge *ngIf="request.status == 'CLOSED'" color="danger">{{request.status}}</c-badge>
                         </td>
-                        <td><button [cModalToggle]="scrollableLongContentModal.id" class="btn btn-sm btn-primary mr-1" cButton (click)="setID(department.departmentID, request.requestID)"><img width="18px" src="../../assets/hand-svgrepo-com.svg" alt="arrow" loading="lazy">Offer</button></td>
+                        <td><button [cModalToggle]="scrollableLongContentModal.id" class="btn btn-sm btn-primary mr-1" cButton (click)="setID(department.departmentID, request.requestID)"><img width="18px" src="../../assets/hand-svgrepo-com.svg" alt="arrow" loading="lazy">Review</button></td>
                   </ng-container >
                   </tr>
 
@@ -106,10 +103,8 @@
                       <thead >
                         <tr>
                           <th scope="col" style="width: 10%">Request ID</th>
-                          <th scope="col" style="width: 15%">Date</th>
-                          <th scope="col" style="width: 15%">Time</th>
-                          <th scope="col" style="width: 20%">Student Level</th>
-                          <th scope="col" style="width: 10%">#</th>
+                          <th scope="col" style="width: 20%">Description</th>
+                          <th scope="col" style="width: 10%">reason</th>
                           <th scope="col" style="width: 15%">Status</th>
                         </tr>
                         </thead>
@@ -121,10 +116,8 @@
                       <tr *ngFor="let request of department.requests" >
                         <ng-container >
                           <td>{{request.requestID}}</td>
-                          <td>{{request.date}}</td>
-                          <td>{{request.time}}</td>
-                          <td>{{request.studentLevel}}</td>
-                          <td>{{request.numberOfStudents}}</td>
+                          <td>{{request.description}}</td>
+                          <td>{{request.reason}}</td>
                           <td>
                             <c-badge *ngIf="request.status == 'NEW'" color="success">{{request.status}}</c-badge>
                             <c-badge *ngIf="request.status == 'CLOSED'" color="danger">{{request.status}}</c-badge>

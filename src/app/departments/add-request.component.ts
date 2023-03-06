@@ -36,7 +36,7 @@ export class AddRequestComponent implements OnInit {
             description: ['', Validators.required],
             date: ['', Validators.required],
             time: ['', Validators.required],
-            offers: [[]]
+            reviews: [[]]
         });
 
         if (!this.isAddMode) {

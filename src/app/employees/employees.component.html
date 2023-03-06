@@ -12,8 +12,10 @@
         <tr *ngFor="let employee of users">
             <td *ngIf="employee.role == 'Employee'">{{employee.fullname}}</td>
             <td *ngIf="employee.role == 'Employee'">{{employee.username}}</td>
+            <td *ngIf="employee.position == 'supervisor' || employee.position == 'Supervisor' "> {{employee.position}}</td>
             <td *ngIf="employee.role == 'Employee'">
-              <button  cButton size="lg"><img width="20px" src="../../assets/user-svgrepo-com (1).svg" alt="arrow" loading="lazy">Add Supervisor</button>
+              <button  *ngIf="employee.position != 'supervisor' && employee.position != 'Supervisor' "
+                cButton size="lg"><img width="20px" src="../../assets/user-svgrepo-com (1).svg" alt="arrow" loading="lazy">Add Supervisor</button>
             </td>
         </tr>
 

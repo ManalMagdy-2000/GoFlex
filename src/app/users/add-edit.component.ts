@@ -11,6 +11,7 @@ export class AddEditComponent implements OnInit {
     id: string;
     isAddMode: boolean;
     isEmployee: boolean;
+    isSupervisor:boolean;
     loading = false;
     submitted = false;
 
@@ -26,6 +27,8 @@ export class AddEditComponent implements OnInit {
         this.id = this.route.snapshot.params['id'];
         this.isAddMode = !this.id;
         this.isEmployee = this.accountService.userValue.role === 'Employee';
+        this.isSupervisor = this.accountService.userValue.role === 'User';
+
 
         // password not required in edit mode
         const passwordValidators = [Validators.pattern('(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}')];

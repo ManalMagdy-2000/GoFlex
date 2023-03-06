@@ -12,15 +12,15 @@ export class RequestComponent implements OnInit {
     form: FormGroup;
     departmentID: string;
     requestID: string;
-    offerID: string;
+    reviewID: string;
     isAddMode: boolean;
     department: Department;
     requests: Request[];
     loading = false;
-    isResource = false;
+    isSupervisor = false;
     submitted = false;
     success = false;
-    isTutor = true;
+
 
     constructor(
         private formBuilder: FormBuilder,
@@ -52,14 +52,9 @@ export class RequestComponent implements OnInit {
 
         this.form = this.formBuilder.group({
             description: ['', Validators.required],
-            date: ['', this.isTutor ? Validators.required : ''],
-            time: ['', this.isTutor ? Validators.required : ''],
-            studentLevel: ['', this.isTutor ? Validators.required : ''],
-            numberOfStudents: ['', this.isTutor ? Validators.required : ''],
+            reason: ['', Validators.required],
             status: "NEW",
-            resourceType: ['', this.isResource ? Validators.required : ''],
-            resourceQuantity: ['', this.isResource ? Validators.required : ''],
-            offers: [[]]
+            reviews: [[]]
         });
 
 
@@ -74,33 +69,15 @@ export class RequestComponent implements OnInit {
     // convenience getter for easy access to form fields
     get f() { return this.form.controls; }
 
-    addResource() {
-        //toggle isResource
-        if(this.isResource) {
-            this.isResource = false;
-            this.isTutor = true;
-        }
-        else {
-            this.isResource = true;
-            this.isTutor = false;
-        }
-
+    addFlexRequest() {
         this.form = this.formBuilder.group({
             description: ['', Validators.required],
-            date: ['', this.isTutor ? Validators.required : ''],
-            time: ['', this.isTutor ? Validators.required : ''],
-            studentLevel: ['', this.isTutor ? Validators.required : ''],
-            numberOfStudents: ['', this.isTutor ? Validators.required : ''],
+            reason: ['', Validators.required],
             status: "NEW",
-            resourceType: ['', this.isResource ? Validators.required : ''],
-            resourceQuantity: ['', this.isResource ? Validators.required : ''],
-            offers: [[]]
+            reviews: [[]]
         });
     }
 
-    reset() {
-        this.isResource = false;
-    }
 
     onSubmit() {
 
@@ -126,14 +103,14 @@ export class RequestComponent implements OnInit {
     }
 
 
-    setID(requestID, offerID, status) {
-        this.offerID = offerID;
+    setID(requestID, reviewID, status) {
+        this.reviewID = reviewID;
         this.requestID = requestID;
         this.updateStatus(status);
     }
 
-    private addOffer() {
-        this.departmentService.addOffer(this.departmentID, this.requestID, this.form.value)
+    private addReview() {
+        this.departmentService.addReview(this.departmentID, this.requestID, this.form.value)
             .pipe(first())
             .subscribe({
                 next: () => {
@@ -148,7 +125,7 @@ export class RequestComponent implements OnInit {
     }
 
     private updateStatus(status: string) {
-        this.departmentService.updateStatus(this.departmentID, this.requestID, this.offerID, status)
+        this.departmentService.updateStatus(this.departmentID, this.requestID, this.reviewID, status)
             .pipe(first())
             .subscribe({
                 next: () => {

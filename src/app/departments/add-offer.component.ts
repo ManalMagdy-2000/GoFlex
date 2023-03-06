@@ -6,8 +6,8 @@ import { first } from 'rxjs/operators';
 import { DepartmentService, AlertService, AccountService } from '@app/_services';
 import { Role, Department } from '@app/_models';
 
-@Component({ templateUrl: 'add-offer.component.html' })
-export class AddOfferComponent implements OnInit {
+@Component({ templateUrl: 'add-review.component.html' })
+export class AddReviewComponent implements OnInit {
     form: UntypedFormGroup;
     departmentID: string;
     requestID: string;
@@ -37,8 +37,8 @@ export class AddOfferComponent implements OnInit {
         }
 
         this.form = this.formBuilder.group({
-            offerStatus: ['', Validators.required],
-            offerDate: ['', Validators.required],
+            reviewStatus: ['', Validators.required],
+            reviewDate: ['', Validators.required],
             remarks: ['', Validators.required],
             volunteer: this.accountService.userValue,
             request: [this.requestID]
@@ -67,15 +67,15 @@ export class AddOfferComponent implements OnInit {
 
         this.loading = true;
 
-            this.addOffer();
+            this.addReview();
         // } else {
         //     this.updateUser();
         // }
 
     }
 
-    private addOffer() {
-        this.departmentService.addOffer(this.departmentID, this.requestID, this.form.value)
+    private addReview() {
+        this.departmentService.addReview(this.departmentID, this.requestID, this.form.value)
             .pipe(first())
             .subscribe({
                 next: () => {
