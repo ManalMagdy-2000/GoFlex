@@ -35,9 +35,9 @@ export class AppComponent {
         return this.user && this.user.role === Role.Employee;
     }
 
-    get isSupervisor() {
-      return this.user && this.user.role === Role.User;
-  }
+    get isSupervisor(){
+      return this.user && this.user.position == "supervisor" || this.user.position == "Supervisor";
+   }
 
     get isHRAdmin() {
         return this.user && this.user.role === Role.HRAdmin;
@@ -100,7 +100,7 @@ export class AppComponent {
         )
       }
 
-      if (this.isEmployee) {
+      if (this.isEmployee && !this.isSupervisor) {
         this.navItems.push(
           {
             name: 'Profile',
@@ -120,18 +120,23 @@ export class AppComponent {
         )
       }
 
-      if (!this.isSupervisor) {
+      if (this.isSupervisor) {
         this.navItems.push(
-          /*{
+          {
+            name: 'Profile',
+            url: `/users/edit/${this.user?.id}`,
+            iconComponent: { name: 'cil-user' },
+          },
+          {
             name: 'View Requests',
-            url: '/reviews',
+            url: '/offers',
             iconComponent: { name: 'cil-list-numbered' },
             // badge: {
             //   color: 'success',
             //   text: 'NEW',
             //   size: 'lg',
             // }
-          },*/
+          },
 
         )
       }

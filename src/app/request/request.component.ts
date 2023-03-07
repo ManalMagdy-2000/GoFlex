@@ -13,6 +13,7 @@ export class RequestComponent implements OnInit {
     departmentID: string;
     requestID: string;
     reviewID: string;
+    requestDate:string;
     isAddMode: boolean;
     department: Department;
     requests: Request[];
@@ -108,6 +109,8 @@ export class RequestComponent implements OnInit {
         this.requestID = requestID;
         this.updateStatus(status);
     }
+
+
 
     private addReview() {
         this.departmentService.addReview(this.departmentID, this.requestID, this.form.value)
