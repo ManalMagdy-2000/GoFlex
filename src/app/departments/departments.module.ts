@@ -10,7 +10,8 @@ import { AddRequestComponent } from './add-request.component';
 import {  AddEmployeeComponent } from './add-Employee.component';
 import { AddReviewComponent } from './add-review.component';
 import { AccordionModule, BadgeModule, ButtonModule, FormModule, ModalModule, SharedModule, TableModule, UtilitiesModule } from '@coreui/angular';
-
+import { AddSupervisorComponent } from './add-supervisor.component';
+import { ListsupervisorComponent } from './listsupervisor.component';
 @NgModule({
     imports: [
         CommonModule,
@@ -31,7 +32,9 @@ import { AccordionModule, BadgeModule, ButtonModule, FormModule, ModalModule, Sh
         AddEditComponent,
         AddRequestComponent,
          AddEmployeeComponent,
-        AddReviewComponent
+        AddReviewComponent,
+        AddSupervisorComponent,
+        ListsupervisorComponent
     ]
 })
 export class DepartmentsModule { }
