@@ -129,7 +129,7 @@ export class AppComponent {
           },
           {
             name: 'View Requests',
-            url: '/offers',
+            url: '/reviews',
             iconComponent: { name: 'cil-list-numbered' },
             // badge: {
             //   color: 'success',

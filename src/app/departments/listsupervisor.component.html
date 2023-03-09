@@ -1,8 +1,8 @@
 
 <div class="title-button">
-  <h1>Employees </h1>
+  <h1>Supervisors </h1>
 </div>
-<h3 *ngIf="employees?.length == 0" class="space">There is no departments and employees in the system</h3>
+<h3 *ngIf="employees?.length == 1" class="space">No  employees assigned to any department yet!</h3>
 <c-accordion *ngFor="let employee of employees"   >
     <c-accordion-item style="margin: 1rem 0;" #item0="cAccordionItem" [visible]="false" *ngIf="employee.role != 'HRAdmin'">
       <ng-template cTemplateId="accordionHeaderTemplate">

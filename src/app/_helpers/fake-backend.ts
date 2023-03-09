@@ -183,16 +183,12 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         function departmentDetails(department) {
-            const { departmentID, name, address, city, employees, requests } = department;
-            return { departmentID, name, address, city, employees, requests };
+            const { departmentID, name, employees, requests , supervisors } = department;
+            return { departmentID, name, employees, requests  , supervisors};
         }
 
         function addDepartment() {
             const department = body
-
-            if (departments.find(x => x.name === department.name) && departments.find(x => x.city === department.city)) {
-                return error('Department "' + department.name + '" already exists in this city!')
-            }
 
             department.departmentID = departments.length ? Math.max(...departments.map(x => x.departmentID)) + 1 : 1;
             departments.push(department);
@@ -265,7 +261,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             params.reviewDate = new Date().getDate() + "/" + (new Date().getMonth() + 1) + "/" + new Date().getFullYear();
             request.reviews.push(params);
 
-            let user = users.find(x => x.id === params.volunteer.id);
+            let user = users.find(x => x.id === params.User.id);
             user.reviews.push(params);
             localStorage.setItem(usersKey, JSON.stringify(users));
             localStorage.setItem(departmentsKey, JSON.stringify(departments));

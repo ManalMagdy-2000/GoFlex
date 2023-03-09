@@ -40,7 +40,6 @@ export class AddReviewComponent implements OnInit {
             reviewStatus: ['', Validators.required],
             reviewDate: ['', Validators.required],
             remarks: ['', Validators.required],
-            volunteer: this.accountService.userValue,
             request: [this.requestID]
         });
 

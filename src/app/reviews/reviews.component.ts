@@ -51,7 +51,7 @@ export class ReviewComponent implements OnInit {
 
         this.form = this.formBuilder.group({
             remarks: ['', Validators.required],
-            volunteer: this.accountService.userValue,
+            user: this.accountService.userValue, //supervisor
             request: [this.requestID]
         });
 
