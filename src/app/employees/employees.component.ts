@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
 import { AccountService } from '@app/_services';
-import { DepartmentService } from '@app/_services';
 import { Role } from '../_models/role';
 import { User } from '@app/_models';
 
@@ -12,7 +11,6 @@ import { User } from '@app/_models';
 })
 export class EmployeesComponent implements OnInit {
     users = null;
-    department: DepartmentService;
 
     constructor(private accountService: AccountService) {}
 

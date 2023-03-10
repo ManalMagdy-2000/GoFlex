@@ -99,9 +99,6 @@ export class ListComponent implements OnInit {
         if (this.form.invalid) {
             return;
         }
-
-
-
         this.loading = true;
 
             this.createDepartment();

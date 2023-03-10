@@ -19,7 +19,7 @@ import { IconModule } from '@coreui/icons-angular';
 import { ReviewComponent } from './reviews';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { EmployeesComponent } from './employees/employees.component';
-
+import { SupervisorsComponent } from './supervisors/supervisors.component';
 @NgModule({
     imports: [
         BrowserModule,
@@ -54,6 +54,7 @@ import { EmployeesComponent } from './employees/employees.component';
         RequestComponent,
         ReviewComponent,
         EmployeesComponent,
+        SupervisorsComponent,
 
     ],
     providers: [
