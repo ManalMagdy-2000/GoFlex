@@ -338,9 +338,14 @@ a { cursor: pointer }
     font-weight: 800 !important;
   }
 
-  input.form-control {
+  input.form-control, select.form-control {
     border: 2px solid #E7EDF5;
     height: 50px;
+    background-color: white;
+  }
+
+  textarea.form-control {
+    border: 2px solid #E7EDF5;
     background-color: white;
   }
 
