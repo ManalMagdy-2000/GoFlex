@@ -4,20 +4,15 @@
 <table class="table table-striped">
     <thead>
         <tr *ngIf="users.length >1 ">
-            <th style="width: 20%">Fullname</th>
             <th style="width: 20%">Employee ID</th>
-            <th style="width: 30%">Position</th>
+            <th style="width: 20%">Fullname</th>
+            <th style="width: 30%">Supervised By</th>
         </tr>
     </thead>
     <tbody>
         <tr *ngFor="let employee of users">
+          <td *ngIf="employee.role == 'Employee'">{{employee.username}}</td>
             <td *ngIf="employee.role == 'Employee'">{{employee.fullname}}</td>
-            <td *ngIf="employee.role == 'Employee'">{{employee.username}}</td>
-            <td *ngIf="employee.role == 'Employee'"> {{employee.position}}</td>
-            <td *ngIf="employee.role == 'Employee'">
-              <button cButton size="lg"><img width="20px" src="../../assets/user-svgrepo-com (1).svg" alt="arrow" loading="lazy">Add Supervisor</button>
-            </td>
         </tr>
-
     </tbody>
 </table>

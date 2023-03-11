@@ -35,7 +35,9 @@
                         <th scope="col" style="width: 16%">Email</th>
                         <th scope="col" style="width: 16%">Position</th>
                         <th scope="col" style="width: 16%">Password</th>
-                        <th scope="col" style="width: 16%"></th>
+                        <th scope="col" style="width: 16%">FWA Status</th>
+                        <th scope="col" style="width: 16%">Supervisors </th>
+
 
                         <!-- <th scope="col" style="width: 15%">Action</th> -->
                       </tr>
@@ -51,6 +53,18 @@
                         <td>{{Employee.email}}</td>
                         <td>{{Employee.position}}</td>
                         <td>{{Employee.password}}</td>
+                        <td >
+                          <c-badge  color="success" shape="rounded-pill">{{Employee.status}}</c-badge>
+                        </td>
+                        <td>
+                          <select style="width:200px">
+                            <option *ngFor="let supervisor of supervisors" [value]="supervisor.username">
+                              <div *ngIf="supervisor.position =='Supervisor'">
+                                {{supervisor.username}}
+                              </div>
+                            </option>
+                          </select>
+                        </td>
                         <!-- <td><button [cModalToggle]="addEmployee.id" class="btn btn-sm btn-primary mr-1" cButton (click)="setID(department.departmentID, request.requestID)">Review</button></td> -->
                   </ng-container>
                   </tr>
@@ -143,36 +157,9 @@
   </div>
 
 
-  <div class="form-group col" *ngIf="!isSupervisor">
-
-    <a style="color: blue;" (click)="addSuperEmp()">
-      + Add Supervisor
-    </a>
-  </div>
-
-  <div class="form-group" *ngIf="isSupervisor">
-    <label for="supervisorID">Employee ID</label>
-    <input type="text" formControlName="supervisorID" class="form-control" [ngClass]="{ 'is-invalid': submitted && f2.supervisorID.errors }" />
-    <div *ngIf="submitted && f2.supervisorID.errors" class="invalid-feedback">
-        <div *ngIf="f2.supervisorID.errors.required">Employee ID  is required</div>
-    </div>
-  </div>
-
-  <div class="form-group" *ngIf="isSupervisor">
-    <label for="supervisorName">Full Name</label>
-    <input type="text" formControlName="supervisorName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f2.supervisorName.errors }" />
-    <div *ngIf="submitted && f2.supervisorName.errors" class="invalid-feedback">
-      <div *ngIf="f2.supervisorName.errors.required">Full Name is required</div>
-   </div>
-  </div>
+ 
 
 
-  <div class="form-group col" *ngIf="isSupervisor">
-
-    <a style="color: blue;" (click)="addSuperEmp()">
-      + Add Employee
-    </a>
-  </div>
 
 
     </ng-container>

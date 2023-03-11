@@ -6,10 +6,11 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms
 import { Role, Department } from '@app/_models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalService } from '@coreui/angular';
-
+import { User } from '@app/_models';
 @Component({ templateUrl: 'list.component.html' })
 export class ListComponent implements OnInit {
     departments = null;
+    supervisors = null;
     form: UntypedFormGroup;
     form2: UntypedFormGroup;
     departmentID: string;
@@ -18,9 +19,19 @@ export class ListComponent implements OnInit {
     isSupervisor = false;
     department: Department;
     requests: Request[];
+    supervisor : User[];
     loading = false;
     submitted = false;
 
+
+    id: string;
+    username: string; //employee ID
+    password: string;
+    fullname: string;
+    email: string;
+    role: Role;
+    position?: string;
+    token: string;
     constructor(
         private formBuilder: UntypedFormBuilder,
         private route: ActivatedRoute,
@@ -36,8 +47,9 @@ export class ListComponent implements OnInit {
         this.departmentService.getAllDepartments()
             .pipe(first())
             .subscribe(departments => this.departments = departments);
-
-
+        this.accountService.getAll()
+            .pipe(first())
+            .subscribe(supervisors => this.supervisors = supervisors);
         // this.departmentID = this.route.snapshot.params['departmentID'];
         // this.requestID = this.route.snapshot.params['requestID'];
         this.isAddMode = !this.departmentID;
@@ -70,9 +82,7 @@ export class ListComponent implements OnInit {
             position: ['', Validators.required],
             role: [Role.Employee],
             department: [this.departmentID],
-            role2:['' , this.isSupervisor], //supervisor
             supervisorID : ['' , this.isSupervisor ? Validators.required : ''] ,
-            supervisorName : ['' , this.isSupervisor ? Validators.required : ''] ,
             status :"NEW",
         });
 
