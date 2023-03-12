@@ -1,4 +1,8 @@
-﻿<c-card id="info" class="u-border u-border--bottom-right">
+﻿<!--
+  Student Name : Manal MAgdy Eid Khalil Eid
+  Student ID : B1901825
+-->
+<c-card id="info" class="u-border u-border--bottom-right">
     <c-card-body>
         <h5 cCardTitle id="loginTitle">Register</h5>
         <h6 cCardSubtitle style="color: #6F8A9E !important;" class="mb-2 text-medium-emphasis">
@@ -34,7 +38,7 @@
                     <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
                 </div>
             </div>
-  
+
             <div class="form-group" id="loginFormGroup">
                 <button id="big" [disabled]="loading" class="btn btn-primary">
                     <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>

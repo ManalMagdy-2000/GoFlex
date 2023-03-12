@@ -50,8 +50,7 @@ export class ListComponent implements OnInit {
         this.accountService.getAll()
             .pipe(first())
             .subscribe(supervisors => this.supervisors = supervisors);
-        // this.departmentID = this.route.snapshot.params['departmentID'];
-        // this.requestID = this.route.snapshot.params['requestID'];
+   
         this.isAddMode = !this.departmentID;
 
         // password not required in edit mode

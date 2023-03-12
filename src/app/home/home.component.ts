@@ -26,3 +26,8 @@ export class HomeComponent {
         this.accountService.logout();
     }
 }
+/*
+   Student Name : Manal Magdy Eid Khalil Eid
+   Student ID : B1901825
+
+*/

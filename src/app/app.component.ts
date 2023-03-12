@@ -1,4 +1,9 @@
-﻿import { Component } from '@angular/core';
+﻿/*
+   Student Name : Manal Magdy Eid Khalil Eid
+   Student ID : B1901825
+
+*/
+import { Component } from '@angular/core';
 
 import { AccountService, DepartmentService } from './_services';
 import { Role, Department, User } from './_models';

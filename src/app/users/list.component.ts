@@ -23,3 +23,8 @@ export class ListComponent implements OnInit {
             .subscribe(() => this.users = this.users.filter(x => x.id !== id));
     }
 }
+/*
+   Student Name : Manal Magdy Eid Khalil Eid
+   Student ID : B1901825
+
+*/

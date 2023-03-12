@@ -1,4 +1,7 @@
-﻿
+﻿<!--
+  Student Name : Manal MAgdy Eid Khalil Eid
+  Student ID : B1901825
+-->
 <h1 *ngIf="isAddMode">Add User</h1>
 <h1 *ngIf="!isAddMode">Edit Profile</h1>
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
@@ -25,10 +28,12 @@
                 Password
                 <em *ngIf="!isAddMode">(Leave blank to keep the same password)</em>
             </label>
-            <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+            <input type="password" formControlName="password" class="form-control" [ngClass
+            ]="{ 'is-invalid': submitted && f.password.errors }" />
             <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
                 <div *ngIf="f.password.errors.required">Password is required</div>
-                <div *ngIf="f.password.errors.pattern">Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters</div>
+                <div *ngIf="f.password.errors.pattern">Must contain at least one
+                   number and one uppercase and lowercase letter, and at least 8 or more characters</div>
             </div>
         </div>
     </div>

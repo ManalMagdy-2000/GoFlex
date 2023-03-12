@@ -1,4 +1,7 @@
-﻿
+﻿<!--
+  Student Name : Manal MAgdy Eid Khalil Eid
+  Student ID : B1901825
+-->
 <div class="title-button">
   <h1>Departments </h1>
 <button [cModalToggle]="scrollableLongContentModal.id" cButton size="lg" id="regDepartment"><img width="20px" src="../../assets/plus-svgrepo-com.svg" alt="arrow" loading="lazy">Register Department</button>
@@ -70,7 +73,9 @@
                   </tr>
                   <tr>
                     <td align="center" colSpan="7">
-                      <button [cModalToggle]="addEmployee.id" cButton size="lg" (click)="setID(department.departmentID)"><img width="20px" src="../../assets/user-svgrepo-com (1).svg" alt="arrow" loading="lazy">Add Employee</button>
+                      <button [cModalToggle]="addEmployee.id" cButton size="lg"
+                       (click)="setID(department.departmentID)"><img width="20px"
+                       src="../../assets/user-svgrepo-com (1).svg" alt="arrow" loading="lazy">Add Employee</button>
                     </td>
                   </tr>
                 </tbody>
@@ -119,14 +124,16 @@
 
       <div class="form-group" *ngIf="!isSupervisor">
         <label for="fullname">Fullname</label>
-        <input type="text" formControlName="fullname" class="form-control" [ngClass]="{ 'is-invalid': submitted && f2.fullname.errors }" />
+        <input type="text" formControlName="fullname" class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f2.fullname.errors }" />
         <div *ngIf="submitted && f2.fullname.errors" class="invalid-feedback">
             <div *ngIf="f2.fullname.errors.required">Fullname is required</div>
         </div>
     </div>
     <div class="form-group" *ngIf="!isSupervisor">
         <label for="email">Email</label>
-        <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f2.email.errors }" />
+        <input type="text" formControlName="email" class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f2.email.errors }" />
         <div *ngIf="submitted && f2.email.errors" class="invalid-feedback">
             <div *ngIf="f2.email.errors.required">Email is required</div>
             <div *ngIf="f2.email.errors.pattern">Email must contains @mail.com</div>
@@ -134,7 +141,8 @@
     </div>
     <div class="form-group" *ngIf="!isSupervisor">
         <label for="username">Username</label>
-        <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f2.username.errors }" />
+        <input type="text" formControlName="username"
+         class="form-control" [ngClass]="{ 'is-invalid': submitted && f2.username.errors }" />
         <div *ngIf="submitted && f2.username.errors" class="invalid-feedback">
             <div *ngIf="f2.username.errors.required">Username is required</div>
         </div>

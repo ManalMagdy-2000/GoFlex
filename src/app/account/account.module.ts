@@ -22,3 +22,8 @@ import { CardModule } from '@coreui/angular';
     ]
 })
 export class AccountModule { }
+/*
+   Student Name : Manal Magdy Eid Khalil Eid
+   Student ID : B1901825
+
+*/

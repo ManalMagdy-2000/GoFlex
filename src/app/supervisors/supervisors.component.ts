@@ -1,3 +1,8 @@
+/*
+   Student Name : Manal Magdy Eid Khalil Eid
+   Student ID : B1901825
+
+*/
 import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
 import { AccountService, AlertService, DepartmentService } from '@app/_services';
@@ -57,9 +62,6 @@ export class SupervisorsComponent implements OnInit {
     this.loading = true;
 
         this.createUser();
-    // } else {
-    //     this.updateUser();
-    // }
 
 }
 
