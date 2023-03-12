@@ -117,16 +117,16 @@ export class AppComponent {
             //   size: 'lg',
             // }
           },
-          {
+        /*  {
             name: 'View Requests',
-            url: '/reviews',
+            url: '/viewRequests',
             iconComponent: { name: 'cil-list-numbered' },
             // badge: {
             //   color: 'success',
             //   text: 'NEW',
             //   size: 'lg',
             // }
-          },
+          },*/
         )
       }
 
@@ -139,7 +139,7 @@ export class AppComponent {
           },
           {
             name: 'View Requests',
-            url: '/reviews',
+            url: '/reviewRequest',
             iconComponent: { name: 'cil-list-numbered' },
             // badge: {
             //   color: 'success',

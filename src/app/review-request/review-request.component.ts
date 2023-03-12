@@ -1,4 +1,4 @@
-﻿import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
 
 import { AccountService, AlertService, DepartmentService } from '@app/_services';
@@ -6,8 +6,8 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms
 import { Department, User } from '@app/_models';
 import { ActivatedRoute, Router } from '@angular/router';
 
-@Component({ templateUrl: 'reviews.component.html' })
-export class ReviewComponent implements OnInit {
+@Component({ templateUrl: 'review-request.component.html' })
+export class ReviewRequestComponent implements OnInit {
     departments = null;
     form: UntypedFormGroup;
     departmentID: string;
