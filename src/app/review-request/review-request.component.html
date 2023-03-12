@@ -20,8 +20,10 @@
             <h5 style="margin: 0 1rem;"><c-badge color="dark">Department ID: {{ department.departmentID }}</c-badge></h5>
           <h5 style="margin: 0 5rem"><c-badge color="dark">Department Name: {{ department.name }}</c-badge></h5>
           <h5 style="margin: 0 3rem">
-            <c-badge *ngIf="countNewRequests(department.departmentID) == 0" color="light" shape="rounded-pill">{{ countNewRequests(department.departmentID) }}</c-badge>
-            <c-badge *ngIf="countNewRequests(department.departmentID) > 0" color="success" shape="rounded-pill">{{ countNewRequests(department.departmentID) }}</c-badge>
+            <c-badge *ngIf="countNewRequests(department.departmentID) == 0" color="light"
+            shape="rounded-pill">{{ countNewRequests(department.departmentID) }}</c-badge>
+            <c-badge *ngIf="countNewRequests(department.departmentID) > 0" color="success"
+              shape="rounded-pill">{{ countNewRequests(department.departmentID) }}</c-badge>
           </h5>
           </div>
         </button>
