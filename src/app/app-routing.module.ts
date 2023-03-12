@@ -1,8 +1,3 @@
-/*
-   Student Name : Manal Magdy Eid Khalil Eid
-   Student ID : B1901825
-
-*/
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
