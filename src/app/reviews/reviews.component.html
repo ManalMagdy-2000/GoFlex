@@ -13,10 +13,10 @@
       <ng-template cTemplateId="accordionHeaderTemplate">
         <button (click)="item0.toggleItem()" [collapsed]="!item0.visible" cAccordionButton>
           <div class="stats">
-            <h5 style="margin: 0 1rem;"><c-badge color="dark">ID: {{ department.departmentID }}</c-badge></h5>
-          <h5 style="margin: 0 1rem"><c-badge color="dark">Name: {{ department.name }}</c-badge></h5>
+            <h5 style="margin: 0 1rem;"><c-badge color="dark">Department ID: {{ department.departmentID }}</c-badge></h5>
+          <h5 style="margin: 0 5rem"><c-badge color="dark">Department Name: {{ department.name }}</c-badge></h5>
 
-          <h5 style="margin: 0 1rem">
+          <h5 style="margin: 0 3rem">
             <c-badge *ngIf="countNewRequests(department.departmentID) == 0" color="light" shape="rounded-pill">{{ countNewRequests(department.departmentID) }}</c-badge>
             <c-badge *ngIf="countNewRequests(department.departmentID) > 0" color="success" shape="rounded-pill">{{ countNewRequests(department.departmentID) }}</c-badge>
           </h5>
@@ -36,10 +36,11 @@
                     <thead >
                       <tr>
                         <th scope="col" style="width: 10%">Request ID</th>
+                        <th scope="col" style="width: 10%">Date</th>
                         <th scope="col" style="width: 20%">Description</th>
+                        <th scope="col" style="width: 25%">Work Type</th>
                         <th scope="col" style="width: 25%">Reason</th>
                         <th scope="col" style="width: 15%">Status</th>
-                        <th scope="col" style="width: 15%">Action</th>
                       </tr>
                       </thead>
                       <tbody>
@@ -50,14 +51,15 @@
                     <tr *ngFor="let request of department.requests" >
                       <ng-container *ngIf="request.status !='CLOSED'">
                         <td>{{request.requestID}}</td>
+                        <td>{{request.date | date:"mediumDate"}}</td>
                         <td>{{request.description}}</td>
+                        <td>{{request.workType}}</td>
                         <td>{{request.reason}}</td>
 
                         <td>
-                          <c-badge *ngIf="request.status == 'NEW'" color="success">{{request.status}}</c-badge>
+                          <c-badge *ngIf="request.status == 'NEW'" color="warning">PENDING</c-badge>
                             <c-badge *ngIf="request.status == 'CLOSED'" color="danger">{{request.status}}</c-badge>
                         </td>
-                        <td><button [cModalToggle]="scrollableLongContentModal.id" class="btn btn-sm btn-primary mr-1" cButton (click)="setID(department.departmentID, request.requestID)"><img width="18px" src="../../assets/hand-svgrepo-com.svg" alt="arrow" loading="lazy">Review</button></td>
                   </ng-container >
                   </tr>
 
@@ -131,8 +133,6 @@
         </ng-template>
       </c-accordion-item>
     </c-accordion>
-
-
   </div>
   </div>
 

@@ -117,6 +117,16 @@ export class AppComponent {
             //   size: 'lg',
             // }
           },
+          {
+            name: 'View Requests',
+            url: '/reviews',
+            iconComponent: { name: 'cil-list-numbered' },
+            // badge: {
+            //   color: 'success',
+            //   text: 'NEW',
+            //   size: 'lg',
+            // }
+          },
         )
       }
 
