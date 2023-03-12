@@ -12,7 +12,9 @@
     <tbody>
         <tr *ngFor="let employee of users">
           <td *ngIf="employee.role == 'Employee'">{{employee.username}}</td>
-            <td *ngIf="employee.role == 'Employee'">{{employee.fullname}}</td>
+          <td *ngIf="employee.role == 'Employee'">{{employee.fullname}}</td>
+          <td *ngIf="employee.role == 'Employee' && employee.position == 'Supervisor'" >employee.username</td>
         </tr>
+
     </tbody>
 </table>

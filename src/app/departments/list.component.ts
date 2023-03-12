@@ -78,7 +78,7 @@ export class ListComponent implements OnInit {
             fullname: ['', Validators.required],
             email: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')]],
             username: ['', Validators.required],
-            password: ['', passwordValidators],
+            password: ['', [Validators.required , Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}') ]],
             position: ['', Validators.required],
             role: [Role.Employee],
             department: [this.departmentID],
