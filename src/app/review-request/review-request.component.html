@@ -109,6 +109,7 @@
                           <th scope="col" style="width: 20%">Description</th>
                           <th scope="col" style="width: 10%">reason</th>
                           <th scope="col" style="width: 15%">Status</th>
+                          <th scope="col" style="width: 15%">Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -125,6 +126,7 @@
                             <c-badge *ngIf="request.status == 'NEW'" color="success">{{request.status}}</c-badge>
                             <c-badge *ngIf="request.status == 'CLOSED'" color="danger">{{request.status}}</c-badge>
                           </td>
+                          <td><button [cModalToggle]="scrollableLongContentModal.id" class="btn btn-sm btn-primary mr-1" cButton (click)="setID(department.departmentID, request.requestID)"><img width="18px" src="../../assets/hand-svgrepo-com.svg" alt="arrow" loading="lazy">Review</button></td>
                     </ng-container >
                     </tr>
 
