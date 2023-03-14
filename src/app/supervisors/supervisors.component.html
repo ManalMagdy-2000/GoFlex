@@ -63,8 +63,6 @@
           <th style="width: 20%">Employee ID</th>
           <th style="width: 20%">Full Name</th>
           <th style="width: 20%">Position</th>
-          <th style="width: 20%">Email</th>
-          <th style="width: 20%">Password</th>
       </tr>
   </thead>
   <tbody>
@@ -72,8 +70,6 @@
           <td *ngIf="employee.position == 'Supervisor'">{{employee.username}}</td>
           <td *ngIf="employee.position == 'Supervisor'">{{employee.fullname}}</td>
           <td *ngIf="employee.position == 'Supervisor'"> Supervisor</td>
-          <td *ngIf="employee.position == 'Supervisor'">{{employee.email}}</td>
-          <td *ngIf="employee.position == 'Supervisor'" >{{employee.password}}</td>
       </tr>
   </tbody>
 </table>
