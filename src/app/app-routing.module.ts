@@ -11,6 +11,7 @@ import { ListsupervisorComponent } from './departments/listsupervisor.component'
 import { SupervisorsComponent } from './supervisors/supervisors.component';
 import { ReviewRequestComponent } from './review-request/review-request.component';
 import { ScheduleComponent } from './users/schedule.component';
+import { ScheduleReviewComponent } from './schedules/schedule-review.component';
 
 const accountModule = () => import('./account/account.module').then(x => x.AccountModule);
 const usersModule = () => import('./users/users.module').then(x => x.UsersModule);
