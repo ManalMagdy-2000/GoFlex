@@ -122,16 +122,16 @@ export class AppComponent {
             //   size: 'lg',
             // }
           },
-        /*  {
-            name: 'View Requests',
-            url: '/viewRequests',
+          {
+            name: 'Schedules',
+            url: `/users/${this.user?.id}/schedule`,
             iconComponent: { name: 'cil-list-numbered' },
-            // badge: {
-            //   color: 'success',
-            //   text: 'NEW',
-            //   size: 'lg',
-            // }
-          },*/
+          },
+          {
+            name: 'Review Schedules',
+            url: `/schedule`,
+            iconComponent: { name: 'cil-list-numbered' },
+          },
         )
       }
 

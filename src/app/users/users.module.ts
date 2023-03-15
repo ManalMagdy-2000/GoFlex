@@ -6,19 +6,23 @@ import { UsersRoutingModule } from './users-routing.module';
 import { LayoutComponent } from './layout.component';
 import { ListComponent } from './list.component';
 import { AddEditComponent } from './add-edit.component';
-import { ButtonModule } from '@coreui/angular';
+import { ButtonModule, FormModule, ModalModule } from '@coreui/angular';
+import { ScheduleComponent } from './schedule.component';
 
 @NgModule({
     imports: [
         CommonModule,
         ReactiveFormsModule,
         UsersRoutingModule,
-        ButtonModule
+        ButtonModule,
+        FormModule,
+        ModalModule
     ],
     declarations: [
         LayoutComponent,
         ListComponent,
-        AddEditComponent
+        AddEditComponent,
+        ScheduleComponent
     ]
 })
 export class UsersModule { }

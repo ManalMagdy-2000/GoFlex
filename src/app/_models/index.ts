@@ -4,3 +4,4 @@ export * from './role';
 export * from './review';
 export * from './request';
 export * from './department';
+export * from './schedule';

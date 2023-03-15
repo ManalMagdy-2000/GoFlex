@@ -6,6 +6,7 @@
 import { Review } from "./review";
 import { Role } from "./role";
 import { Department } from "./department";
+import { Schedule } from "./schedule";
 
 export class User {
     id: string;
@@ -17,5 +18,6 @@ export class User {
     department?: string;
     reviews?: Review[];
     position?: string;
+    schedules?: Schedule[];
     token: string;
 }

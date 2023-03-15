@@ -10,6 +10,7 @@ import { EmployeesComponent } from './employees/employees.component';
 import { ListsupervisorComponent } from './departments/listsupervisor.component';
 import { SupervisorsComponent } from './supervisors/supervisors.component';
 import { ReviewRequestComponent } from './review-request/review-request.component';
+import { ScheduleComponent } from './users/schedule.component';
 
 const accountModule = () => import('./account/account.module').then(x => x.AccountModule);
 const usersModule = () => import('./users/users.module').then(x => x.UsersModule);
@@ -25,6 +26,7 @@ const routes: Routes = [
     { path: 'employees', component: EmployeesComponent, canActivate: [AuthGuard], data: { roles: [Role.HRAdmin] } },
     { path: 'supervisors', component: SupervisorsComponent, canActivate: [AuthGuard], data: { roles: [Role.HRAdmin] } },
     { path: 'reviewRequest' , component: ReviewRequestComponent, canActivate: [AuthGuard], data: { roles: [Role.User] }},
+    { path: 'schedule', component: ScheduleReviewComponent, canActivate: [AuthGuard] },
 
 
 

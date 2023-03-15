@@ -20,6 +20,8 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { EmployeesComponent } from './employees/employees.component';
 import { SupervisorsComponent } from './supervisors/supervisors.component';
 import { ReviewRequestComponent } from './review-request/review-request.component';
+import { ScheduleReviewComponent } from './schedules/schedule-review.component';
+
 @NgModule({
     imports: [
         BrowserModule,
@@ -55,7 +57,7 @@ import { ReviewRequestComponent } from './review-request/review-request.componen
         EmployeesComponent,
         SupervisorsComponent,
         ReviewRequestComponent,
-
+        ScheduleReviewComponent
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

@@ -83,6 +83,7 @@ export class ListComponent implements OnInit {
             department: [this.departmentID],
             supervisorID : ['' , this.isSupervisor ? Validators.required : ''] ,
             status :"NEW",
+            schedules: [[]]
         });
 
 
