@@ -16,9 +16,10 @@ import { RequestComponent } from './request/request.component';
 import { AccordionModule, AlertModule, AvatarModule, BadgeModule, ButtonModule, CardModule, DropdownModule, FormModule, GridModule, HeaderModule, ModalModule, NavModule, SharedModule, SidebarModule, TableModule, ToastModule, UtilitiesModule } from '@coreui/angular';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IconModule } from '@coreui/icons-angular';
-import { ReviewComponent } from './reviews';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { EmployeesComponent } from './employees/employees.component';
+import { SupervisorsComponent } from './supervisors/supervisors.component';
+import { ReviewRequestComponent } from './review-request/review-request.component';
 import { ScheduleReviewComponent } from './schedules/schedule-review.component';
 
 @NgModule({
@@ -53,8 +54,9 @@ import { ScheduleReviewComponent } from './schedules/schedule-review.component';
         HomeComponent,
        UserComponent,
         RequestComponent,
-        ReviewComponent,
         EmployeesComponent,
+        SupervisorsComponent,
+        ReviewRequestComponent,
         ScheduleReviewComponent
     ],
     providers: [
@@ -67,3 +69,8 @@ import { ScheduleReviewComponent } from './schedules/schedule-review.component';
     bootstrap: [AppComponent]
 })
 export class AppModule { };
+/*
+   Student Name : Manal Magdy Eid Khalil Eid
+   Student ID : B1901825
+
+*/

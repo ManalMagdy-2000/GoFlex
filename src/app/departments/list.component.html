@@ -1,4 +1,7 @@
-﻿
+﻿<!--
+  Student Name : Manal MAgdy Eid Khalil Eid
+  Student ID : B1901825
+-->
 <div class="title-button">
   <h1>Departments </h1>
 <button [cModalToggle]="scrollableLongContentModal.id" cButton size="lg" id="regDepartment"><img width="20px" src="../../assets/plus-svgrepo-com.svg" alt="arrow" loading="lazy">Register Department</button>
@@ -35,7 +38,9 @@
                         <th scope="col" style="width: 16%">Email</th>
                         <th scope="col" style="width: 16%">Position</th>
                         <th scope="col" style="width: 16%">Password</th>
-                        <th scope="col" style="width: 16%"></th>
+                        <th scope="col" style="width: 16%">FWA Status</th>
+                        <th scope="col" style="width: 16%">Supervisors </th>
+
 
                         <!-- <th scope="col" style="width: 15%">Action</th> -->
                       </tr>
@@ -51,12 +56,26 @@
                         <td>{{Employee.email}}</td>
                         <td>{{Employee.position}}</td>
                         <td>{{Employee.password}}</td>
+                        <td >
+                          <c-badge  color="success" shape="rounded-pill">{{Employee.status}}</c-badge>
+                        </td>
+                        <td>
+                          <select style="width:200px">
+                            <option *ngFor="let supervisor of supervisors" [value]="supervisor.username">
+                              <div *ngIf="supervisor.position =='Supervisor'">
+                                {{supervisor.username}}
+                              </div>
+                            </option>
+                          </select>
+                        </td>
                         <!-- <td><button [cModalToggle]="addEmployee.id" class="btn btn-sm btn-primary mr-1" cButton (click)="setID(department.departmentID, request.requestID)">Review</button></td> -->
                   </ng-container>
                   </tr>
                   <tr>
                     <td align="center" colSpan="7">
-                      <button [cModalToggle]="addEmployee.id" cButton size="lg" (click)="setID(department.departmentID)"><img width="20px" src="../../assets/user-svgrepo-com (1).svg" alt="arrow" loading="lazy">Add Employee</button>
+                      <button [cModalToggle]="addEmployee.id" cButton size="lg"
+                       (click)="setID(department.departmentID)"><img width="20px"
+                       src="../../assets/user-svgrepo-com (1).svg" alt="arrow" loading="lazy">Add Employee</button>
                     </td>
                   </tr>
                 </tbody>
@@ -105,14 +124,16 @@
 
       <div class="form-group" *ngIf="!isSupervisor">
         <label for="fullname">Fullname</label>
-        <input type="text" formControlName="fullname" class="form-control" [ngClass]="{ 'is-invalid': submitted && f2.fullname.errors }" />
+        <input type="text" formControlName="fullname" class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f2.fullname.errors }" />
         <div *ngIf="submitted && f2.fullname.errors" class="invalid-feedback">
             <div *ngIf="f2.fullname.errors.required">Fullname is required</div>
         </div>
     </div>
     <div class="form-group" *ngIf="!isSupervisor">
         <label for="email">Email</label>
-        <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f2.email.errors }" />
+        <input type="text" formControlName="email" class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f2.email.errors }" />
         <div *ngIf="submitted && f2.email.errors" class="invalid-feedback">
             <div *ngIf="f2.email.errors.required">Email is required</div>
             <div *ngIf="f2.email.errors.pattern">Email must contains @mail.com</div>
@@ -120,7 +141,8 @@
     </div>
     <div class="form-group" *ngIf="!isSupervisor">
         <label for="username">Username</label>
-        <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f2.username.errors }" />
+        <input type="text" formControlName="username"
+         class="form-control" [ngClass]="{ 'is-invalid': submitted && f2.username.errors }" />
         <div *ngIf="submitted && f2.username.errors" class="invalid-feedback">
             <div *ngIf="f2.username.errors.required">Username is required</div>
         </div>
@@ -143,36 +165,9 @@
   </div>
 
 
-  <div class="form-group col" *ngIf="!isSupervisor">
-
-    <a style="color: blue;" (click)="addSuperEmp()">
-      + Add Supervisor
-    </a>
-  </div>
-
-  <div class="form-group" *ngIf="isSupervisor">
-    <label for="supervisorID">Employee ID</label>
-    <input type="text" formControlName="supervisorID" class="form-control" [ngClass]="{ 'is-invalid': submitted && f2.supervisorID.errors }" />
-    <div *ngIf="submitted && f2.supervisorID.errors" class="invalid-feedback">
-        <div *ngIf="f2.supervisorID.errors.required">Employee ID  is required</div>
-    </div>
-  </div>
-
-  <div class="form-group" *ngIf="isSupervisor">
-    <label for="supervisorName">Full Name</label>
-    <input type="text" formControlName="supervisorName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f2.supervisorName.errors }" />
-    <div *ngIf="submitted && f2.supervisorName.errors" class="invalid-feedback">
-      <div *ngIf="f2.supervisorName.errors.required">Full Name is required</div>
-   </div>
-  </div>
 
 
-  <div class="form-group col" *ngIf="isSupervisor">
 
-    <a style="color: blue;" (click)="addSuperEmp()">
-      + Add Employee
-    </a>
-  </div>
 
 
     </ng-container>

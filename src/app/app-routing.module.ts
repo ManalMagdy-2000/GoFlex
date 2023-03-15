@@ -6,11 +6,11 @@ import {UserComponent } from './user';
 import { AuthGuard } from './_helpers';
 import { Role } from './_models';
 import { RequestComponent } from './request/request.component';
-import { ReviewComponent } from './reviews/reviews.component';
 import { EmployeesComponent } from './employees/employees.component';
 import { ListsupervisorComponent } from './departments/listsupervisor.component';
+import { SupervisorsComponent } from './supervisors/supervisors.component';
+import { ReviewRequestComponent } from './review-request/review-request.component';
 import { ScheduleComponent } from './users/schedule.component';
-import { ScheduleReviewComponent } from './schedules/schedule-review.component';
 
 const accountModule = () => import('./account/account.module').then(x => x.AccountModule);
 const usersModule = () => import('./users/users.module').then(x => x.UsersModule);
@@ -22,10 +22,10 @@ const routes: Routes = [
     { path: 'departments', loadChildren: departmentsModule, canActivate: [AuthGuard], data: { roles: [Role.HRAdmin] } },
     { path: 'account', loadChildren: accountModule },
     { path: 'requests', component: RequestComponent, canActivate: [AuthGuard], data: { roles: [Role.Employee] }  },
-    { path: 'reviews', component: ReviewComponent},
     { path: 'Employee', component:UserComponent, canActivate: [AuthGuard], data: { roles: [Role.Employee] } },
     { path: 'employees', component: EmployeesComponent, canActivate: [AuthGuard], data: { roles: [Role.HRAdmin] } },
-    { path: 'supervisors', component: ListsupervisorComponent, canActivate: [AuthGuard], data: { roles: [Role.HRAdmin] } },
+    { path: 'supervisors', component: SupervisorsComponent, canActivate: [AuthGuard], data: { roles: [Role.HRAdmin] } },
+    { path: 'reviewRequest' , component: ReviewRequestComponent, canActivate: [AuthGuard], data: { roles: [Role.User] }},
     { path: 'schedule', component: ScheduleReviewComponent, canActivate: [AuthGuard] },
 
 

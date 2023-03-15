@@ -1,4 +1,9 @@
-﻿import { Injectable } from '@angular/core';
+﻿/*
+   Student Name : Manal Magdy Eid Khalil Eid
+   Student ID : B1901825
+
+*/
+import { Injectable } from '@angular/core';
 import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { delay, materialize, dematerialize } from 'rxjs/operators';
@@ -7,7 +12,8 @@ import { Role, Schedule } from '@app/_models';
 // array in local storage for registered users
 const usersKey = 'users';
 let users = JSON.parse(localStorage.getItem(usersKey)) || [];
-users.push({ id: 1, username: 'admin', password: 'admin', fullname: 'HR Admin', department: 0, role: Role.HRAdmin });
+users.push({ id: 1, username: 'admin', password: 'admin',
+ fullname: 'HR Admin', department: 0, role: Role.HRAdmin });
 
 //array in local storage for departments
 const departmentsKey = 'departments';

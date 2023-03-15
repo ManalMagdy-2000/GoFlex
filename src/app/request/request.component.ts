@@ -1,6 +1,6 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
-
+import { Data } from '@angular/router';
 import { AccountService, AlertService, DepartmentService } from '@app/_services';
 import { FormBuilder, FormGroup, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Department, Request } from '@app/_models';
@@ -13,15 +13,13 @@ export class RequestComponent implements OnInit {
     departmentID: string;
     requestID: string;
     reviewID: string;
-    requestDate:string;
     isAddMode: boolean;
     department: Department;
     requests: Request[];
     loading = false;
-    isSupervisor = false;
     submitted = false;
     success = false;
-
+    currentDate = new Date();
 
     constructor(
         private formBuilder: FormBuilder,
@@ -29,8 +27,9 @@ export class RequestComponent implements OnInit {
         private router: Router,
         private departmentService: DepartmentService,
         private accountService: AccountService,
-        private alertService: AlertService
-    ) {}
+        private alertService: AlertService ,
+
+    ) {   }
 
 
     ngOnInit() {
@@ -53,8 +52,10 @@ export class RequestComponent implements OnInit {
 
         this.form = this.formBuilder.group({
             description: ['', Validators.required],
-            reason: ['', Validators.required],
             status: "NEW",
+            workType: ['', Validators.required ],
+            reason: ['',Validators.required ],
+            date: [this.currentDate],
             reviews: [[]]
         });
 
@@ -70,14 +71,6 @@ export class RequestComponent implements OnInit {
     // convenience getter for easy access to form fields
     get f() { return this.form.controls; }
 
-    addFlexRequest() {
-        this.form = this.formBuilder.group({
-            description: ['', Validators.required],
-            reason: ['', Validators.required],
-            status: "NEW",
-            reviews: [[]]
-        });
-    }
 
 
     onSubmit() {
@@ -109,8 +102,6 @@ export class RequestComponent implements OnInit {
         this.requestID = requestID;
         this.updateStatus(status);
     }
-
-
 
     private addReview() {
         this.departmentService.addReview(this.departmentID, this.requestID, this.form.value)
@@ -162,3 +153,4 @@ export class RequestComponent implements OnInit {
     }
 
 }
+

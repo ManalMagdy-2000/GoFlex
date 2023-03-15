@@ -1,27 +1,86 @@
-﻿<style>
-      input[type=radio] #inlineRadio1 {
-            background-color: aqua;
-        }
-button{
-  margin-right: 43%;
-  padding: 15px 50px;
-}
-#inlineRadio1 , #inlineRadio2 , #inlineRadio3{
-  margin :10px;
-
-}
-.form-check.form-check-inline{
-  margin-top: 30px;
-}
-
-</style>
+﻿<!--
+  Student Name : Manal MAgdy Eid Khalil Eid
+  Student ID : B1901825
+-->
+<div class="title-button">
+  <h1>Requests </h1>
+<button [cModalToggle]="scrollableLongContentModal.id" cButton size="lg" id="regDepartment"><img width="20px" src="../../assets/plus-svgrepo-com.svg" alt="arrow" loading="lazy">Submit Request</button>
+</div>
 <div class="p-4">
-  <h1 style="margin: 0 0 2rem 0;"> Create FWA Request</h1>
-<div class="container">
+ <div class="container">
+  <c-accordion *ngFor="let request of requests" disabled>
+    <c-accordion-item style="margin: 1rem 0;" #item0="cAccordionItem" [visible]="false">
+      <ng-template cTemplateId="accordionHeaderTemplate">
+        <button (click)="item0.toggleItem()" [collapsed]="!item0.visible" cAccordionButton>
+          <div class="stats-2" *ngIf="request.date != ''">
+            <h5 ><c-badge color="warning"><img width="18px" src="../../assets/person-svgrepo-com.svg" alt="arrow" loading="lazy"></c-badge></h5>
+            <h5 ><c-badge color="dark">Request ID : {{ request.requestID }}</c-badge></h5>
+            <h5 style="margin: 0 1rem"><c-badge color="dark"><img width="18px" src="../../assets/calendar-svgrepo-com.svg" alt="arrow" loading="lazy">  {{ request.date | date:"mediumDate"}}</c-badge></h5>
+            <h5 style="margin: 0 1rem">
+            <c-badge *ngIf="request.reviews.length == 0" color="light" shape="rounded-pill">{{ request.reviews.length }}</c-badge>
+            <c-badge *ngIf="request.reviews.length > 0" color="success" shape="rounded-pill">{{ request.reviews.length }}</c-badge>
+          </h5>
+          </div>
+        </button>
+      </ng-template>
+      <ng-template cTemplateId="accordionBodyTemplate">
+        <div class="accordion-body" style="padding: 0;">
+          <table
+          [hover]="false"
+          [responsive]="true"
+          [striped]="false"
+          cAlign="middle"
+          cTable
+          class="mb-0"
+        >
+                    <thead>
+                      <tr>
+                        <th scope="col" style="width: 20%">Status</th>
+                        <th scope="col" style="width: 20%">Date</th>
+                        <th scope="col" style="width: 20%">By</th>
+                        <th scope="col" style="width: 20%">Remarks</th>
+                        <th *ngIf="request.status != 'CLOSED'" scope="col" style="width: 20%">Action</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                        <td colSpan="7" *ngIf="request.reviews.length == 0">
+                          <h5 style="margin: 0.5rem; text-align: center;" >There is no reviews for this request yet!</h5>
+                        </td>
+                    <tr *ngFor="let review of request.reviews">
+                      <ng-container>
+                        <td>
+                          <c-badge *ngIf="review.reviewStatus == 'PENDING' && request.status != 'CLOSED'" color="warning">{{review.reviewStatus}}</c-badge>
+                          <c-badge *ngIf="review.reviewStatus == 'PENDING' && request.status == 'CLOSED'" color="dark">NOT SELECTED</c-badge>
+                          <c-badge *ngIf="review.reviewStatus == 'ACCEPTED'" color="success">{{review.reviewStatus}}</c-badge>
+                          <c-badge *ngIf="review.reviewStatus == 'CLOSED'" color="danger">{{review.reviewStatus}}</c-badge>
+                        </td>
+                        <td>{{review.reviewDate}}</td>
+                        <td>{{review.volunteer.username}}</td>
+                        <td>{{review.remarks}}</td>
+                        <td *ngIf="request.status != 'CLOSED'"><button  style="color: white;" class="btn btn-sm btn-success mr-1" cButton (click)="setID(request.requestID, review.reviewID, 'ACCEPTED')"><img width="18px" src="../../assets/tick-svgrepo-com.svg" alt="arrow" loading="lazy">Accept</button>
+                          <!-- <button style="color: white;" class="btn btn-sm btn-danger mr-1" cButton (click)="setID(request.requestID, review.reviewID, 'ACCEPTED')">Close</button></td> -->
+                  </ng-container>
+                  </tr>
+                </tbody>
+                </table>
+        </div>
+      </ng-template>
+    </c-accordion-item>
+  </c-accordion>
+
+
+
+
+
+
+  <c-modal #scrollableLongContentModal id="scrollableLongContentModal" alignment="center" scrollable>
+  <c-modal-header>
+    <h5 cModalTitle>Create a Request</h5>
+    <button [cModalToggle]="scrollableLongContentModal.id" cButtonClose></button>
+  </c-modal-header>
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <c-modal-body>
     <ng-container >
-
         <div class="form-group col">
           <label for="description">Description</label>
           <input type="text" formControlName="description" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.description.errors }" />
@@ -29,59 +88,37 @@ button{
               <div *ngIf="f.description.errors.required">Description is required</div>
           </div>
       </div>
-
+      <div class="form-group col" >
+        <label for="workType">Work Type</label>
+        <select formControlName="workType" [ngClass]="{ 'is-invalid': submitted && f.workType.errors }" class="form-control" aria-label="Default select example" cSelect>
+          <option>Select work type</option>
+          <option value="Flexi-Hour">Flexi-Hour</option>
+          <option value="Work-From-Home">Work-From-Home</option>
+          <option value="Hybrid">Hybrid</option>
+        </select>
+        <div *ngIf="submitted && f.workType.errors" class="invalid-feedback">
+            <div *ngIf="f.workType.errors.required">WorkType is required</div>
+        </div>
+      </div>
 
       <div class="form-group col">
-        <label for="description">Reason</label>
+        <label for="reason">Reason</label>
         <input type="text" formControlName="reason" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.reason.errors }" />
-        <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
-            <div *ngIf="f.reason.errors.required">reason is required</div>
+        <div *ngIf="submitted && f.reason.errors" class="invalid-feedback">
+            <div *ngIf="f.reason.errors.required">Reason is required</div>
         </div>
-    </div>
-    
-    <div class="form-check form-check-inline">
-      <input
-        mdbRadio
-        class="form-check-input"
-        type="radio"
-        name="inlineRadioOptions"
-        id="inlineRadio1"
-        value="option1"
-      />
-      <label class="form-check-label" for="inlineRadio1">Flexi-Hour</label>
-    </div>
-    <div class="form-check form-check-inline">
-      <input
-        mdbRadio
-        class="form-check-input"
-        type="radio"
-        name="inlineRadioOptions"
-        id="inlineRadio2"
-        value="option2"
-      />
-      <label class="form-check-label" for="inlineRadio2">Working-From-Home</label>
-    </div>
-    <div class="form-check form-check-inline">
-      <input
-        mdbRadio
-        class="form-check-input"
-        type="radio"
-        name="inlineRadioOptions"
-        id="inlineRadio3"
-        value="option3"
-      />
-      <label class="form-check-label" for="inlineRadio3">Hybrid</label>
-    </div>
-
-
-
+      </div>
     </ng-container>
   </c-modal-body>
-
   <c-modal-footer>
-    <button style="margin-left: 0; margin-top: 100px;" cButton color="primary" data-dismiss="scrollableLongContentModal.id" type="submit">Save changes</button>
+    <button [cModalToggle]="scrollableLongContentModal.id" cButton color="secondary" >
+      Close
+    </button>
+    <button cButton color="primary" data-dismiss="scrollableLongContentModal.id" type="submit">Save changes</button>
   </c-modal-footer>
 </form>
+</c-modal>
 
 </div>
 </div>
+<ngx-material-timepicker #picker></ngx-material-timepicker>
