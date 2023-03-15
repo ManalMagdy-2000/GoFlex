@@ -35,9 +35,9 @@ export class AppComponent {
         return this.user && this.user.role === Role.Employee;
     }
 
-    get isSupervisor() {
-      return this.user && this.user.role === Role.User;
-  }
+    get isSupervisor(){
+      return this.user && this.user.position == "supervisor" || this.user.position == "Supervisor";
+   }
 
     get isHRAdmin() {
         return this.user && this.user.role === Role.HRAdmin;
@@ -100,7 +100,7 @@ export class AppComponent {
         )
       }
 
-      if (this.isEmployee) {
+      if (this.isEmployee && !this.isSupervisor) {
         this.navItems.push(
           {
             name: 'Profile',
@@ -117,12 +117,27 @@ export class AppComponent {
             //   size: 'lg',
             // }
           },
+          {
+            name: 'Schedules',
+            url: `/users/${this.user?.id}/schedule`,
+            iconComponent: { name: 'cil-list-numbered' },
+          },
+          {
+            name: 'Review Schedules',
+            url: `/schedule`,
+            iconComponent: { name: 'cil-list-numbered' },
+          },
         )
       }
 
-      if (!this.isSupervisor) {
+      if (this.isSupervisor) {
         this.navItems.push(
-          /*{
+          {
+            name: 'Profile',
+            url: `/users/edit/${this.user?.id}`,
+            iconComponent: { name: 'cil-user' },
+          },
+          {
             name: 'View Requests',
             url: '/reviews',
             iconComponent: { name: 'cil-list-numbered' },
@@ -131,7 +146,7 @@ export class AppComponent {
             //   text: 'NEW',
             //   size: 'lg',
             // }
-          },*/
+          },
 
         )
       }

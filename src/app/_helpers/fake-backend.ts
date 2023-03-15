@@ -2,7 +2,7 @@
 import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { delay, materialize, dematerialize } from 'rxjs/operators';
-import { Role } from '@app/_models';
+import { Role, Schedule } from '@app/_models';
 
 // array in local storage for registered users
 const usersKey = 'users';
@@ -11,6 +11,8 @@ users.push({ id: 1, username: 'admin', password: 'admin', fullname: 'HR Admin', 
 
 //array in local storage for departments
 const departmentsKey = 'departments';
+const schedulesKey = 'schedules';
+const schedules = JSON.parse(localStorage.getItem(schedulesKey)) || [];
 let departments = JSON.parse(localStorage.getItem(departmentsKey)) || [];
 
 @Injectable()
@@ -43,11 +45,29 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return addDepartment();
                 case url.match(/\/departments\/\d+$/) && method === 'GET':
                     return getDepartmentById();
+                //add schedule users/:id/schedule
+                case url.match(/\/users\/\d+\/schedule$/) && method === 'POST':
+                    return addSchedule();
+   
+                case url.endsWith('/schedule') && method === 'GET':
+                    return getSchedules();
+                // //get schedule by id /schedule/supervisor/:scheduleID
+                // case url.match(/\/schedule\/supervisor\/\d+$/) && method === 'GET':
+                //     return getScheduleBySupervisorId();
+                // //get schedule by id /schedule/employee/:scheduleID
+                // case url.match(/\/schedule\/employee\/\d+$/) && method === 'GET':
+                //     return getScheduleByEmployeeId();
+                // //update schedule /schedule/:scheduleID
+                // case url.match(/\/schedule\/\d+$/) && method === 'PUT':
+                //     return updateSchedule();
                 case url.match(/\/departments\/request\/\d+$/) && method === 'POST':
                     return addRequest();
                 //add employee to department
                 case url.match(/\/departments\/Employee\/\d+$/) && method === 'POST':
                     return addEmployee();
+                //departments/:departmentID/employee/schedule
+                case url.match(/\/departments\/\d+\/employee\/schedule$/) && method === 'POST':
+                    return addsEmployeeSchedule();
                 //add review to request as departments/:departmentID/request/:requestID/review
                 case url.match(/\/departments\/\d+\/request\/\d+\/review$/) && method === 'POST':
                     return addReview();
@@ -146,8 +166,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         function basicDetails(user) {
-            const { id, username, fullname, email, role, department ,position } = user;
-            return { id, username, fullname, email, role, department,  position };
+            const { id, username, fullname, email, role, department, position, schedules } = user;
+            return { id, username, fullname, email, role, department,  position, schedules };
         }
 
         function isEmployee() {
@@ -183,16 +203,12 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         function departmentDetails(department) {
-            const { departmentID, name, address, city, employees, requests } = department;
-            return { departmentID, name, address, city, employees, requests };
+            const { departmentID, name, employees, requests , supervisors } = department;
+            return { departmentID, name, employees, requests  , supervisors};
         }
 
         function addDepartment() {
             const department = body
-
-            if (departments.find(x => x.name === department.name) && departments.find(x => x.city === department.city)) {
-                return error('Department "' + department.name + '" already exists in this city!')
-            }
 
             department.departmentID = departments.length ? Math.max(...departments.map(x => x.departmentID)) + 1 : 1;
             departments.push(department);
@@ -244,6 +260,50 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             return ok();
         }
 
+        function addsEmployeeSchedule() {
+            if (!isLoggedIn()) return unauthorized();
+
+            let params = body;
+            let department = departments.find(x => x.departmentID === idFromUrl());
+
+            department.employees.push(params.Employee);
+            localStorage.setItem(departmentsKey, JSON.stringify(departments));
+
+            return ok();
+
+        }
+
+        function addSchedule() {
+            if (!isLoggedIn()) return unauthorized();
+
+            //get userID from url without idFromUrl()
+            let uID = url.split('/')[4];
+ 
+            let params = body;
+            let user = users.find(x => x.id === parseInt(uID));
+            let schedule = params as Schedule;
+
+            user.schedules.push(schedule);
+            localStorage.setItem(usersKey, JSON.stringify(users));
+            localStorage.setItem('user', JSON.stringify(user));
+            return ok();
+
+        }
+
+        function getSchedules() {
+            if (!isLoggedIn()) return unauthorized();
+            let schedules = [];
+            users.forEach(user => {
+                user.schedules?.forEach(schedule => {
+                    schedule.userID = user.id;
+                    schedule.fullname = user.username;
+                    schedule.supervisorID = user.supervisorID;
+                    schedules.push(schedule);
+                });
+            });
+            return ok(schedules);
+        }
+
 
 
         function addReview() {
@@ -265,7 +325,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             params.reviewDate = new Date().getDate() + "/" + (new Date().getMonth() + 1) + "/" + new Date().getFullYear();
             request.reviews.push(params);
 
-            let user = users.find(x => x.id === params.volunteer.id);
+            let user = users.find(x => x.id === params.User.id);
             user.reviews.push(params);
             localStorage.setItem(usersKey, JSON.stringify(users));
             localStorage.setItem(departmentsKey, JSON.stringify(departments));

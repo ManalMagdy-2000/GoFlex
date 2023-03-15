@@ -19,7 +19,7 @@ import { IconModule } from '@coreui/icons-angular';
 import { ReviewComponent } from './reviews';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { EmployeesComponent } from './employees/employees.component';
-import { SupervisorsComponent } from './supervisors/supervisors.component';
+import { ScheduleReviewComponent } from './schedules/schedule-review.component';
 
 @NgModule({
     imports: [
@@ -55,7 +55,7 @@ import { SupervisorsComponent } from './supervisors/supervisors.component';
         RequestComponent,
         ReviewComponent,
         EmployeesComponent,
-        SupervisorsComponent
+        ScheduleReviewComponent
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

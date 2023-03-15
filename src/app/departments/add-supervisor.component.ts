@@ -1,39 +1,38 @@
-﻿import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
-import { AccountService, AlertService } from '@app/_services';
+import {AlertService, AccountService } from '@app/_services';
+import { EmployeeService } from '@app/_services/employee.service';
+import { Role, Department } from '@app/_models';
 
-@Component({ templateUrl: 'add-edit.component.html' })
-export class AddEditComponent implements OnInit {
+@Component({ templateUrl: 'add-supervisor.component.html' })
+export class  AddSupervisorComponent implements OnInit {
     form: UntypedFormGroup;
-    id: string;
+    username: string; //employeeID
     isAddMode: boolean;
-    isEmployee: boolean;
-    isSupervisor:boolean;
+    department: Department;
     loading = false;
     submitted = false;
-    departments = [];
 
     constructor(
         private formBuilder: UntypedFormBuilder,
         private route: ActivatedRoute,
         private router: Router,
+        private employeeService: EmployeeService,
         private accountService: AccountService,
         private alertService: AlertService
     ) {}
 
     ngOnInit() {
-        this.id = this.route.snapshot.params['id'];
-        this.isAddMode = !this.id;
-        this.isEmployee = this.accountService.userValue.role === 'Employee';
-        this.isSupervisor = this.accountService.userValue.role === 'User';
-
+        this.username = this.route.snapshot.params['id'];
+        this.isAddMode = !this.username;
 
         // password not required in edit mode
         const passwordValidators = [Validators.pattern('(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}')];
         const emailVal = [ Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')];
+
 
         if (this.isAddMode) {
             passwordValidators.push(Validators.required);
@@ -42,27 +41,18 @@ export class AddEditComponent implements OnInit {
             emailVal.push(Validators.required);
         }
 
-        if(this.isEmployee) {
-            this.form = this.formBuilder.group({
-                fullname: ['', Validators.required],
-                email: ['', emailVal],
-                password: ['', passwordValidators],
-                position: ['', Validators.required],
 
-            });
-        }
-        else {
-            this.form = this.formBuilder.group({
-                fullname: ['', Validators.required],
-                email: ['', emailVal],
-
-                password: ['', passwordValidators],
-
-            });
-        }
+        this.form = this.formBuilder.group({
+            firstName: ['', Validators.required],
+            lastName: ['', Validators.required],
+            username: ['', Validators.required],
+            password: ['', passwordValidators],
+            role: [Role.User], //supervisor
+            employee: [this.username]
+        });
 
         if (!this.isAddMode) {
-            this.accountService.getById(this.id)
+            this.employeeService.getEmployeeById(this.username)
                 .pipe(first())
                 .subscribe(x => this.form.patchValue(x));
         }
@@ -83,21 +73,23 @@ export class AddEditComponent implements OnInit {
         }
 
         this.loading = true;
-        if (this.isAddMode) {
+
             this.createUser();
-        } else {
-            this.updateUser();
-        }
+        // } else {
+        //     this.updateUser();
+        // }
+
     }
 
-
-    private createUser() {
-        this.accountService.register(this.form.value)
+    private addSupervisor() {
+        this.employeeService.addSupervisor(this.username, this.form.value)
             .pipe(first())
             .subscribe({
                 next: () => {
-                    this.alertService.success('User added successfully', { keepAfterRouteChange: true });
-                    this.router.navigate(['../'], { relativeTo: this.route });
+                    this.alertService.success('Request added successfully', { keepAfterRouteChange: true });
+                    this.router.navigate(['/departments'], { relativeTo: this.route });
+                    window.location.reload();
+
                 },
                 error: error => {
                     this.alertService.error(error);
@@ -106,13 +98,15 @@ export class AddEditComponent implements OnInit {
             });
     }
 
-    private updateUser() {
-        this.accountService.update(this.id, this.form.value)
+    private createUser() {
+        this.accountService.register(this.form.value)
             .pipe(first())
             .subscribe({
                 next: () => {
-                    this.alertService.success('Update successful', { keepAfterRouteChange: true });
+                    this.alertService.success('User added successfully', { keepAfterRouteChange: true });
+                    this.addSupervisor();
                     this.router.navigate(['../'], { relativeTo: this.route });
+
                 },
                 error: error => {
                     this.alertService.error(error);
@@ -121,3 +115,4 @@ export class AddEditComponent implements OnInit {
             });
     }
 }
+

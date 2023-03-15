@@ -3,11 +3,12 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
-import { AccountService, AlertService } from '@app/_services';
+import { AccountService, AlertService, ScheduleService } from '@app/_services';
 
-@Component({ templateUrl: 'add-edit.component.html' })
-export class AddEditComponent implements OnInit {
+@Component({ templateUrl: 'schedule-review.component.html' })
+export class ScheduleReviewComponent implements OnInit {
     form: UntypedFormGroup;
+    form2: UntypedFormGroup;
     id: string;
     isAddMode: boolean;
     isEmployee: boolean;
@@ -15,12 +16,15 @@ export class AddEditComponent implements OnInit {
     loading = false;
     submitted = false;
     departments = [];
+    schedules = [];
+    selectedSchedule = null;
 
     constructor(
         private formBuilder: UntypedFormBuilder,
         private route: ActivatedRoute,
         private router: Router,
         private accountService: AccountService,
+        private scheduleService: ScheduleService,
         private alertService: AlertService
     ) {}
 
@@ -29,6 +33,8 @@ export class AddEditComponent implements OnInit {
         this.isAddMode = !this.id;
         this.isEmployee = this.accountService.userValue.role === 'Employee';
         this.isSupervisor = this.accountService.userValue.role === 'User';
+        this.scheduleService.getAllSchedules().pipe(first())
+        .subscribe(x => this.schedules = x);
 
 
         // password not required in edit mode
@@ -44,32 +50,31 @@ export class AddEditComponent implements OnInit {
 
         if(this.isEmployee) {
             this.form = this.formBuilder.group({
-                fullname: ['', Validators.required],
-                email: ['', emailVal],
-                password: ['', passwordValidators],
-                position: ['', Validators.required],
-
+                workHours: ['', Validators.required],
+                workLocation: ['', Validators.required],
+                workReport: ['', Validators.required],
+            });
+            this.form2 = this.formBuilder.group({
+                date: ['', Validators.required],
             });
         }
         else {
             this.form = this.formBuilder.group({
-                fullname: ['', Validators.required],
-                email: ['', emailVal],
-
-                password: ['', passwordValidators],
+                workHours: ['', Validators.required],
+                workLocation: ['', Validators.required],
+                workReport: ['', Validators.required],
 
             });
-        }
 
-        if (!this.isAddMode) {
-            this.accountService.getById(this.id)
-                .pipe(first())
-                .subscribe(x => this.form.patchValue(x));
+            this.form2 = this.formBuilder.group({
+                date: ['', Validators.required],
+            });
         }
     }
 
     // convenience getter for easy access to form fields
     get f() { return this.form.controls; }
+    get f2() { return this.form2.controls; }
 
     onSubmit() {
         this.submitted = true;
@@ -82,17 +87,31 @@ export class AddEditComponent implements OnInit {
             return;
         }
 
+        this.form.value.date = this.form2.value.date;
+        this.form.value.supervisorComments = "";
+
+        console.log(this.form.value);
         this.loading = true;
-        if (this.isAddMode) {
-            this.createUser();
-        } else {
-            this.updateUser();
+        this.addSchedule();
+    }
+
+    checkDate() {
+        if (this.form2.invalid) {
+            console.log("invalid");
+            return;
         }
+        this.selectedSchedule = this.form2.value.date
+        this.schedules = []
+        this.scheduleService.getAllSchedules().pipe(first())
+        .subscribe(x => this.schedules = x);
+
+        // this.selectedSchedule.push(this.schedules.find(x => x.date === this.form2.value.date));
+       
     }
 
 
-    private createUser() {
-        this.accountService.register(this.form.value)
+    private addSchedule() {
+        this.scheduleService.addSchedule(this.form.value, this.id)
             .pipe(first())
             .subscribe({
                 next: () => {

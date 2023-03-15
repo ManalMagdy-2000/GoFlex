@@ -1,22 +1,25 @@
-﻿import { Component, OnInit } from '@angular/core';
+import { DepartmentService } from '@app/_services';
+import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
-
-import { AccountService, AlertService, DepartmentService } from '@app/_services';
+import { BehaviorSubject } from 'rxjs';
+import { AccountService, AlertService } from '@app/_services';
+import { EmployeeService } from '@app/_services/employee.service';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { Role, Department } from '@app/_models';
+import { Role, User } from '@app/_models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalService } from '@coreui/angular';
 
-@Component({ templateUrl: 'list.component.html' })
-export class ListComponent implements OnInit {
+@Component({ templateUrl: 'listsupervisor.component.html' })
+export class ListsupervisorComponent implements OnInit {
+    employees = null;
     departments = null;
     form: UntypedFormGroup;
     form2: UntypedFormGroup;
-    departmentID: string;
+    username: string; //employee ID
     requestID: string;
     isAddMode: boolean;
     isSupervisor = false;
-    department: Department;
+    employee: Role.Employee;
     requests: Request[];
     loading = false;
     submitted = false;
@@ -25,7 +28,8 @@ export class ListComponent implements OnInit {
         private formBuilder: UntypedFormBuilder,
         private route: ActivatedRoute,
         private router: Router,
-        private departmentService: DepartmentService,
+        private employeeService: EmployeeService,
+        private departmentService : DepartmentService,
         private accountService: AccountService,
         private alertService: AlertService,
         private modal: ModalService
@@ -33,14 +37,18 @@ export class ListComponent implements OnInit {
 
 
     ngOnInit() {
-        this.departmentService.getAllDepartments()
+
+
+        this.accountService.getAll()
             .pipe(first())
-            .subscribe(departments => this.departments = departments);
+            .subscribe(employees => this.employees = employees);
 
 
-        // this.departmentID = this.route.snapshot.params['departmentID'];
-        // this.requestID = this.route.snapshot.params['requestID'];
-        this.isAddMode = !this.departmentID;
+
+
+
+
+        this.isAddMode = !this.username; //employee ID
 
         // password not required in edit mode
         const passwordValidators = [Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')];
@@ -57,29 +65,25 @@ export class ListComponent implements OnInit {
         this.form = this.formBuilder.group({
             name: ['', Validators.required],
             requests: [[]],
-            employees: [[]],
             supervisors: [[]]
         });
 
-        console.log(this.departmentID)
+        console.log(this.username) //employee ID
         this.form2 = this.formBuilder.group({
             fullname: ['', Validators.required],
             email: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')]],
-            username: ['', Validators.required],
+            username: ['', Validators.required], //employeee ID
             password: ['', passwordValidators],
             position: ['', Validators.required],
-            role: [Role.Employee],
-            department: [this.departmentID],
-            role2:['' , this.isSupervisor], //supervisor
-            supervisorID : ['' , this.isSupervisor ? Validators.required : ''] ,
-            supervisorName : ['' , this.isSupervisor ? Validators.required : ''] ,
+            role: [Role.User], //supervisor
+            employee: Role.Employee,
             status :"NEW",
-            schedules: [[]]
+            schedules: [[]],
         });
 
 
         if (!this.isAddMode) {
-            this.departmentService.getDepartmentById(this.departmentID)
+            this.employeeService.getEmployeeById(this.username) //employee ID
                 .pipe(first())
                 .subscribe(x => this.form.patchValue(x));
         }
@@ -90,27 +94,6 @@ export class ListComponent implements OnInit {
 
     get f2() { return this.form2.controls; }
 
-    onSubmit() {
-        this.submitted = true;
-        console.log(this.form)
-        // reset alerts on submit
-        this.alertService.clear();
-
-        // stop here if form is invalid
-        if (this.form.invalid) {
-            return;
-        }
-
-
-
-        this.loading = true;
-
-            this.createDepartment();
-        // } else {
-        //     this.updateUser();
-        // }
-
-    }
 
     reset(){
       this.isSupervisor = false;
@@ -131,8 +114,8 @@ export class ListComponent implements OnInit {
         this.loading = true;
         //toggle modal
 
-        this.form2.patchValue({department: this.departmentID});
-        this.createUser();
+        this.form2.patchValue({employee: this.username});
+        this.createUser(); //create supervisor
         // } else {
         //     this.updateUser();
         // }
@@ -140,26 +123,13 @@ export class ListComponent implements OnInit {
     }
 
 
-    setID(departmentID: string) {
-        this.departmentID = departmentID;
+    setID(username: string) {
+        this.username = username;
     }
 
-    private createDepartment() {
-        this.departmentService.addDepartment(this.form.value)
-            .pipe(first())
-            .subscribe({
-                next: () => {
-                    this.alertService.success('Department added successfully', { keepAfterRouteChange: true });
-                },
-                error: error => {
-                    this.alertService.error(error);
-                    this.loading = false;
-                }
-            });
-    }
 
-    private addEmployee() {
-        this.departmentService.addEmployee(this.departmentID, this.form2.value)
+    private addSupervisor() {
+        this.employeeService.addSupervisor(this.username, this.form2.value)
             .pipe(first())
             .subscribe({
                 next: () => {
@@ -182,13 +152,13 @@ export class ListComponent implements OnInit {
       }
     }
 
-    private createUser() {
+    private createUser() { //create supervisor
         this.accountService.register(this.form2.value)
             .pipe(first())
             .subscribe({
                 next: () => {
-                    this.alertService.success('Employee added successfully', { keepAfterRouteChange: true });
-                    this.addEmployee();
+                    this.alertService.success('supervisor  added successfully', { keepAfterRouteChange: true });
+                    this.addSupervisor();
                     this.router.navigate(['../'], { relativeTo: this.route });
                 },
                 error: error => {

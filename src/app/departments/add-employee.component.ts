@@ -47,7 +47,8 @@ export class  AddEmployeeComponent implements OnInit {
             username: ['', Validators.required],
             password: ['', passwordValidators],
             role: [Role.Employee],
-            department: [this.departmentID]
+            department: [this.departmentID],
+            schedules: [[]],
         });
 
         if (!this.isAddMode) {
