@@ -127,11 +127,6 @@ export class AppComponent {
             url: `/users/${this.user?.id}/schedule`,
             iconComponent: { name: 'cil-list-numbered' },
           },
-          {
-            name: 'Review Schedules',
-            url: `/schedule`,
-            iconComponent: { name: 'cil-list-numbered' },
-          },
         )
       }
 
@@ -151,6 +146,11 @@ export class AppComponent {
             //   text: 'NEW',
             //   size: 'lg',
             // }
+          },
+          {
+            name: 'Review Schedules',
+            url: `/schedule`,
+            iconComponent: { name: 'cil-list-numbered' },
           },
 
         )
