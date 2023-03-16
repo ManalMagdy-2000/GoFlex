@@ -21,6 +21,7 @@ import { EmployeesComponent } from './employees/employees.component';
 import { SupervisorsComponent } from './supervisors/supervisors.component';
 import { ReviewRequestComponent } from './review-request/review-request.component';
 import { ScheduleReviewComponent } from './schedules/schedule-review.component';
+import { AddEditComponent } from './users/add-edit.component';
 
 @NgModule({
     imports: [
@@ -57,7 +58,7 @@ import { ScheduleReviewComponent } from './schedules/schedule-review.component';
         EmployeesComponent,
         SupervisorsComponent,
         ReviewRequestComponent,
-        ScheduleReviewComponent
+        ScheduleReviewComponent,
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

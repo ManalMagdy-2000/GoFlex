@@ -7,6 +7,7 @@
 <button [cModalToggle]="scrollableLongContentModal.id" cButton size="lg" id="regDepartment"><img width="20px" src="../../assets/plus-svgrepo-com.svg" alt="arrow" loading="lazy">Submit Request</button>
 </div>
 <div class="p-4">
+  <h3 *ngIf="requests.length==0 " style="text-align: center;">No  request has been  made yet</h3>
  <div class="container">
   <c-accordion *ngFor="let request of requests" disabled>
     <c-accordion-item style="margin: 1rem 0;" #item0="cAccordionItem" [visible]="false">

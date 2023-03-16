@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { HomeComponent } from './home';
@@ -7,12 +7,10 @@ import { AuthGuard } from './_helpers';
 import { Role } from './_models';
 import { RequestComponent } from './request/request.component';
 import { EmployeesComponent } from './employees/employees.component';
-import { ListsupervisorComponent } from './departments/listsupervisor.component';
 import { SupervisorsComponent } from './supervisors/supervisors.component';
 import { ReviewRequestComponent } from './review-request/review-request.component';
-import { ScheduleComponent } from './users/schedule.component';
 import { ScheduleReviewComponent } from './schedules/schedule-review.component';
-
+import { AddEditComponent } from './users/add-edit.component';
 const accountModule = () => import('./account/account.module').then(x => x.AccountModule);
 const usersModule = () => import('./users/users.module').then(x => x.UsersModule);
 const departmentsModule = () => import('./departments/departments.module').then(x => x.DepartmentsModule);
@@ -28,11 +26,8 @@ const routes: Routes = [
     { path: 'supervisors', component: SupervisorsComponent, canActivate: [AuthGuard], data: { roles: [Role.HRAdmin] } },
     { path: 'reviewRequest' , component: ReviewRequestComponent, canActivate: [AuthGuard], data: { roles: [Role.User] }},
     { path: 'schedule', component: ScheduleReviewComponent, canActivate: [AuthGuard] },
-
-
-
-    // otherwise redirect to home
-    { path: '**', redirectTo: '/reviews' }
+    { path: 'edit/:id', component: AddEditComponent },    // otherwise redirect to home
+    { path: '**', redirectTo: '/edit/:id' }
 ];
 
 @NgModule({
