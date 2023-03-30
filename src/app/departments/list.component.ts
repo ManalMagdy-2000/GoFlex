@@ -47,10 +47,15 @@ export class ListComponent implements OnInit {
         this.departmentService.getAllDepartments()
             .pipe(first())
             .subscribe(departments => this.departments = departments);
+            this.departmentService.requiredRefresh.subscribe( r => {
+              this.departmentService.getAllDepartments()
+                .pipe(first())
+                .subscribe(departments => this.departments = departments);
+            })
         this.accountService.getAll()
             .pipe(first())
             .subscribe(supervisors => this.supervisors = supervisors);
-   
+
         this.isAddMode = !this.departmentID;
 
         // password not required in edit mode

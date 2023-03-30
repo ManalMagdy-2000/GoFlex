@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+
 
 import { environment } from '@environments/environment';
 import { Department, Request, User, Review } from '@app/_models';
-import { Role } from '../_models/role';
+import { Subject} from 'rxjs';
+import { tap } from 'rxjs/operators';
+
 
 @Injectable({ providedIn: 'root' })
 export class DepartmentService {
@@ -16,8 +17,17 @@ export class DepartmentService {
         private http: HttpClient
     ) { }
 
+    private _refreshrequired = new Subject<void>();
+    get requiredRefresh(){
+      return this._refreshrequired;
+    }
+
     addDepartment(department: Department) {
-        return this.http.post(`${environment.apiUrl}/departments/add`, department);
+        return this.http.post(`${environment.apiUrl}/departments/add`, department).pipe(
+          tap(() => {
+            this._refreshrequired.next(); // pipe and tap to trigger the next processa and show the departments without refreshing the page
+          })
+        );
     }
 
     getAllDepartments() {

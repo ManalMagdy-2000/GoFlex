@@ -11,6 +11,7 @@ import { SupervisorsComponent } from './supervisors/supervisors.component';
 import { ReviewRequestComponent } from './review-request/review-request.component';
 import { ScheduleReviewComponent } from './schedules/schedule-review.component';
 import { AddEditComponent } from './users/add-edit.component';
+import { LoginComponent } from './account/login.component';
 const accountModule = () => import('./account/account.module').then(x => x.AccountModule);
 const usersModule = () => import('./users/users.module').then(x => x.UsersModule);
 const departmentsModule = () => import('./departments/departments.module').then(x => x.DepartmentsModule);
