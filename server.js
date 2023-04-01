@@ -2,7 +2,6 @@ const express = require("express");
 /*CORS is used to open up the server for requests from different origins, which could otherwise be blocked.
 This allows for secure and controlled data sharing between different applications and services.*/
 const cors = require("cors");
-const bodyParser = require('body-parser');
 
 const app = express();
 
@@ -19,15 +18,6 @@ app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
-app.use(bodyParser.json());
-
-app.use((req , res , next) => {
-  console.log ( " server use - 1 set header");
-  res.setHeader("Access-control-Allow-Origin" , '*'); //no matter which domain still can run
-  res.setHeader("Access-Control-Allow-Headers" , "Origin , X-Requested-With , Content-Type , Accept"); //type of header allowed for incoming requests.
-  res.setHeader("Access-Control-Allow-Methods" , "GET , POST , DELETE , OPTIONS"); //http verbs used to send request
-  next();
-});
 
 
 

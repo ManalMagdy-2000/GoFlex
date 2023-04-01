@@ -10,25 +10,17 @@ HERE I used Express Router which provides  with a way to modularize routes and a
 */
   var router = require("express").Router();
 
-  // so the request goes into middleware stack and when it hits this  next line of code , it'll match the url and 2 middlware routers will run
-  app.use("/api/departments", router); // this process called mounting routers
-
-
-
-  /*
-  So basically here the / or the root directory refers to url we defined already in router variable
-  */
- // Create a new department
+  // Create a new department
   router.post("/", departments.create);
 
   // Retrieve all Departments
-  router.get("/", departments.findAll);
+  router.get("/getall", departments.findAll);
 
   // Retrieve a single Department with id
-  router.get("/:id", departments.findOne);// api/department/:id
+  router.get("/:id", departments.findOne);
 
   // Add admin to department
-  router.post("/:id/employee", departments.addEmployee); //api/department/:id/employee
+  router.post("/:id/employee", departments.addEmployee);
 
   // Update a Department with id
   router.put("/:id", departments.update);
@@ -39,7 +31,5 @@ HERE I used Express Router which provides  with a way to modularize routes and a
   // Delete a all departments
   router.delete("/", departments.deleteAll);
 
-
+  app.use("/api/departments", router);
 };
-
-

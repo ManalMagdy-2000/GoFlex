@@ -26,14 +26,15 @@ export class HomeComponent {
         if(this.isEmployee) {
           this.departmentService.getDepartmentById(this.user.department).subscribe(department => {
             this.department = department;
-  
+
             console.log( this.department )
           });
         }
         else {
           this.departmentService.getAllDepartments().subscribe(departments => {
             this.departments = departments;
-            departments.forEach(department => {
+
+           /*departments.forEach(department => {
                 this.departmentsCount = departments.length;
                 this.departmentRequestsCount = department.requests.length;
                 this.depEmployeeCount = department.employees.length;
@@ -51,7 +52,7 @@ export class HomeComponent {
                   hybrid: this.depReq3
                 }});
                 console.log( this.statsArray )
-            });
+            });*/
 
             console.log( this.departments )
           })
@@ -64,7 +65,7 @@ export class HomeComponent {
                     console.log(user.schedules)
                     if(user.schedules) {
                       stat.stats.schedules = user.schedules.length;
-                      //filter unique dates store earliest date and latest date 
+                      //filter unique dates store earliest date and latest date
                       let uniqueDates = user.schedules.filter((v,i,a)=>a.findIndex(t=>(t.date === v.date))===i);
                       stat.stats.earliestDate = uniqueDates[0].date;
                       stat.stats.latestDate = uniqueDates[uniqueDates.length - 1].date;
@@ -77,7 +78,7 @@ export class HomeComponent {
                       }
                       )
                       stat.stats.workHoursCount = workHoursCount;
-                      
+
                     }
                   }
                 })

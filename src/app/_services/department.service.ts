@@ -7,6 +7,7 @@ import { environment } from '@environments/environment';
 import { Department, Request, User, Review } from '@app/_models';
 import { Subject} from 'rxjs';
 import { tap } from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 
 
 @Injectable({ providedIn: 'root' })
@@ -23,7 +24,20 @@ export class DepartmentService {
     }
 
     addDepartment(department: Department) {
-        return this.http.post(`${environment.apiUrl}/departments/add`, department).pipe(
+     /* let id = "642715820c226e9f0b9ddfe9";
+      this.http.get<Department[]>(`${environment.apiUrl}/api/departments`);
+      this.http.get('http://localhost:8080/api/departments');
+      this.http.get<{ departmentID: string,
+        name: string,
+        employees: any ,
+        requests: any }>('http://localhost:8080/api/departments/642715820c226e9f0b9ddfe9');
+      this.http.get <{ departmentID: string,
+        name: string,
+        employees: any ,
+        requests: any }>(`${environment.apiUrl}/api/departments/${id}`);*/
+
+
+        return this.http.post(`${environment.apiUrl}/api/departments`, department).pipe(
           tap(() => {
             this._refreshrequired.next(); // pipe and tap to trigger the next processa and show the departments without refreshing the page
           })
@@ -31,11 +45,18 @@ export class DepartmentService {
     }
 
     getAllDepartments() {
-        return this.http.get<Department[]>(`${environment.apiUrl}/departments`);
+
+       return this.http.get<Department[]>(`${environment.apiUrl}/api/departments/getall`);
     }
 
     getDepartmentById(id: string) {
-        return this.http.get<Department>(`${environment.apiUrl}/departments/${id}`);
+       // return this.http.get<Department>(`${environment.apiUrl}/departments/${id}`);
+       let res =  this.http.get<{ departmentID: string,
+        name: string,
+        employees: any ,
+        requests: any }>('http://localhost:8080/api/departments/642715820c226e9f0b9ddfe9');
+        res.subscribe(response => console.log("resp****" ,response));
+        return res;
     }
 
     addRequest(id: string, request: Request) {

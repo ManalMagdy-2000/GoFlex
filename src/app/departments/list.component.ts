@@ -7,6 +7,7 @@ import { Role, Department } from '@app/_models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalService } from '@coreui/angular';
 import { User } from '@app/_models';
+import random from '@angular-devkit/schematics/src/rules/random';
 @Component({ templateUrl: 'list.component.html' })
 export class ListComponent implements OnInit {
     departments = null;
@@ -44,13 +45,15 @@ export class ListComponent implements OnInit {
 
 
     ngOnInit() {
-        this.departmentService.getAllDepartments()
+          this.departmentService.getAllDepartments()
             .pipe(first())
-            .subscribe(departments => this.departments = departments);
+            .subscribe(departments => {this.departments = departments
+          });
             this.departmentService.requiredRefresh.subscribe( r => {
               this.departmentService.getAllDepartments()
                 .pipe(first())
-                .subscribe(departments => this.departments = departments);
+                .subscribe(departments => {this.departments = departments
+              });
             })
         this.accountService.getAll()
             .pipe(first())
@@ -106,7 +109,7 @@ export class ListComponent implements OnInit {
 
     onSubmit() {
         this.submitted = true;
-        console.log(this.form)
+        console.log(this.form.value)
         // reset alerts on submit
         this.alertService.clear();
 
@@ -156,7 +159,9 @@ export class ListComponent implements OnInit {
     }
 
     private createDepartment() {
-        this.departmentService.addDepartment(this.form.value)
+      const dep  = new Department;
+      dep.name = this.form.value.name;
+        this.departmentService.addDepartment(dep)
             .pipe(first())
             .subscribe({
                 next: () => {
