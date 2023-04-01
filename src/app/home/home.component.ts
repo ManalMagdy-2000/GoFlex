@@ -2,6 +2,9 @@
 
 import { Role, Department, User } from '@app/_models';
 import { AccountService, DepartmentService, ScheduleService } from '@app/_services';
+import { TestDepartment } from '@app/_models/TestDepartment';
+
+import { map } from 'rxjs/operators';
 
 @Component({ templateUrl: 'home.component.html' })
 export class HomeComponent {
@@ -19,6 +22,8 @@ export class HomeComponent {
     depReq3 = 0;
     statsArray = [];
 
+    private testDep: TestDepartment[] = [];
+
     constructor(private accountService: AccountService, private departmentService: DepartmentService, private scheduleService: ScheduleService) {
         this.user = this.accountService.userValue;
         console.log(this.user)
@@ -26,21 +31,38 @@ export class HomeComponent {
         if(this.isEmployee) {
           this.departmentService.getDepartmentById(this.user.department).subscribe(department => {
             this.department = department;
-
             console.log( this.department )
           });
         }
         else {
-          this.departmentService.getAllDepartments().subscribe(departments => {
-            this.departments = departments;
+          /*
+          Here it's  using the RxJS library to handle asynchronous data streams. It is calling a method called "getAllDepartments" from department Service
+           and then using the "pipe" method to apply a series of operators to the data stream that is returned.
+          The "map" operator is used to transform the data in the stream. In this case, it is taking the "alldeps" property from the "depList" object
+          and mapping it to a new array of objects that only contain the "name" and "departmentID" properties.
+           The final result is an observable that emits an array of objects with the "name" and "departmentID" properties for each department in the original data stream.
+          */
+          this.departmentService.getAllDepartments()
+          .pipe( map ((depList) => {
+            return depList.alldeps.map( dep => {
+              return {
+                name: dep.name,
+                departmentID: dep.departmentID
+              }
+            }
+            );
+          }))
+          .subscribe(depsTransformed => {
+            this.departments = depsTransformed;
 
-           /*departments.forEach(department => {
-                this.departmentsCount = departments.length;
-                this.departmentRequestsCount = department.requests.length;
+
+            depsTransformed.forEach(department => {
+                this.departmentsCount = depsTransformed.length;
+               /* this.departmentRequestsCount = department.requests.length;
                 this.depEmployeeCount = department.employees.length;
                 this.depReq1 = department.requests.filter(request => request.status == "flexi").length;
                 this.depReq2 = department.requests.filter(request => request.status == "wfh").length;
-                this.depReq3 = department.requests.filter(request => request.status == "hybrid").length;
+                this.depReq3 = department.requests.filter(request => request.status == "hybrid").length;*/
                 this.statsArray.push({
                   id: department.departmentID,
                   stats: {
@@ -51,10 +73,10 @@ export class HomeComponent {
                   wfh: this.depReq2,
                   hybrid: this.depReq3
                 }});
-                console.log( this.statsArray )
-            });*/
+                //console.log( this.statsArray )
+            });
 
-            console.log( this.departments )
+           // console.log( this.departments )
           })
           this.accountService.getAll().subscribe(users => {
             this.users = users;

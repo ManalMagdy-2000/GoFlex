@@ -7,7 +7,7 @@ import { Role, Department } from '@app/_models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalService } from '@coreui/angular';
 import { User } from '@app/_models';
-import random from '@angular-devkit/schematics/src/rules/random';
+import { map } from 'rxjs/operators';
 @Component({ templateUrl: 'list.component.html' })
 export class ListComponent implements OnInit {
     departments = null;
@@ -45,17 +45,37 @@ export class ListComponent implements OnInit {
 
 
     ngOnInit() {
+        this.departmentService.getAllDepartments()
+        .pipe( map ((depList) => {
+          return depList.alldeps.map( dep => {
+            return {
+              name: dep.name,
+              departmentID: dep.departmentID
+            }
+          }
+          );
+        }))
+        .subscribe(departments => {this.departments = departments
+        });
+
+
+        this.departmentService.requiredRefresh.subscribe( r => { //list new departments without refreshing the page
           this.departmentService.getAllDepartments()
-            .pipe(first())
-            .subscribe(departments => {this.departments = departments
+          .pipe( map ((depList) => {
+            return depList.alldeps.map( dep => {
+              return {
+                name: dep.name,
+                departmentID: dep.departmentID
+              }
+            }
+            );
+          }))
+          .subscribe(departments => {this.departments = departments
           });
-            this.departmentService.requiredRefresh.subscribe( r => {
-              this.departmentService.getAllDepartments()
-                .pipe(first())
-                .subscribe(departments => {this.departments = departments
-              });
-            })
-        this.accountService.getAll()
+        })
+
+
+          this.accountService.getAll()
             .pipe(first())
             .subscribe(supervisors => this.supervisors = supervisors);
 

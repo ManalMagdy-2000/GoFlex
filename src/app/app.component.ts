@@ -30,7 +30,8 @@ export class AppComponent {
           });
         }
         this.departmentService.getAllDepartments().subscribe(departments => {
-          this.departmentsCount = departments.length;
+         // this.departmentsCount = departments.length; // TODO : process/transform data here and set the length
+         this.departmentsCount = 1;
           console.log( this.departmentsCount )
         })
         iconSet.icons = { cilListNumbered, cilPaperPlane, cilHome, cilBank, cilUser, ...brandSet };

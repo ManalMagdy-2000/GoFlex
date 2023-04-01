@@ -65,6 +65,19 @@ exports.findAll = (req, res) => {
   );
  }
 
+
+ // Retrieve all Departments from the database. - test
+exports.findAllTest = (req, res) => {
+  // Fetch all data
+  Department.find().then(
+    deps=> {
+      res.status(200).json({
+        message : "send all departments data - test",
+        alldepstest : deps
+      })
+    }
+  );
+ }
 /*
 It creates a user in the database and then searches for a department by its ID.
 It sets the department and positions information on the user object and then adds the user to the department's employees array.

@@ -24,18 +24,6 @@ export class DepartmentService {
     }
 
     addDepartment(department: Department) {
-     /* let id = "642715820c226e9f0b9ddfe9";
-      this.http.get<Department[]>(`${environment.apiUrl}/api/departments`);
-      this.http.get('http://localhost:8080/api/departments');
-      this.http.get<{ departmentID: string,
-        name: string,
-        employees: any ,
-        requests: any }>('http://localhost:8080/api/departments/642715820c226e9f0b9ddfe9');
-      this.http.get <{ departmentID: string,
-        name: string,
-        employees: any ,
-        requests: any }>(`${environment.apiUrl}/api/departments/${id}`);*/
-
 
         return this.http.post(`${environment.apiUrl}/api/departments`, department).pipe(
           tap(() => {
@@ -45,18 +33,24 @@ export class DepartmentService {
     }
 
     getAllDepartments() {
-
-       return this.http.get<Department[]>(`${environment.apiUrl}/api/departments/getall`);
+       return this.http.get<{ alldeps :any}>(`${environment.apiUrl}/api/departments/getall`);
     }
 
+    getAllDepartmentsTest(){
+
+      return this.http.get<{ message : string , alldepstest :any}>(`${environment.apiUrl}/api/departments/getalltest`);
+
+    }
+
+
     getDepartmentById(id: string) {
-       // return this.http.get<Department>(`${environment.apiUrl}/departments/${id}`);
-       let res =  this.http.get<{ departmentID: string,
+        return this.http.get<Department>(`${environment.apiUrl}/departments/${id}`);
+       /*let res =  this.http.get<{ departmentID: string,
         name: string,
         employees: any ,
         requests: any }>('http://localhost:8080/api/departments/642715820c226e9f0b9ddfe9');
         res.subscribe(response => console.log("resp****" ,response));
-        return res;
+        return res;*/
     }
 
     addRequest(id: string, request: Request) {

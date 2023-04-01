@@ -16,6 +16,9 @@ HERE I used Express Router which provides  with a way to modularize routes and a
   // Retrieve all Departments
   router.get("/getall", departments.findAll);
 
+   // Retrieve all Departments
+   router.get("/getalltest", departments.findAllTest);
+
   // Retrieve a single Department with id
   router.get("/:id", departments.findOne);
 
