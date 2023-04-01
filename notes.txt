@@ -1,0 +1,14 @@
+-- MVC
+
+- we start with request , each requate hits with one of the routers , we have a router for one of each resourse
+
+the goal of the router  is to deligate the request to the correct handler function which should be in one of the controllers .
+-- there will be one controller for each of the resources to keep these diff parts of tha pp nicley seperated .
+
+- depending on the incomming requests controllers need to interact with models to retrive data from database or create .
+
+-there is one model file for each resource
+
+--after getting the data from the model , the controller will be ready to send back response to the client containing that data
+--incase we want  actaully  render website after getting the data from the model , the controller will select one of the view template and inject the data to it  and then that renderd website will be sending back as a response
+

@@ -1,6 +1,11 @@
+/* eslint-disable no-undef */
 /*
-Student Name : Manal Magdy Eid Khalil 
+Student Name : Manal Magdy Eid Khalil
 Student ID : B1901825
+*/
+/*
+Basically this department.controller file  is to handle application requests
+, interact with department model and to send back resposes to the clinet side
 */
 const db = require("../models");
 const Department = db.departments;
@@ -65,13 +70,13 @@ exports.create = (req, res) => {
 
 
 /*
-basically I exported .findAll  that takes two parameters, req and res. It then declares a const variable called name and assigns it the value of req.query.name.
+basically .findAll  that takes two parameters, req and res. It then declares a const variable called name and assigns it the value of req.query.name.
 A condition is then set which checks if there is a name present or not. If there is, a new regular expression object will be created with the given name. If not, an empty object will be created instead.
 The Department.find method is then called, passing in the condition, and populating its employees. A .then() block is then used to send the data if the operation is successful
 , otherwise a .catch() block is used to send an error message along with a status code of 500.
 */
 // Retrieve all Departments from the database.
-exports.findAll = (req, res) => {
+exports.findAll = (req, res) => { // instead of app. , I used exports to be able to access it from route file
     const name = req.query.name;
     var condition = name
         ? { name: { $regex: new RegExp(name), $options: "i" } }
@@ -99,7 +104,7 @@ It sets the department and positions information on the user object and then add
 //add employee to department
 exports.addEmployee = (req, res) => {
     db.users.create(req).then((user) => {
-        db.departments.findById(req.params.id).then((department) => {
+        db.departments.findById(req.params.id).then((department) => { // this ID comming from the router 
             user.department = department._id;
             user.position = req.body.position;
             department.employees.push(user._id);
