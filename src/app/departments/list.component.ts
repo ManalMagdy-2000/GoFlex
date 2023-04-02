@@ -75,9 +75,23 @@ export class ListComponent implements OnInit {
         })
 
 
-          this.accountService.getAll()
-            .pipe(first())
-            .subscribe(supervisors => this.supervisors = supervisors);
+        this.accountService.getAll()
+        .pipe( map ((userList) => {
+          return userList.allusers.map( user => {
+            return {
+              username: user.username,
+              password : user.password ,
+              email : user.email ,
+              position : user.position ,
+              department : user.department ,
+              role : user.role,
+              employeeID : user.employeeID ,
+              supervisorID : user.supervisorID
+            }
+          }
+          );
+        }))
+        .subscribe(supervisors => {this.supervisors = supervisors});
 
         this.isAddMode = !this.departmentID;
 
@@ -152,6 +166,7 @@ export class ListComponent implements OnInit {
 
     onSubmit2() {
         this.submitted = true;
+        console.log(this.form2.value)
         // reset alerts on submit
         this.alertService.clear();
 
@@ -219,7 +234,14 @@ export class ListComponent implements OnInit {
     }
 
     private createUser() {
-        this.accountService.register(this.form2.value)
+      const u  = new User;
+      u.username = this.form2.value.username;
+      u.fullname = this.form2.value.fullname;
+      u.email = this.form2.value.email;
+      u.password = this.form2.value.password;
+      u.position = this.form2.value.position;
+      u.role = this.form2.value.role;
+        this.accountService.register(u)
             .pipe(first())
             .subscribe({
                 next: () => {

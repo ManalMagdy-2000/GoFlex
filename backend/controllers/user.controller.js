@@ -8,44 +8,86 @@ const User = db.users;
 // Create and Save a new User
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.email) {
-    res.status(400).send({ message: "email  can not be empty!" });
+  if (!req.body.username) {
+    res.status(400).send({ message: "username  can not be empty!" });
     return;
   }
 
-  var count = 0;
+
+  /*var count = 0;
   User.find().count().then((data) => {
     count = data;
-    });
+    });*/
 
   //check if user exists
     User.findOne
-    ({email
-        : req.body.email
-    }, function(err, user) {
-        if (err) {
-            res.status(500).send({
-                message: err.message || "Some error occurred while creating the User.",
-            });
-        }
-        else if (user) {
-            res.status(400).send({
-                message: "User already exists.",
+    ({username : req.body.username})
+    .then(user => {
+      if (user) {
+         res.status(400).send({
+         message: "User already exists.",
             });
         }
         else {
+            //create a user
+              db.departments.findById(req.params.departmentID)
+                  .then((data) => {
+                    var count = 0;
+                    User.find().count().then((data) => {
+                      count = data;
+                    }).then( () => {
+                      const user = new User();
+                      user.employeeID =  "U" + (count + 1);
+                      user.username= req.body.username;
+                      user.email= req.body.email;
+                      user.password= req.body.password;
+                      user.fullname= req.body.fullname;
+                      user.role=req.body.role;
+                      //user.department= data._id;
+                      user.position= req.body.position;
+                      //user.supervisorID = req.body.supervisorID;
+                      // token= req.body.token;
+
+                      //save user in database
+                      user
+                      .save(user)
+                      .then((data) => {
+                        res.send(data);
+                      })
+                      .catch((err) => {
+                        res.status(500).send({
+                          message: err.message || "Some error occurred while creating the User.",
+                        });
+                      });
+
+                    })
+                  }
+                  )
+                  .catch((err) => {
+                    res.status(500).send({
+                    message: err.message || "Some error occurred while creating the Department.",
+                  });
+                });
 
 
 
-  // Create a User
-  if(req.body.role == "User") {
-    const user = new User({
+  // Create a supervisor
+  /*if( req.body.position == "User") {//  if( req.body.role == "User") {
+    var count = 0;
+    User.find().count().then((data) => {
+      count = data;
+    }).then( () => {
+      const user = new User({
         supervisorID: "S" + (count+1),
         username: req.body.username,
         password: req.body.password,
         fullname: req.body.fullname,
         email: req.body.email,
         role: req.body.role,
+        //department: data._id,
+        position : "Supervisor",
+        //position: req.body.position,
+        //employeeID : req.body.employeeID ,
         // token: req.body.token,
       });
       user
@@ -58,40 +100,47 @@ exports.create = (req, res) => {
           message: err.message || "Some error occurred while creating the User.",
         });
       });
+
+    })
   } else {
     db.departments.findById(req.params.departmentID)
         .then((data) => {
+          var count = 0;
+          User.find().count().then((data) => {
+            count = data;
+          }).then( () => {
             const user = new User({
-                employeeID: "E" + (count+1),
-                username: req.body.username,
-                password: req.body.password,
-                fullname: req.body.fullname,
-                email: req.body.email,
-                role: req.body.role,
-                // token: req.body.token,
-                department: data._id,
-                position: req.body.position,
-              });
-              user
-              .save(user)
-              .then((data) => {
-                res.send(data);
-              })
-              .catch((err) => {
-                res.status(500).send({
-                  message: err.message || "Some error occurred while creating the User.",
-                });
-              });
-            data.employees.push(user._id);
-            data.save();
-        }
-        ).catch((err) => {
-            res.status(500).send({
-                message: err.message || "Some error occurred while creating the User.",
+              employeeID: "E" + (count+1),
+              username: req.body.username,
+              password: req.body.password,
+              fullname: req.body.fullname,
+              email: req.body.email,
+              role: req.body.role,
+              //department: data._id,
+              position: req.body.position,
+              //supervisorID : req.body.supervisorID ,
+              // token: req.body.token,
             });
+            user
+            .save(user)
+            .then((data) => {
+              res.send(data);
+            })
+            .catch((err) => {
+              res.status(500).send({
+                message: err.message || "Some error occurred while creating the User.",
+              });
+            });
+
+          })
         }
-        );
-    }
+        )
+        .catch((err) => {
+          res.status(500).send({
+          message: err.message || "Some error occurred while creating the Department.",
+        });
+      });
+    }*/
 
         }
     });
@@ -146,21 +195,16 @@ exports.getCurrentUser = (req, res) => {
 
 // Retrieve all Users from the database.
 exports.findAll = (req, res) => {
-    const email = req.query.email;
-    var condition = email
-        ? { email: { $regex: new RegExp(email), $options: "i" } }
-        : {};
-
-    User.find(condition)
-        .then((data) => {
-        res.send(data);
-        })
-        .catch((err) => {
-        res.status(500).send({
-            message: err.message || "Some error occurred while retrieving users.",
-        });
-        });
-    };
+  // Fetch all data
+  User.find().then(
+    users=> {
+      res.status(200).json({
+        //message : "send all users data",
+        allusers : users
+      })
+    }
+  );
+ }
 
 // Find a single User with an id
 exports.findOne = (req, res) => {

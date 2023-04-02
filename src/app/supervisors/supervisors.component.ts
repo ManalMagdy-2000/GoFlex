@@ -8,6 +8,8 @@ import { first } from 'rxjs/operators';
 import { AccountService, AlertService, DepartmentService } from '@app/_services';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Role } from '@app/_models';
+import { User } from '@app/_models';
+import { map } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-supervisors',
@@ -41,9 +43,22 @@ export class SupervisorsComponent implements OnInit {
       role: [Role.User],
   });
 
-   this.accountService.getAll()
-    .pipe(first())
-    .subscribe(supervisors => this.supervisors = supervisors);
+  this.accountService.getAll()
+  .pipe( map ((userList) => {
+    return userList.allusers.map( user => {
+      return {
+        username: user.username,
+        position : user.position ,
+        /*email : user.email ,
+        department : user.department ,
+        role : user.role,*/
+        fullname : user.fullname ,
+        //supervisorID : user.supervisorID
+      }
+    }
+    );
+  }))
+  .subscribe(supervisors => {this.supervisors = supervisors});
 
   }
 
@@ -66,7 +81,14 @@ export class SupervisorsComponent implements OnInit {
 }
 
 private createUser() {
-  this.accountService.register(this.form.value)
+  const u  = new User;
+  u.username = this.form.value.username;
+  u.fullname = this.form.value.fullname;
+  u.email = this.form.value.email;
+  u.password = this.form.value.password;
+  u.position = this.form.value.position;
+  u.role = this.form.value.role;
+  this.accountService.register(u)
       .pipe(first())
       .subscribe({
           next: () => {

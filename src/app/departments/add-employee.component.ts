@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
+import { User } from '@app/_models';
 
 import { DepartmentService, AlertService, AccountService } from '@app/_services';
 import { Role, Department } from '@app/_models';
@@ -47,8 +48,7 @@ export class  AddEmployeeComponent implements OnInit {
 
 
         this.form = this.formBuilder.group({
-            firstName: ['', Validators.required],
-            lastName: ['', Validators.required],
+            fullname: ['', Validators.required],
             username: ['', Validators.required],
             password: ['', passwordValidators],
             role: [Role.Employee],
@@ -104,7 +104,14 @@ export class  AddEmployeeComponent implements OnInit {
     }
 
     private createUser() {
-        this.accountService.register(this.form.value)
+      const u  = new User;
+      u.username = this.form.value.username;
+      u.fullname = this.form.value.fullname;
+      u.email = this.form.value.email;
+      u.password = this.form.value.password;
+      u.position = this.form.value.position;
+      u.role = this.form.value.role;
+        this.accountService.register(u)
             .pipe(first())
             .subscribe({
                 next: () => {

@@ -42,11 +42,12 @@ export class AccountService {
     }
 
     register(user: User) {
-        return this.http.post(`${environment.apiUrl}/users/register`, user);
+        return this.http.post(`${environment.apiUrl}/api/users`, user);
     }
 
     getAll() {
-        return this.http.get<User[]>(`${environment.apiUrl}/users`);
+        //return this.http.get<User[]>(`${environment.apiUrl}/users`);
+        return this.http.get<{ allusers :any}>(`${environment.apiUrl}/api/users/getall`);
     }
 
     getById(id: string) {

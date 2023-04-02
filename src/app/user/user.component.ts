@@ -1,6 +1,6 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
-
+import { map } from 'rxjs/operators';
 import { User } from '@app/_models';
 import { AccountService } from '@app/_services';
 
@@ -13,10 +13,23 @@ export class UserComponent implements OnInit {
 
     ngOnInit() {
         this.loading = true;
-        this.userService.getAll().pipe(first()).subscribe(users => {
-            this.loading = false;
-            this.users = users;
-        });
+        this.userService.getAll()
+        .pipe( map ((userList) => {
+          return userList.allusers.map( user => {
+            return {
+              username: user.username,
+              password : user.password ,
+              email : user.email ,
+              position : user.position ,
+              department : user.department ,
+              role : user.role,
+              employeeID : user.employeeID ,
+              supervisorID : user.supervisorID
+            }
+          }
+          );
+        }))
+        .subscribe(users => {this.users = users});
     }
 }
 /*

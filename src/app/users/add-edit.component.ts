@@ -2,7 +2,7 @@
 import { Router, ActivatedRoute } from '@angular/router';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
-
+import { User } from '@app/_models';
 import { AccountService, AlertService } from '@app/_services';
 
 @Component({ templateUrl: 'add-edit.component.html' })
@@ -92,7 +92,14 @@ export class AddEditComponent implements OnInit {
 
 
     private createUser() {
-        this.accountService.register(this.form.value)
+      const u  = new User;
+      u.username = this.form.value.username;
+      u.fullname = this.form.value.fullname;
+      u.email = this.form.value.email;
+      u.password = this.form.value.password;
+      u.position = this.form.value.position;
+      u.role = this.form.value.role;
+        this.accountService.register(u)
             .pipe(first())
             .subscribe({
                 next: () => {

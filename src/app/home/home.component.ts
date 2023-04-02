@@ -78,7 +78,7 @@ export class HomeComponent {
 
            // console.log( this.departments )
           })
-          this.accountService.getAll().subscribe(users => {
+         /* this.accountService.getAll().subscribe(users => {
             this.users = users;
             users.forEach(user => {
               if(user.role == "Employee") {
@@ -107,7 +107,7 @@ export class HomeComponent {
               }
             })
             console.log( this.statsArray )
-          });
+          });*/
           this.scheduleService.getAllSchedules().subscribe(schedules => {
             this.schedules = schedules;
             console.log( this.schedules )

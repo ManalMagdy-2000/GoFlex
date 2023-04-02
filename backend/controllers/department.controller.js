@@ -9,7 +9,7 @@ const Department = db.departments;
 exports.create = (req, res) => {
   // Validate request
   if (!req.body.name) {
-    res.status(400).send({ message: "Content can not be empty  !" });
+    res.status(400).send({ message: "Department Name can not be empty  !" });
     return;
   }
   //check if department with same name  already exists

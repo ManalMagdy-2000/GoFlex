@@ -13,6 +13,7 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms
 import { Role, User } from '@app/_models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalService } from '@coreui/angular';
+import { map } from 'rxjs/operators';
 
 @Component({ templateUrl: 'listsupervisor.component.html' })
 export class ListsupervisorComponent implements OnInit {
@@ -44,9 +45,22 @@ export class ListsupervisorComponent implements OnInit {
     ngOnInit() {
 
 
-        this.accountService.getAll()
-            .pipe(first())
-            .subscribe(employees => this.employees = employees);
+      this.accountService.getAll()
+      .pipe( map ((userList) => {
+        return userList.allusers.map( user => {
+          return {
+            username: user.username,
+            position : user.position ,
+            /*email : user.email ,
+            department : user.department ,
+            role : user.role,*/
+            fullname : user.fullname ,
+            //supervisorID : user.supervisorID
+          }
+        }
+        );
+      }))
+      .subscribe(employees => {this.employees = employees});
 
 
 
@@ -158,7 +172,14 @@ export class ListsupervisorComponent implements OnInit {
     }
 
     private createUser() { //create supervisor
-        this.accountService.register(this.form2.value)
+      const u  = new User;
+      u.username = this.form2.value.username;
+      u.fullname = this.form2.value.fullname;
+      u.email = this.form2.value.email;
+      u.password = this.form2.value.password;
+      u.position = this.form2.value.position;
+      u.role = this.form2.value.role;
+        this.accountService.register(u)
             .pipe(first())
             .subscribe({
                 next: () => {
