@@ -46,30 +46,37 @@
                       </tr>
                       </thead>
                       <tbody>
-                        <td colSpan="7" *ngIf="department.employees?.length == 0">
+                        <!-----
+                          <td colSpan="7" *ngIf="department.employees?.length == 0"> in assignment 1
+                        -->
+                        <td colSpan="7" *ngIf="employees?.length == 0">
                           <h5 id="departmentErrMsg" class="infotext">No employee has been assigned yet!</h5>
                         </td>
-                    <tr *ngFor="let Employee of department.employees">
-                      <ng-container>
-                        <td>{{Employee.username}}</td>
-                        <td>{{Employee.fullname}}</td>
-                        <td>{{Employee.email}}</td>
-                        <td>{{Employee.position}}</td>
-                        <td>{{Employee.password}}</td>
-                        <td >
-                          <c-badge  color="success" shape="rounded-pill">{{Employee.status}}</c-badge>
-                        </td>
-                        <td>
-                          <select style="width:200px">
-                            <option *ngFor="let supervisor of supervisors" [value]="supervisor.username">
-                              <div *ngIf="supervisor.position =='Supervisor'">
-                                {{supervisor.username}}
-                              </div>
-                            </option>
-                          </select>
-                        </td>
-                        <!-- <td><button [cModalToggle]="addEmployee.id" class="btn btn-sm btn-primary mr-1" cButton (click)="setID(department.departmentID, request.requestID)">Review</button></td> -->
-                  </ng-container>
+                        <!--
+                    <tr *ngFor="let Employee of department.employees"> in assignment 1
+                            ---->
+                    <tr *ngFor="let Employee of employees">
+                        <ng-container  *ngIf="Employee.position !='Supervisor'">
+                          <td>{{Employee.username}}</td>
+                          <td>{{Employee.fullname}}</td>
+                          <td>{{Employee.email}}</td>
+                          <td>{{Employee.position}}</td>
+                          <td>{{Employee.password}}</td>
+                          <td >
+                            <c-badge  color="success" shape="rounded-pill">{{Employee.status}}</c-badge>
+                          </td>
+                          <td>
+                            <select style="width:200px">
+                              <option *ngFor="let supervisor of supervisors" [value]="supervisor.username">
+                                <div *ngIf="supervisor.position =='Supervisor'">
+                                  {{supervisor.username}}
+                                </div>
+                              </option>
+                            </select>
+                          </td>
+                          <!-- <td><button [cModalToggle]="addEmployee.id" class="btn btn-sm btn-primary mr-1" cButton (click)="setID(department.departmentID, request.requestID)">Review</button></td> -->
+                    </ng-container>
+
                   </tr>
                   <tr>
                     <td align="center" colSpan="7">

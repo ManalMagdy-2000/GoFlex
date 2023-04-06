@@ -14,14 +14,16 @@ module.exports = mongoose => {
       password: String,
       fullname: String,
       email: String,
-      role: String,
-      departments: [{type: mongoose.Schema.Types.ObjectId, ref: 'departments'}],
+      department: {type: mongoose.Schema.Types.ObjectId, ref: 'departments'},
       //reviews: [{type: mongoose.Schema.Types.ObjectId, ref: 'reviews'}],
       position: String,
       employeeID: String,
       supervisorID: String,
-      token: String
+      token : String ,
+      role: String ,
+      status : String ,
     },
+// timestamps : so any documents created using this schema will have createdAt and updatedAt fields automatically added to them.
     { timestamps: true }
   );
 /*

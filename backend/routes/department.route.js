@@ -22,7 +22,7 @@ HERE I used Express Router which provides  with a way to modularize routes and a
   // Retrieve a single Department with id
   router.get("/:id", departments.findOne);
 
-  // Add admin to department
+  // Add employee to department
   router.post("/:id/employee", departments.addEmployee);
 
   // Update a Department with id

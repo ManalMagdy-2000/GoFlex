@@ -63,7 +63,7 @@ export class DepartmentService {
 
     addEmployee(id: string, Employee: User) {
       console.log (" call api add empl" + id + Employee.email);
-      id = "642a49a08a38c0bc25adc4fb"; // this id
+      id = "642f07f1e3614e7e317bcb67"; // IT dept
       //Employee.
 
     /*this.http.post<{user : string}>(`${environment.apiUrl}/api/departments/${id}/employee`, { Employee })
@@ -73,7 +73,6 @@ export class DepartmentService {
 
 console.log("api called successfully" , res)   ;
 });*/
-
         return  this.http.post<{users : any}>(`${environment.apiUrl}/api/departments/${id}/employee`, { Employee });
     }
 

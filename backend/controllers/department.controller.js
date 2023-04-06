@@ -86,6 +86,7 @@ It sets the department and positions information on the user object and then add
 */
 //add employee to department
 exports.addEmployee = (req, res) => {
+  console.log("add emp ..");
     db.users.create(req).then((user) => {
         db.departments.findById(req.params.id).then((department) => {
             user.department = department._id;

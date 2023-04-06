@@ -12,6 +12,7 @@ import { map } from 'rxjs/operators';
 export class ListComponent implements OnInit {
     departments = null;
     supervisors = null;
+    employees = null;
     form: UntypedFormGroup;
     form2: UntypedFormGroup;
     departmentID: string;
@@ -75,23 +76,27 @@ export class ListComponent implements OnInit {
         })
 
 
+
         this.accountService.getAll()
         .pipe( map ((userList) => {
           return userList.allusers.map( user => {
             return {
               username: user.username,
+              fullname : user.fullname,
               password : user.password ,
               email : user.email ,
               position : user.position ,
-              department : user.department ,
-              role : user.role,
-              employeeID : user.employeeID ,
-              supervisorID : user.supervisorID
+              //supervisorID : user.supervisorID ,
+              status : "NEW"
             }
           }
           );
         }))
-        .subscribe(supervisors => {this.supervisors = supervisors});
+        .subscribe(employees => {this.employees = employees
+        });
+
+
+
 
         this.isAddMode = !this.departmentID;
 
@@ -211,17 +216,7 @@ export class ListComponent implements OnInit {
 
     private addEmployee() {
         this.departmentService.addEmployee(this.departmentID, this.form2.value)
-            .pipe(first())
-            .subscribe({
-                next: () => {
-                    // this.alertService.success('Request added successfully', { keepAfterRouteChange: true });
-                    // this.router.navigate(['/departments'], { relativeTo: this.route });
-                },
-                error: error => {
-                    this.alertService.error(error);
-                    this.loading = false;
-                }
-            });
+
     }
     addSuperEmp() {
       //toggle isResource
@@ -254,6 +249,9 @@ export class ListComponent implements OnInit {
                     this.loading = false;
                 }
             });
+
+
+
     }
 
 

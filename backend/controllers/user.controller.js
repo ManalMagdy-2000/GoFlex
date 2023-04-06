@@ -5,20 +5,15 @@ Student ID : B1901825
 const db = require("../models");
 const User = db.users;
 
+
 // Create and Save a new User
 exports.create = (req, res) => {
+
   // Validate request
   if (!req.body.username) {
     res.status(400).send({ message: "username  can not be empty!" });
     return;
   }
-
-
-  /*var count = 0;
-  User.find().count().then((data) => {
-    count = data;
-    });*/
-
   //check if user exists
     User.findOne
     ({username : req.body.username})
@@ -30,12 +25,14 @@ exports.create = (req, res) => {
         }
         else {
             //create a user
+
               db.departments.findById(req.params.departmentID)
                   .then((data) => {
                     var count = 0;
                     User.find().count().then((data) => {
                       count = data;
                     }).then( () => {
+
                       const user = new User();
                       user.employeeID =  "U" + (count + 1);
                       user.username= req.body.username;
@@ -43,8 +40,9 @@ exports.create = (req, res) => {
                       user.password= req.body.password;
                       user.fullname= req.body.fullname;
                       user.role=req.body.role;
-                      //user.department= data._id;
+                      user.department= "642f07f1e3614e7e317bcb67"; //fixed dept
                       user.position= req.body.position;
+                      user.status= req.body.status;
                       //user.supervisorID = req.body.supervisorID;
                       // token= req.body.token;
 
@@ -67,91 +65,22 @@ exports.create = (req, res) => {
                     res.status(500).send({
                     message: err.message || "Some error occurred while creating the Department.",
                   });
-                });
-
-
-
-  // Create a supervisor
-  /*if( req.body.position == "User") {//  if( req.body.role == "User") {
-    var count = 0;
-    User.find().count().then((data) => {
-      count = data;
-    }).then( () => {
-      const user = new User({
-        supervisorID: "S" + (count+1),
-        username: req.body.username,
-        password: req.body.password,
-        fullname: req.body.fullname,
-        email: req.body.email,
-        role: req.body.role,
-        //department: data._id,
-        position : "Supervisor",
-        //position: req.body.position,
-        //employeeID : req.body.employeeID ,
-        // token: req.body.token,
-      });
-      user
-      .save(user)
-      .then((data) => {
-        res.send(data);
-      })
-      .catch((err) => {
-        res.status(500).send({
-          message: err.message || "Some error occurred while creating the User.",
-        });
-      });
-
-    })
-  } else {
-    db.departments.findById(req.params.departmentID)
-        .then((data) => {
-          var count = 0;
-          User.find().count().then((data) => {
-            count = data;
-          }).then( () => {
-            const user = new User({
-              employeeID: "E" + (count+1),
-              username: req.body.username,
-              password: req.body.password,
-              fullname: req.body.fullname,
-              email: req.body.email,
-              role: req.body.role,
-              //department: data._id,
-              position: req.body.position,
-              //supervisorID : req.body.supervisorID ,
-              // token: req.body.token,
             });
-            user
-            .save(user)
-            .then((data) => {
-              res.send(data);
-            })
-            .catch((err) => {
-              res.status(500).send({
-                message: err.message || "Some error occurred while creating the User.",
-              });
-            });
-
-          })
-        }
-        )
-        .catch((err) => {
-          res.status(500).send({
-          message: err.message || "Some error occurred while creating the Department.",
-        });
-      });
-    }*/
 
         }
     });
 };
 
 
+
+
+
 //authenticate
 exports.authenticate = (req, res) => {
+  User.
     User.findOne
-    ({email
-        : req.body.email
+    ({username
+        : req.body.username
     }, function(err, user) {
         if (err) throw err;
         if (!user) {
