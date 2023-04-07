@@ -34,6 +34,9 @@ export class ListComponent implements OnInit {
     role: Role;
     position?: string;
     token: string;
+
+    departmentCode : string;
+    test :User  [];
     constructor(
         private formBuilder: UntypedFormBuilder,
         private route: ActivatedRoute,
@@ -78,7 +81,25 @@ export class ListComponent implements OnInit {
 
 
         this.accountService.getAll()
-        .pipe( map ((userList) => {
+       /*.pipe( map ((userList) => {
+        console.log("code");
+        console.log(this.department.departmentID);
+
+        this.test = userList.allusers.map( user => {
+          return {
+            username: user.username,
+            fullname : user.fullname,
+            password : user.password ,
+            email : user.email ,
+            position : user.position ,
+            //supervisorID : user.supervisorID ,
+            status : "NEW",
+            departmentCode : user.departmentCode,
+          }
+        });
+        return this.test.filter( user=>{ return user.departmentCode==this.departmentCode} )}
+        )*/
+       .pipe( map ((userList) => {
           return userList.allusers.map( user => {
             return {
               username: user.username,
@@ -87,11 +108,13 @@ export class ListComponent implements OnInit {
               email : user.email ,
               position : user.position ,
               //supervisorID : user.supervisorID ,
-              status : "NEW"
+              status : "NEW",
+              departmentCode : user.departmentCode,
             }
           }
           );
-        }))
+        })
+        )
         .subscribe(employees => {this.employees = employees
         });
 
@@ -192,6 +215,14 @@ export class ListComponent implements OnInit {
         // }
 
     }
+/*
+    sendDeptId(id:string){
+      console.log("id***" , this.departmentCode)
+      this.departmentCode = id;
+      this.employees.filter( user=>{ return user.departmentCode==this.departmentCode} )
+
+    }
+    */
 
 
     setID(departmentID: string) {
@@ -236,6 +267,8 @@ export class ListComponent implements OnInit {
       u.password = this.form2.value.password;
       u.position = this.form2.value.position;
       u.role = this.form2.value.role;
+      u.departmentCode = this.departmentID;
+      console.log("user department" , this.departmentID);
         this.accountService.register(u)
             .pipe(first())
             .subscribe({

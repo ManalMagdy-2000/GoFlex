@@ -20,4 +20,5 @@ export class User {
     position?: string;
     schedules?: Schedule[];
     token: string;
+    departmentCode : string;
 }

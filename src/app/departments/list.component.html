@@ -56,7 +56,8 @@
                     <tr *ngFor="let Employee of department.employees"> in assignment 1
                             ---->
                     <tr *ngFor="let Employee of employees">
-                        <ng-container  *ngIf="Employee.position !='Supervisor'">
+                        <!-- <ng-container  *ngIf="Employee.position !='Supervisor'"> -->
+                          <ng-container *ngIf="Employee.departmentCode ==department.departmentID">
                           <td>{{Employee.username}}</td>
                           <td>{{Employee.fullname}}</td>
                           <td>{{Employee.email}}</td>

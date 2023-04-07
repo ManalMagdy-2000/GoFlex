@@ -62,8 +62,8 @@ export class DepartmentService {
     }
 
     addEmployee(id: string, Employee: User) {
-      console.log (" call api add empl" + id + Employee.email);
-      id = "642f07f1e3614e7e317bcb67"; // IT dept
+      console.log (" call api add empl: " + id + Employee.email);
+     // id = "642f07f1e3614e7e317bcb67"; // IT dept
       //Employee.
 
     /*this.http.post<{user : string}>(`${environment.apiUrl}/api/departments/${id}/employee`, { Employee })

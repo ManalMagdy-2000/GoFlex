@@ -9,6 +9,8 @@ const User = db.users;
 // Create and Save a new User
 exports.create = (req, res) => {
 
+  console.log("dep code", req.body.departmentCode)
+
   // Validate request
   if (!req.body.username) {
     res.status(400).send({ message: "username  can not be empty!" });
@@ -25,6 +27,7 @@ exports.create = (req, res) => {
         }
         else {
             //create a user
+            console.log("add user to dep CODE " ,req.params.departmentCode );
 
               db.departments.findById(req.params.departmentID)
                   .then((data) => {
@@ -40,7 +43,8 @@ exports.create = (req, res) => {
                       user.password= req.body.password;
                       user.fullname= req.body.fullname;
                       user.role=req.body.role;
-                      user.department= "642f07f1e3614e7e317bcb67"; //fixed dept
+                      //user.department= "642f07f1e3614e7e317bcb67"; //fixed dept
+                      user.departmentCode =   req.body.departmentCode;
                       user.position= req.body.position;
                       user.status= req.body.status;
                       //user.supervisorID = req.body.supervisorID;
@@ -50,6 +54,7 @@ exports.create = (req, res) => {
                       user
                       .save(user)
                       .then((data) => {
+                        console.log("user created", data);
                         res.send(data);
                       })
                       .catch((err) => {
