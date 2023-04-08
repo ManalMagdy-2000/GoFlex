@@ -83,6 +83,7 @@ export class AppComponent {
               size: 'lg',
                }*/
           },
+          /*
           {
             name: 'Employees',
             url: '/employees',
@@ -92,7 +93,7 @@ export class AppComponent {
             //   text: ""+this.departmentsCount,
             //   size: 'lg',
             // }
-          },
+          },*/
           {
             name: 'Supervisors',
             url: '/supervisors',
