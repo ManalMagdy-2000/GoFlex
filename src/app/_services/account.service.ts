@@ -49,6 +49,20 @@ export class AccountService {
         //return this.http.get<User[]>(`${environment.apiUrl}/users`);
         return this.http.get<{ allusers :any}>(`${environment.apiUrl}/api/users/getall`);
     }
+    addSupervisor(id: string, supervisor: User) {
+      console.log (" call api add sup : " + id + supervisor.email);
+      id = "2"; //emp id
+
+
+    /*this.http.post<{user : string}>(`${environment.apiUrl}/api/departments/${id}/employee`, { Employee })
+    .pipe( user => {
+      return user;})
+     .subscribe(res => {
+
+console.log("api called successfully" , res)   ;
+});*/
+        return  this.http.post<{users : any}>(`${environment.apiUrl}/api/users/${id}/supervisor`, { supervisor });
+    }
 
     getById(id: string) {
         return this.http.get<User>(`${environment.apiUrl}/users/${id}`);

@@ -17,6 +17,7 @@ module.exports = mongoose => {
       department: {type: mongoose.Schema.Types.ObjectId, ref: 'departments'},
       //reviews: [{type: mongoose.Schema.Types.ObjectId, ref: 'reviews'}],
       departmentCode : String,
+      supervisorCode : String,
       position: String,
       employeeID: String,
       supervisorID: String,

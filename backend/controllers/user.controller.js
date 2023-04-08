@@ -10,7 +10,7 @@ const User = db.users;
 exports.create = (req, res) => {
 
   console.log("dep code", req.body.departmentCode)
-
+  console.log("sup code", req.body.supervisorCode)
   // Validate request
   if (!req.body.username) {
     res.status(400).send({ message: "username  can not be empty!" });
@@ -28,7 +28,7 @@ exports.create = (req, res) => {
         else {
             //create a user
             console.log("add user to dep CODE " ,req.params.departmentCode );
-
+            console.log("add user to sup CODE " ,req.params.supervisorCode );
               db.departments.findById(req.params.departmentID)
                   .then((data) => {
                     var count = 0;
@@ -37,14 +37,22 @@ exports.create = (req, res) => {
                     }).then( () => {
 
                       const user = new User();
-                      user.employeeID =  "U" + (count + 1);
+                      //user.employeeID =  "U" + (count + 1);
                       user.username= req.body.username;
                       user.email= req.body.email;
                       user.password= req.body.password;
                       user.fullname= req.body.fullname;
                       user.role=req.body.role;
+                      if(user.role == "Employee" ){
+                        user.employeeID =  "E" + (count + 1);
+                        user.supervisorCode= req.body.supervisorCode;
+                      }
+                      else if (user.role == "User"){
+                          user.employeeID =  "S" + (count + 1);
+                      }
+
                       //user.department= "642f07f1e3614e7e317bcb67"; //fixed dept
-                      user.departmentCode =   req.body.departmentCode;
+                      user.departmentCode = req.body.departmentCode;
                       user.position= req.body.position;
                       user.status= req.body.status;
                       //user.supervisorID = req.body.supervisorID;
@@ -139,6 +147,29 @@ exports.findAll = (req, res) => {
     }
   );
  }
+
+
+
+ exports.addSupervisor = (req, res) => {
+  console.log("add emp ..");
+    db.users.create(req).then((user) => {
+        db.users.findById(req.params.id).then((sup) => {
+            user.sup = sup._id;
+            user.position = req.body.position;
+            sup.employees.push(user._id);
+            sup.save();
+            res.send(user);
+        });
+    }
+    ).catch((err) => {
+        res.status(500).send({
+            message: err.message || "Some error occurred while adding employee to department.",
+        });
+    });
+};
+
+
+
 
 // Find a single User with an id
 exports.findOne = (req, res) => {

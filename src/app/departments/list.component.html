@@ -1,5 +1,5 @@
 ﻿<!--
-  Student Name : Manal MAgdy Eid Khalil Eid
+  Student Name : Manal Magdy Eid Khalil Eid
   Student ID : B1901825
 -->
 <div class="title-button">
@@ -39,7 +39,7 @@
                         <th scope="col" style="width: 16%">Position</th>
                         <th scope="col" style="width: 16%">Password</th>
                         <th scope="col" style="width: 16%">FWA Status</th>
-                        <th scope="col" style="width: 16%">Supervisors </th>
+                        <th scope="col" style="width: 16%">Supervisor</th>
 
 
                         <!-- <th scope="col" style="width: 15%">Action</th> -->
@@ -66,15 +66,8 @@
                           <td >
                             <c-badge  color="success" shape="rounded-pill">{{Employee.status}}</c-badge>
                           </td>
-                          <td>
-                            <select style="width:200px">
-                              <option *ngFor="let supervisor of supervisors" [value]="supervisor.username">
-                                <div *ngIf="supervisor.position =='Supervisor'">
-                                  {{supervisor.username}}
-                                </div>
-                              </option>
-                            </select>
-                          </td>
+                          <td>{{Employee.supervisorCode}}</td>
+
                           <!-- <td><button [cModalToggle]="addEmployee.id" class="btn btn-sm btn-primary mr-1" cButton (click)="setID(department.departmentID, request.requestID)">Review</button></td> -->
                     </ng-container>
 
@@ -173,9 +166,19 @@
   </div>
 
 
-
-
-
+<div class="form-group col" *ngIf="!isSupervisor">
+  <label for="supervisorCode">Supervisor</label>
+  <select formControlName="supervisorCode" [ngClass]="{ 'is-invalid': submitted && f.supervisorCode.errors }"
+   class="form-control"
+   aria-label="Default select example" cSelect>
+   <option (click)="setSupID(supervisor.username)"
+   *ngFor="let supervisor of employees" [value]="supervisor.username">
+     <div *ngIf="supervisor.position =='Supervisor'">
+       {{supervisor.username}}
+     </div>
+   </option>
+  </select>
+</div>
 
 
     </ng-container>

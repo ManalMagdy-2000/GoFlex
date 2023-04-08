@@ -15,6 +15,9 @@ module.exports = app => {
   // Retrieve all Users
   router.get("/getall", users.findAll);
 
+  // Add supervisor to employee
+  router.post("/:id/supervisor", users.addSupervisor);
+
   // Retrieve a single User with id
   router.get("/:id", users.findOne);
 

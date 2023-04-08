@@ -25,6 +25,8 @@ HERE I used Express Router which provides  with a way to modularize routes and a
   // Add employee to department
   router.post("/:id/employee", departments.addEmployee);
 
+  router.get("/employee/:id/save-supervisor")
+
   // Update a Department with id
   router.put("/:id", departments.update);
 

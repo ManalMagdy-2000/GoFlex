@@ -16,12 +16,13 @@ export class ListComponent implements OnInit {
     form: UntypedFormGroup;
     form2: UntypedFormGroup;
     departmentID: string;
+    supervisorID : string ;
     requestID: string;
     isAddMode: boolean;
     isSupervisor = false;
     department: Department;
     requests: Request[];
-    supervisor : User[];
+    supervisor : Role.User;
     loading = false;
     submitted = false;
 
@@ -36,7 +37,12 @@ export class ListComponent implements OnInit {
     token: string;
 
     departmentCode : string;
+
     test :User  [];
+
+
+    supervisorCode : string; 
+
     constructor(
         private formBuilder: UntypedFormBuilder,
         private route: ActivatedRoute,
@@ -110,6 +116,7 @@ export class ListComponent implements OnInit {
               //supervisorID : user.supervisorID ,
               status : "NEW",
               departmentCode : user.departmentCode,
+              supervisorCode : user.supervisorCode,
             }
           }
           );
@@ -143,6 +150,7 @@ export class ListComponent implements OnInit {
         });
 
         console.log(this.departmentID)
+        console.log(this.supervisorCode)
         this.form2 = this.formBuilder.group({
             fullname: ['', Validators.required],
             email: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')]],
@@ -151,7 +159,8 @@ export class ListComponent implements OnInit {
             position: ['', Validators.required],
             role: [Role.Employee],
             department: [this.departmentID],
-            supervisorID : ['' , this.isSupervisor ? Validators.required : ''] ,
+            supervisorCode : ['', Validators.required] ,
+            //supervisorID : ['' , this.isSupervisor ? Validators.required : ''] ,
             status :"NEW",
             schedules: [[]]
         });
@@ -209,6 +218,7 @@ export class ListComponent implements OnInit {
         //toggle modal
 
         this.form2.patchValue({department: this.departmentID});
+        this.form2.patchValue({supervisor: this.supervisorCode});
         this.createUser();
         // } else {
         //     this.updateUser();
@@ -228,6 +238,9 @@ export class ListComponent implements OnInit {
     setID(departmentID: string) {
         this.departmentID = departmentID;
     }
+    setSupID(supervisorCode: string) {
+      this.supervisorCode = supervisorCode;
+  }
 
     private createDepartment() {
       const dep  = new Department;
@@ -249,6 +262,7 @@ export class ListComponent implements OnInit {
         this.departmentService.addEmployee(this.departmentID, this.form2.value)
 
     }
+
     addSuperEmp() {
       //toggle isResource
       if(this.isSupervisor) {
@@ -267,8 +281,10 @@ export class ListComponent implements OnInit {
       u.password = this.form2.value.password;
       u.position = this.form2.value.position;
       u.role = this.form2.value.role;
+      u.supervisorCode = this.form2.value.supervisorCode;
       u.departmentCode = this.departmentID;
       console.log("user department" , this.departmentID);
+      console.log("user supervisor" , this.supervisorCode);
         this.accountService.register(u)
             .pipe(first())
             .subscribe({
