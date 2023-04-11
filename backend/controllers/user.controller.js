@@ -144,6 +144,7 @@ exports.findAll = (req, res) => {
         //message : "send all users data",
         allusers : users
       })
+      console.log(users);
     }
   );
  }
@@ -253,6 +254,10 @@ exports.deleteAll = (req, res) => {
         });
         });
     }
+
+
+
+
 
 
 

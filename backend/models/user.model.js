@@ -21,6 +21,7 @@ module.exports = mongoose => {
       position: String,
       employeeID: String,
       supervisorID: String,
+      requestID : { type : String , ref : "requests"} ,
       token : String ,
       role: String ,
       status : String ,

@@ -54,8 +54,12 @@ export class DepartmentService {
     }
 
     addRequest(id: string, request: Request) {
-        return this.http.post(`${environment.apiUrl}/departments/request/${id}`, request);
+        return this.http.post(`${environment.apiUrl}/requests/add/${id}`, request);
     }
+
+    getAllRequests() {
+      return this.http.get<{ allreqs :any}>(`${environment.apiUrl}/api/requests/getall`);
+   }
 
     getRequestById(departmentID: string, requestID: string) {
         return this.http.get<Request>(`${environment.apiUrl}/departments/${departmentID}/request/${requestID}`);
