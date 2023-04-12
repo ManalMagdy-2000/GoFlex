@@ -24,6 +24,7 @@ exports.create = (req, res) => {
   });
 };
 
+
 // Retrieve all schedules
 exports.findAll = (req, res) => {
   Schedule.find({}, (err, schedules) => {

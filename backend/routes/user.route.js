@@ -31,7 +31,7 @@ module.exports = app => {
   router.delete("/", users.deleteAll);
 
   //authentification
-  router.post("/login", users.authenticate);
+  router.post("/authenticate", users.authenticate);
 
   //get current user
   router.get("/current", users.getCurrentUser);
