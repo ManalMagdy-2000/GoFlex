@@ -5,11 +5,12 @@ Student ID : B1901825
 module.exports = mongoose => {
   var request = mongoose.Schema(
     {
-      requestID: {type : String , required : true },
-      description:  {type : String , required : true },
-      date:  {type : String , required : true },
-      status:  {type : String , required : true },
-      reviewID : {type : String , ref : "reviews"},
+      requestID: { type: String, required: true },
+      workType: { type: String, required: true },
+      description: { type: String, required: true },
+      status: { type: String, required: true },
+      //reviewID : {type : String , ref : "reviews"},
+      date: { type: Date, required: true, default: Date.now }//system date
     },
     { timestamps: true }
   );

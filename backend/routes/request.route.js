@@ -7,7 +7,7 @@ module.exports = app => {
   var router = require("express").Router();
 
   // Create a new request
-  router.post("/add/:id", requests.create);
+  router.post("/", requests.create);
 
   // Retrieve all requests
   router.get("/getall", requests.findAll);

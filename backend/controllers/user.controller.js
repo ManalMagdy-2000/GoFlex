@@ -144,7 +144,7 @@ exports.findAll = (req, res) => {
         //message : "send all users data",
         allusers : users
       })
-      console.log(users);
+      //console.log(users);
     }
   );
  }

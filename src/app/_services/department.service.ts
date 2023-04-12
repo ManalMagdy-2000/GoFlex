@@ -53,8 +53,8 @@ export class DepartmentService {
         return res;*/
     }
 
-    addRequest(id: string, request: Request) {
-        return this.http.post(`${environment.apiUrl}/requests/add/${id}`, request);
+    addRequest( request: Request) {
+        return this.http.post(`${environment.apiUrl}/api/requests`, request);
     }
 
     getAllRequests() {
