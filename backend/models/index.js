@@ -16,8 +16,10 @@ const db = {};
 db.mongoose = mongoose;
 db.url = dbConfig.url;
 db.users = require("./user.model")(mongoose);
-//db.reviews = require("./review.model.js")(mongoose);
+db.reviews = require("./review.model.js")(mongoose);
 db.requests = require("./request.model.js")(mongoose);
 db.departments = require("./department.model")(mongoose);
+db.schedules = require("./schedule.model")(mongoose);
+
 
 module.exports = db;

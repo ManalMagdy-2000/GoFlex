@@ -8,10 +8,7 @@ module.exports = app => {
   var router = require("express").Router();
 
   // Create a new schedule
-  router.post("/:id/schedule", schedules.create);
-
-  // Retrieve all schedules for a user
-  router.get("/:id/schedule", schedules.findAllByUserId);
+  router.post("/:id", schedules.addSchedule);
 
   // Retrieve a single schedule by ID
   router.get("/schedule/:id", schedules.findOne);
@@ -22,8 +19,7 @@ module.exports = app => {
   // Update a schedule by ID
   router.put("/schedule/:id", schedules.update);
 
-  // Delete a schedule by ID
-  router.delete("/schedule/:id", schedules.delete);
 
-  app.use("/users", router);
+
+  app.use("/api/schedule", router);
 };

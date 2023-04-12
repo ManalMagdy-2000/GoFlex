@@ -52,8 +52,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 case url.match(/\/departments\/\d+$/) && method === 'GET':
                     return getDepartmentById();
                 //add schedule users/:id/schedule
-                case url.match(/\/users\/\d+\/schedule$/) && method === 'POST':
-                    return addSchedule();
+                // case url.match(/\/users\/\d+\/schedule$/) && method === 'POST':
+                //     return addSchedule();
    
                 case url.endsWith('/schedule') && method === 'GET':
                     return getSchedules();

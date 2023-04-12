@@ -3,7 +3,9 @@ Student Name : Elissa A/P Vassu
 Student ID : B2000015
 */
 
-const Schedule = require("../models/schedule.model");
+const db = require("../models");
+const User = db.users;
+const Schedule = db.schedules;
 
 // Create a new schedule
 exports.create = (req, res) => {
@@ -24,28 +26,60 @@ exports.create = (req, res) => {
   });
 };
 
+exports.addSchedule = (req, res) => {
+  
+  const schedule = new Schedule({
+    date: req.body.date,
+    workLocation: req.body.workLocation,
+    workHours: req.body.workHours,
+    workReport: req.body.workReport,
+    supervisorComments: req.body.supervisorComments,
+  });
+
+    schedule.save();
+    const id = req.params.id;
+
+    User.findById(id)
+        .then((data) => {
+        if (!data)
+            res.status(404).send({ message: "Not found User with id " + id });
+        else {
+            data.schedules.push(schedule._id);
+            data.save();
+            res.send(data);
+        }
+        }
+        )
+        .catch((err) => {
+        res
+            .status(500)
+            .send({ message: "Error retrieving User with id=" + id });
+        }
+        );
+
+};
 
 // Retrieve all schedules
 exports.findAll = (req, res) => {
-  Schedule.find({}, (err, schedules) => {
-    if (err) {
-      res.status(500).send({ message: err });
-    } else {
-      res.send(schedules);
-    }
+  Schedule.find({}).then((data) => {
+    res.send(data);
+  }
+  ).catch((err) => {
+    res.status(500).send({ message: err });
   });
 };
 
 // Retrieve a single schedule by id
 exports.findOne = (req, res) => {
-  Schedule.findById(req.params.id, (err, schedule) => {
-    if (err) {
-      res.status(500).send({ message: err });
-    } else if (!schedule) {
+  Schedule.findById(req.params.id).then((data) => {
+    if (!data) {
       res.status(404).send({ message: "Schedule not found" });
     } else {
-      res.send(schedule);
+      res.send(data);
     }
+  }
+  ).catch((err) => {
+    res.status(500).send({ message: err });
   });
 };
 
@@ -54,39 +88,15 @@ exports.update = (req, res) => {
   Schedule.findByIdAndUpdate(
     req.params.id,
     req.body,
-    { new: true },
-    (err, schedule) => {
-      if (err) {
-        res.status(500).send({ message: err });
-      } else if (!schedule) {
+    { new: true }).then((data) => {
+      if (!data) {
         res.status(404).send({ message: "Schedule not found" });
       } else {
-        res.send(schedule);
+        res.send(data);
       }
     }
-  );
-};
-
-// Delete a schedule by id
-exports.delete = (req, res) => {
-  Schedule.findByIdAndRemove(req.params.id, (err, schedule) => {
-    if (err) {
-      res.status(500).send({ message: err });
-    } else if (!schedule) {
-      res.status(404).send({ message: "Schedule not found" });
-    } else {
-      res.send({ message: "Schedule deleted successfully" });
-    }
+  ).catch((err) => {
+    res.status(500).send({ message: err });
   });
 };
 
-// Delete all schedules
-exports.deleteAll = (req, res) => {
-  Schedule.deleteMany({}, (err) => {
-    if (err) {
-      res.status(500).send({ message: err });
-    } else {
-      res.send({ message: "All schedules deleted successfully" });
-    }
-  });
-};

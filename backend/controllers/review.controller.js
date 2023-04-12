@@ -113,3 +113,14 @@ exports.delete = (req, res) => {
       console.error(err);
       if (err.kind === "ObjectId") {
         return res.status(404).send({ message: `Review not found with id ${id}` });
+      }
+      return res.status(500).send({ message: `Could not delete review with id ${id}` });
+    }
+
+    if (!review) {
+      return res.status(404).send({ message: `Review not found with id ${id}` });
+    }
+
+    res.send({ message: "Review deleted successfully" });
+  });
+};
