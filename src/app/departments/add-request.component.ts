@@ -75,7 +75,7 @@ export class AddRequestComponent implements OnInit {
     }
 
     private addRequest() {
-        this.departmentService.addRequest(this.form.value)
+        this.departmentService.addRequest(this.departmentID, this.form.value)
             .pipe(first())
             .subscribe({
                 next: () => {

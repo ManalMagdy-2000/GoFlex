@@ -4,24 +4,33 @@ Student ID : B1901825
 */
 const db = require("../models");
 const Request = db.requests;
+
 // Create and Save a new Request
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.workType) {
-    res.status(400).send({ message: "Work Type can not be empty  !" });
+  if (!req.body.requestID) {
+    res.status(400).send({ message: "Request ID can not be empty  !" });
     return;
   }
+  //check if Request with same ID  already exists
+  Request.findOne
+    ( { requestID: req.body.requestID })
+    .then ( req=>{
+      if(req) {
+        res.status(500).send({
+          message: "Request ID is taken",
+      });
+      } else {
         var count = 0;
         Request.find().count().then((data) => {
           count = data;
         }).then (  () =>{
           const request = new Request();
           request.requestID =  "R" + (count + 1);
-          request.workType = req.body.workType ;
           request.description = req.body.description;
           request.status = req.body.status;
-          request.date = new Date(); // system date
-          //request.reviewID = req.body.reviewID;
+          request.date = req.body.date;
+          request.reviewID = req.body.reviewID;
           // Save Request in the database
       request
       .save(request)
@@ -35,11 +44,10 @@ exports.create = (req, res) => {
       });
     });
   });
+ }
+});
+
 };
-
-
-
-
 
 
 // Retrieve all Requests from the database.
@@ -80,7 +88,7 @@ exports.findOne = (req, res) => {
 
 // Update a Request by the id in the request
 exports.update = (req, res) => {
-    if (!req.body.workType && !req.body.description) {
+    if (!req.body) {
         return res.status(400).send({
         message: "Data to update can not be empty!",
         });
@@ -92,7 +100,7 @@ exports.update = (req, res) => {
         .then((data) => {
         if (!data) {
             res.status(404).send({
-            message: ` Request with id=${id}  not found!`,
+            message: `Cannot update Request with id=${id}. Maybe Request was not found!`,
             });
         } else res.send({ message: "Request was updated successfully." });
         }
@@ -113,11 +121,11 @@ exports.delete = (req, res) => {
         .then((data) => {
         if (!data) {
             res.status(404).send({
-            message: ` Request with id=${id}. not found!`,
+            message: `Cannot delete Request with id=${id}. Maybe Request was not found!`,
             });
         } else {
             res.send({
-            message: ` Request was deleted successfully!`
+            message: "Request was deleted successfully!",
             });
         }
         }
