@@ -84,39 +84,45 @@ exports.create = (req, res) => {
     });
 };
 
-
-
-
+//request body in json
+/* {
+    "username": "admin",
+    "email": "admin@support.com",
+    "password": "admin",
+    "fullname": "admin",
+    "role": "HRAdmin",
+    "departmentCode": "D1",
+    "position": "Manager",
+    "status": "Active"
+} */
 
 //authenticate
 exports.authenticate = (req, res) => {
-  User.
-    User.findOne
-    ({username
-        : req.body.username
-    }, function(err, user) {
-        if (err) throw err;
+    console.log(req.body);
+    User.findOne({ username: req.body.username })
+      .then(user => {
         if (!user) {
-            res.status(401).send({success: false, msg: 'Authentication failed. User not found.'});
+          res.status(401).send({ success: false, msg: 'Authentication failed. User not found.' });
         } else {
-            // check if password matches
-            if(user.password === req.body.password) {
-
-                    // if user is found and password is right create a token
-                    var token = user.token;
-                    res.setHeader('Authorization', 'Bearer ' + token);
-
-                    //return user without password
-                    user.password = undefined;
-                    res.json(user);
-
-
-                } else {
-                    res.status(401).send({success: false, msg: 'Authentication failed. Wrong password.'});
-                }
+     
+          // check if password matches
+          if (user.password === req.body.password) {
+            // if user is found and password is right create a token
+            var token = user.token;
+            res.setHeader('Authorization', 'Bearer ' + token);
+  
+            //return user without password
+            user.password = undefined;
+            res.json(user);
+          } else {
+            res.status(401).send({ success: false, msg: 'Authentication failed. Wrong password.' });
+          }
         }
-    });
-};
+      })
+      .catch(err => {
+        res.status(500).send({ success: false, msg: 'Error authenticating user.' });
+      });
+  };
 
 //get current user
 exports.getCurrentUser = (req, res) => {
@@ -168,8 +174,6 @@ exports.findAll = (req, res) => {
         });
     });
 };
-
-
 
 
 // Find a single User with an id

@@ -15,6 +15,7 @@ module.exports = mongoose => {
       fullname: String,
       email: String,
       department: {type: mongoose.Schema.Types.ObjectId, ref: 'departments'},
+      schedules: [{type: mongoose.Schema.Types.ObjectId, ref: 'schedules'}],
       //reviews: [{type: mongoose.Schema.Types.ObjectId, ref: 'reviews'}],
       departmentCode : String,
       supervisorCode : String,

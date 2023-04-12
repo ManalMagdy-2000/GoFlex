@@ -2,7 +2,8 @@
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map,catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 import { environment } from '@environments/environment';
 import { User } from '@app/_models';
@@ -25,13 +26,22 @@ export class AccountService {
     }
 
     login(username, password) {
-        return this.http.post<User>(`${environment.apiUrl}/users/authenticate`, { username, password })
-            .pipe(map(user => {
-                // store user details and jwt token in local storage to keep user logged in between page refreshes
-                localStorage.setItem('user', JSON.stringify(user));
-                this.userSubject.next(user);
-                return user;
-            }));
+        console.log("login : " + username + password);
+        return this.http.post<User>(`${environment.apiUrl}/api/users/authenticate`, { username, password })
+            .pipe(
+                map(user => {
+                    console.log("user : " + user);
+                    // store user details and jwt token in local storage to keep user logged in between page refreshes
+                    localStorage.setItem('user', JSON.stringify(user));
+                    this.userSubject.next(user);
+                    return user;
+                }),
+                catchError(err => {
+                    console.error('Error during login:', err);
+                    // Rethrow the error so that it can be handled by the caller
+                    return throwError(err);
+                })
+            );
     }
 
     logout() {
@@ -65,7 +75,7 @@ console.log("api called successfully" , res)   ;
     }
 
     getById(id: string) {
-        return this.http.get<User>(`${environment.apiUrl}/users/${id}`);
+        return this.http.get<User>(`${environment.apiUrl}/api/users/${id}`);
     }
 
     getCurrentUser() {
