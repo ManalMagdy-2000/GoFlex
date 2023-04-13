@@ -1,9 +1,10 @@
 /*
-Student Name : Elissa A/P Vaasu
-Student ID : B2000015
+Student Name : Manal Magdy
+Student ID : B1901825
 */
 
-const Review = require("../models/review-request.model.js");
+const db = require("../models");
+const Review = db.reviewRequests;
 
 // Create and save a new review
 exports.create = (req, res) => {

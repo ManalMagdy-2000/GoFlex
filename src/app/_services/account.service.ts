@@ -111,13 +111,16 @@ console.log("api called successfully" , res)   ;
 
 
 
- addRequest( request: Request) {
-      return this.http.post(`${environment.apiUrl}/api/requests`, request);
+ addRequest( request: Request , id : string) {
+      console.log(request, id)
+      return this.http.post(`${environment.apiUrl}/api/request/${id}`, request);
      }
   getAllRequests() {
       return this.http.get<{ allreqs :any}>(`${environment.apiUrl}/api/requests/getall`);
   }
-
+  getRequestByEmployeeID(id: number) {
+    return this.http.get<Request[]>(`${environment.apiUrl}/request/${id}`);
+}
   getRequestById(username: string, requestID: string) {
       return this.http.get<Request>(`${environment.apiUrl}/api/requests/${username}/request/${requestID}`);
   }

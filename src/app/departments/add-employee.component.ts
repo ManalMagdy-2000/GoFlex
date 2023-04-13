@@ -54,6 +54,7 @@ export class  AddEmployeeComponent implements OnInit {
             role: [Role.Employee],
             department: [this.departmentID],
             schedules: [[]],
+            requests :[[]]
         });
 
         if (!this.isAddMode) {

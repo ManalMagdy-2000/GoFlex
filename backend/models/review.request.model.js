@@ -20,6 +20,6 @@ module.exports = mongoose => {
     return object;
   });
 
-  const Request = mongoose.model("reviews", review);
-  return Request;
+  const Review = mongoose.model("reviewRequests", review);
+  return Review;
 };

@@ -19,6 +19,7 @@ export class User {
     reviews?: Review[];
     position?: string;
     schedules?: Schedule[];
+    requests?:Request[];
     token: string;
     departmentCode : string;
 

@@ -16,14 +16,13 @@ module.exports = mongoose => {
       email: String,
       department: {type: mongoose.Schema.Types.ObjectId, ref: 'departments'},
       schedules: [{type: mongoose.Schema.Types.ObjectId, ref: 'schedules'}],
+      requests : [{ type: mongoose.Schema.Types.ObjectId, ref: 'requests'}], // each employee able to submit only one request
       //reviews: [{type: mongoose.Schema.Types.ObjectId, ref: 'reviews'}],
       departmentCode : String,
       supervisorCode : String,
-
       position: String,
       employeeID: String,
       supervisorID: String,
-      requestID : { type : String , ref : "requests"} ,
       token : String ,
       role: String ,
       status : String ,

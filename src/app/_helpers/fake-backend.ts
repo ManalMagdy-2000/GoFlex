@@ -18,8 +18,10 @@ users.push({ id: 1, username: 'admin', password: 'admin',
 //array in local storage for departments
 const departmentsKey = 'departments';
 const employeesKey = 'employees';
+const requestsKey = 'employees';
 const schedulesKey = 'schedules';
 const schedules = JSON.parse(localStorage.getItem(schedulesKey)) || [];
+const requests = JSON.parse(localStorage.getItem(requestsKey)) || [];
 let departments = JSON.parse(localStorage.getItem(departmentsKey)) || [];
 let employees = JSON.parse(localStorage.getItem(employeesKey)) || [];
 
@@ -54,8 +56,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 case url.match(/\/departments\/\d+$/) && method === 'GET':
                     return getDepartmentById();
                 //add schedule users/:id/schedule
-                case url.match(/\/users\/\d+\/schedule$/) && method === 'POST':
-                    return addSchedule();
+                // case url.match(/\/users\/\d+\/schedule$/) && method === 'POST':
+                //     return addSchedule();
 
                 case url.endsWith('/schedule') && method === 'GET':
                     return getSchedules();
@@ -174,8 +176,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         function basicDetails(user) {
-            const { id, username, fullname, email, role, department, position, schedules } = user;
-            return { id, username, fullname, email, role, department,  position, schedules };
+            const { id, username, fullname, email, role, department, position, schedules , requests } = user;
+            return { id, username, fullname, email, role, department,  position, schedules , requests };
         }
 
         function isEmployee() {
@@ -311,6 +313,36 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             });
             return ok(schedules);
         }
+
+
+
+
+        function addsEmployeeRequest() {
+          if (!isLoggedIn()) return unauthorized();
+
+          let params = body;
+          let department = departments.find(x => x.departmentID === idFromUrl());
+
+          department.employees.push(params.Employee);
+          localStorage.setItem(departmentsKey, JSON.stringify(departments));
+
+          return ok();
+
+      }
+
+      function getRequests() {
+          if (!isLoggedIn()) return unauthorized();
+          let requests = [];
+          users.forEach(user => {
+              user.requests?.forEach(request  => {
+                  request.userID = user.id;
+                  request.fullname = user.username;
+                  request.supervisorID = user.supervisorID;
+                  requests.push(request);
+              });
+          });
+          return ok(requests);
+      }
 
 
 

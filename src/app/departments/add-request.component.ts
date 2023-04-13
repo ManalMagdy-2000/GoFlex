@@ -18,6 +18,7 @@ export class AddRequestComponent implements OnInit {
     loading = false;
     submitted = false;
     username : string ;
+    id : string;
 
 
     constructor(
@@ -78,7 +79,7 @@ export class AddRequestComponent implements OnInit {
     }
 
     private addRequest() {
-        this.accountService.addRequest(this.form.value)
+        this.accountService.addRequest(this.form.value , this.id)
             .pipe(first())
             .subscribe({
                 next: () => {

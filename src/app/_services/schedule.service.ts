@@ -16,7 +16,7 @@ export class ScheduleService {
 
     addSchedule(schedule: Schedule, id: string) {
         console.log(schedule, id)
-        return this.http.post(`${environment.apiUrl}/users/${id}/schedule`, schedule);
+        return this.http.post(`${environment.apiUrl}/api/schedule/${id}`, schedule);
     }
 
     getAllSchedules() {

@@ -10,12 +10,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class RequestComponent implements OnInit {
     departments = null;
     form: FormGroup;
+    id : string;
     departmentID: string;
+    requests : any;
     requestID: string;
     reviewID: string;
     isAddMode: boolean;
     department: Department;
-    requests: Request[];
     loading = false;
     submitted = false;
     success = false;
@@ -33,13 +34,13 @@ export class RequestComponent implements OnInit {
 
 
     ngOnInit() {
+      this.id = this.route.snapshot.params['id'];
+      this.isAddMode = !this.id;
         console.log(this.accountService.userValue);
-        this.departmentService.getDepartmentById(this.accountService.userValue.department).subscribe(department => {
-            this.department = department;
-            this.requests = department.requests;
-        });
+        this.accountService.getAllRequests().pipe(first())
+        .subscribe(x => this.requests = x);
 
-
+        this.requests = this.accountService.userValue.requests;
         this.departmentID = this.accountService.userValue.department;
         // this.requestID = this.route.snapshot.params['requestID'];
         this.isAddMode = !this.departmentID;
@@ -136,7 +137,7 @@ export class RequestComponent implements OnInit {
 
 
     private addRequest() {
-        this.accountService.addRequest(this.form.value)
+        this.accountService.addRequest(this.form.value , this.id)
             .pipe(first())
             .subscribe({
                 next: () => {

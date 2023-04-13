@@ -163,7 +163,8 @@ export class ListComponent implements OnInit {
             supervisorCode : ['', Validators.required] ,
             //supervisorID : ['' , this.isSupervisor ? Validators.required : ''] ,
             status :"NEW",
-            schedules: [[]]
+            schedules: [[]] ,
+            requests:[[]]
         });
 
 

@@ -6,8 +6,8 @@ module.exports = app => {
   const requests = require("../controllers/request.controller.js");
   var router = require("express").Router();
 
-  // Create a new request
-  router.post("/", requests.create);
+  // Create a new request by employee : this id refer to employee ID
+  router.post("/:id", requests.submitRequest);
 
   // Retrieve all requests
   router.get("/getall", requests.findAll);
@@ -25,5 +25,5 @@ module.exports = app => {
   // Delete a all request
   router.delete("/", requests.deleteAll);
 
-  app.use("/api/requests", router);
+  app.use("/api/request", router);
 };

@@ -4,6 +4,7 @@ Student ID : B1901825
 */
 const db = require("../models");
 const User = db.users;
+const Request = db.requests;
 
 //hard coded data for HR Admin
 const HRAdmin = new User({
@@ -16,7 +17,9 @@ const HRAdmin = new User({
   position: "Manager",
   status: "Active"
 });
-HRAdmin.save(HRAdmin);
+ HRAdmin.save(HRAdmin);
+
+
 
 // Create and Save a new User
 exports.create = (req, res) => {
@@ -38,6 +41,7 @@ exports.create = (req, res) => {
             });
         }
         else {
+
             //create a user
             console.log("add user to dep CODE " ,req.params.departmentCode );
             console.log("add user to sup CODE " ,req.params.supervisorCode );
@@ -47,7 +51,12 @@ exports.create = (req, res) => {
                     User.find().count().then((data) => {
                       count = data;
                     }).then( () => {
-
+                     /*
+                      const request = Request.findOne({ requestID: req.body.requestID });
+                      if (!request) {
+                        return res.status(404).json({ message: 'Request not found' });
+                      }
+                      */
                       const user = new User();
                       //user.employeeID =  "U" + (count + 1);
                       user.username= req.body.username;
@@ -58,6 +67,7 @@ exports.create = (req, res) => {
                       if(user.role == "Employee" ){
                         user.employeeID =  "E" + (count + 1);
                         user.supervisorCode= req.body.supervisorCode;
+                       // request =request._id // assign the request object to the request field in the new user object
 
                       }
                       else if (user.role == "User"){
@@ -97,17 +107,7 @@ exports.create = (req, res) => {
     });
 };
 
-//request body in json
-/* {
-    "username": "admin",
-    "email": "admin@support.com",
-    "password": "admin",
-    "fullname": "admin",
-    "role": "HRAdmin",
-    "departmentCode": "D1",
-    "position": "Manager",
-    "status": "Active"
-} */
+
 
 //authenticate
 exports.authenticate = (req, res) => {

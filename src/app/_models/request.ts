@@ -7,7 +7,9 @@ import { Review } from "./review";
 export class Request {
     requestID: string;
     description: string;
+    workType: string ;
     date: string;
     status: string;
+    reason : string;
     reviews: Review[];
 }

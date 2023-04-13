@@ -98,6 +98,7 @@ export class ListsupervisorComponent implements OnInit {
             employee: Role.Employee,
             status :"NEW",
             schedules: [[]],
+            requests :[[]],
         });
 
 

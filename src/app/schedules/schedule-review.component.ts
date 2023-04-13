@@ -106,7 +106,7 @@ export class ScheduleReviewComponent implements OnInit {
         .subscribe(x => this.schedules = x);
 
         // this.selectedSchedule.push(this.schedules.find(x => x.date === this.form2.value.date));
-       
+
     }
 
 
@@ -115,7 +115,7 @@ export class ScheduleReviewComponent implements OnInit {
             .pipe(first())
             .subscribe({
                 next: () => {
-                    this.alertService.success('User added successfully', { keepAfterRouteChange: true });
+                    this.alertService.success('Schedule added successfully', { keepAfterRouteChange: true });
                     this.router.navigate(['../'], { relativeTo: this.route });
                 },
                 error: error => {

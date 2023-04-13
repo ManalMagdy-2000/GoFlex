@@ -4,8 +4,143 @@ Student ID : B1901825
 */
 const db = require("../models");
 const Request = db.requests;
-// Create and Save a new Request
+const User = db.users;
+// Create a new request
 exports.create = (req, res) => {
+  const request = new Request({
+    workType : req.body.workType ,
+    description : req.body.description,
+    reason : req.body.reason ,
+    date : new Date() ,// system date
+    status: 'PENDING',
+  });
+
+  request.save((err, request) => {
+    if (err) {
+      res.status(500).send({ message: err });
+    } else {
+      res.send(request);
+    }
+  });
+};
+
+exports.submitRequest = (req, res) => {
+  try {
+    // Insert or update the document with a potentially duplicate "requestID"
+    const request = new Request({
+      workType : req.body.workType ,
+      description : req.body.description,
+      reason : req.body.reason ,
+      date : new Date() ,// system date
+      status: 'PENDING',
+    });
+
+      request.save();
+      const id = req.params.id;
+
+      User.findById(id)
+          .then((data) => {
+          if (!data)
+              res.status(404).send({ message: "Not found User with id " + id });
+          else {
+              data.requests.push(request._id);
+              data.save();
+              res.send(data);
+          }
+          }
+          )
+          .catch((err) => {
+          res.status(500)
+           .send({ message: "Error retrieving User with id=" + id });
+          }
+          );
+
+    // Handle the successful insertion or update
+    //res.status(200).send(request);
+  } catch (error) {
+    if (error.code === 11000) {
+      // Handle the duplicate key error
+      res.status(400).send('Request ID already exists');
+    } else {
+      // Handle other errors
+      console.error(error);
+      res.status(500).send('Internal server error');
+    }
+  }
+
+};
+/*
+// Create and Save a new Request
+exports.submitRequest = (req, res) => {
+  const request = new Request({
+    //requestID :  "R" + (count + 1),
+    workType : req.body.workType ,
+    description : req.body.description,
+    reason : req.body.reason ,
+    date : new Date() ,// system date
+    status: 'PENDING',
+    //user: req.user._id // Include the user ID in the request object
+  });
+
+    request.save();
+    const id = req.params.id;
+    User.findById(id)
+        .then((data) => {
+        if (!data)
+            res.status(404).send({ message: "Not found Employee with id " + id });
+        else {
+            data.requests.push(request._id);
+            data.save();
+            res.send(data);
+        }
+        }
+        )
+        .catch((err) => {
+        res
+            .status(500)
+            .send({ message: "Error retrieving User with id=" + id });
+        }
+        );
+};
+
+*/
+
+/*
+exports.addUserToRequest = async (req, res) => {
+  const request = new Request({
+    requestID :  "R" + (count + 1),
+    workType : req.body.workType ,
+    description : req.body.description,
+    reason : req.body.reason ,
+    date : new Date() ,// system date
+    status: 'PENDING',
+    user: req.user._id // Include the user ID in the request object
+  });
+
+    request.save();
+    const empID = req.params.id;
+
+    User.findById(empID)
+        .then((data) => {
+        if (!data)
+            res.status(404).send({ message: "Not found Employee with id " + empID });
+        else {
+            data.request.push(request._id);
+            data.save();
+            res.send(data);
+        }
+        }
+        )
+        .catch((err) => {
+        res
+            .status(500)
+            .send({ message: "Error retrieving User with id=" + empID });
+        }
+        );
+};*/
+
+/*
+exports.submitRequest = (req, res) => {
   // Validate request
   if (!req.body.workType) {
     res.status(400).send({ message: "Work Type can not be empty  !" });
@@ -19,24 +154,35 @@ exports.create = (req, res) => {
           request.requestID =  "R" + (count + 1);
           request.workType = req.body.workType ;
           request.description = req.body.description;
-          request.status = req.body.status;
+          request.status = "PENDING";
           request.reason = req.body.reason;
           request.date = new Date(); // system date
           //request.reviewID = req.body.reviewID;
           // Save Request in the database
-      request
-      .save(request)
-      .then((data) => {
-        res.send(data);
-      }
-          )
-      .catch((err) => {
-        res.status(500).send({
-        message: err.message || "Some error occurred while creating the Request.",
-      });
-    });
+          request.save();
+          const id = req.params.id;
+
+          User.findById(id)
+              .then((data) => {
+              if (!data)
+                  res.status(404).send({ message: "Not found Employee with id " + id });
+              else {
+                  data.requests.push(request._id);
+                  data.save();
+                  res.send(data);
+              }
+              }
+              )
+              .catch((err) => {
+              res
+                  .status(500)
+                  .send({ message: "Error retrieving User with id=" + id });
+              }
+              );
   });
 };
+
+*/
 
 
 
