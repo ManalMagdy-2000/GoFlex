@@ -53,17 +53,6 @@ export class DepartmentService {
         return res;*/
     }
 
-    addRequest(id: string, request: Request) {
-        return this.http.post(`${environment.apiUrl}/requests/add/${id}`, request);
-    }
-
-    getAllRequests() {
-      return this.http.get<{ allreqs :any}>(`${environment.apiUrl}/api/requests/getall`);
-   }
-
-    getRequestById(departmentID: string, requestID: string) {
-        return this.http.get<Request>(`${environment.apiUrl}/departments/${departmentID}/request/${requestID}`);
-    }
 
     addEmployee(id: string, Employee: User) {
       console.log (" call api add empl: " + id + Employee.email);
@@ -84,9 +73,10 @@ console.log("api called successfully" , res)   ;
       return this.http.get<User[]>(`${environment.apiUrl}/employees`);
     }
 
-    addReview(departmentID: string, requestID: string, review: Review) {
-        return this.http.post(`${environment.apiUrl}/departments/${departmentID}/request/${requestID}/review`, review);
+    addReview(supervisorID: string, requestID: string, review: Review) {
+        return this.http.post(`${environment.apiUrl}/api/review/${supervisorID}/request/${requestID}/review`, review);
     }
+
 
     updateStatus(departmentID: string, requestID: string, reviewID: string, status: string) {
         console.log(departmentID, requestID, reviewID, status);

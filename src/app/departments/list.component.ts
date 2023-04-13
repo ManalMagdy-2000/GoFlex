@@ -41,7 +41,7 @@ export class ListComponent implements OnInit {
     test :User  [];
 
 
-    supervisorCode : string; 
+    supervisorCode : string;
 
     constructor(
         private formBuilder: UntypedFormBuilder,
@@ -116,6 +116,7 @@ export class ListComponent implements OnInit {
               //supervisorID : user.supervisorID ,
               status : "NEW",
               departmentCode : user.departmentCode,
+
               supervisorCode : user.supervisorCode,
             }
           }

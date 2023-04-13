@@ -17,13 +17,16 @@ export class AddRequestComponent implements OnInit {
     isAddMode: boolean;
     loading = false;
     submitted = false;
+    username : string ;
+
 
     constructor(
         private formBuilder: UntypedFormBuilder,
         private route: ActivatedRoute,
         private router: Router,
         private departmentService: DepartmentService,
-        private alertService: AlertService
+        private alertService: AlertService ,
+        private accountService : AccountService
     ) {}
 
     ngOnInit() {
@@ -75,7 +78,7 @@ export class AddRequestComponent implements OnInit {
     }
 
     private addRequest() {
-        this.departmentService.addRequest(this.departmentID, this.form.value)
+        this.accountService.addRequest(this.form.value)
             .pipe(first())
             .subscribe({
                 next: () => {

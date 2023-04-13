@@ -27,11 +27,11 @@ export class EmployeeService {
     }
 
     addRequest(id: string, request: Request) {
-        return this.http.post(`${environment.apiUrl}/departments/request/${id}`, request);
+        return this.http.post(`${environment.apiUrl}/users/request/${id}`, request);
     }
 
-    getRequestById(departmentID: string, requestID: string) {
-        return this.http.get<Request>(`${environment.apiUrl}/departments/${departmentID}/request/${requestID}`);
+    getRequestById(username: string, requestID: string) {
+        return this.http.get<Request>(`${environment.apiUrl}/users/${username}/request/${requestID}`);
     }
 
     addSupervisor(id: string, Supervisor: User) {

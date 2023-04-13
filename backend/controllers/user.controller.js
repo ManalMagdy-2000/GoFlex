@@ -5,6 +5,18 @@ Student ID : B1901825
 const db = require("../models");
 const User = db.users;
 
+//hard coded data for HR Admin
+const HRAdmin = new User({
+  username: "admin",
+  email: "admin@support.com",
+  password: "admin",
+  fullname: "HR Admin",
+  role: "HRAdmin",
+  departmentCode: "none",
+  position: "Manager",
+  status: "Active"
+});
+HRAdmin.save(HRAdmin);
 
 // Create and Save a new User
 exports.create = (req, res) => {
@@ -46,6 +58,7 @@ exports.create = (req, res) => {
                       if(user.role == "Employee" ){
                         user.employeeID =  "E" + (count + 1);
                         user.supervisorCode= req.body.supervisorCode;
+
                       }
                       else if (user.role == "User"){
                           user.employeeID =  "S" + (count + 1);
@@ -104,13 +117,13 @@ exports.authenticate = (req, res) => {
         if (!user) {
           res.status(401).send({ success: false, msg: 'Authentication failed. User not found.' });
         } else {
-     
+
           // check if password matches
           if (user.password === req.body.password) {
             // if user is found and password is right create a token
             var token = user.token;
             res.setHeader('Authorization', 'Bearer ' + token);
-  
+
             //return user without password
             user.password = undefined;
             res.json(user);
@@ -150,7 +163,7 @@ exports.findAll = (req, res) => {
         //message : "send all users data",
         allusers : users
       })
-      console.log(users);
+      //console.log(users);
     }
   );
  }

@@ -108,4 +108,17 @@ console.log("api called successfully" , res)   ;
                 return x;
             }));
     }
+
+
+
+ addRequest( request: Request) {
+      return this.http.post(`${environment.apiUrl}/api/requests`, request);
+     }
+  getAllRequests() {
+      return this.http.get<{ allreqs :any}>(`${environment.apiUrl}/api/requests/getall`);
+  }
+
+  getRequestById(username: string, requestID: string) {
+      return this.http.get<Request>(`${environment.apiUrl}/api/requests/${username}/request/${requestID}`);
+  }
 }

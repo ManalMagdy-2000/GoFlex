@@ -43,7 +43,7 @@ app.get("/", (req, res) => {
 
 require("./backend/routes/user.route")(app);
 require("./backend/routes/department.route")(app);
-//require("./backend/routes/review.route")(app);
+require("./backend/routes/review.request.route")(app);
 require("./backend/routes/request.route")(app);
 
 // set port to listen for requests , the port should be the one comming from env variable or 8080

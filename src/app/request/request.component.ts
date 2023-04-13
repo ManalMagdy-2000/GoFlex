@@ -136,7 +136,7 @@ export class RequestComponent implements OnInit {
 
 
     private addRequest() {
-        this.departmentService.addRequest(this.departmentID, this.form.value)
+        this.accountService.addRequest(this.form.value)
             .pipe(first())
             .subscribe({
                 next: () => {

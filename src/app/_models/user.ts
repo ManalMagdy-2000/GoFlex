@@ -21,6 +21,7 @@ export class User {
     schedules?: Schedule[];
     token: string;
     departmentCode : string;
+
     supervisorCode : string;
     supervisorID : string;
 }

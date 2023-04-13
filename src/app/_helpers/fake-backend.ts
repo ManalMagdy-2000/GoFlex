@@ -17,9 +17,11 @@ users.push({ id: 1, username: 'admin', password: 'admin',
 
 //array in local storage for departments
 const departmentsKey = 'departments';
+const employeesKey = 'employees';
 const schedulesKey = 'schedules';
 const schedules = JSON.parse(localStorage.getItem(schedulesKey)) || [];
 let departments = JSON.parse(localStorage.getItem(departmentsKey)) || [];
+let employees = JSON.parse(localStorage.getItem(employeesKey)) || [];
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
@@ -54,7 +56,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 //add schedule users/:id/schedule
                 case url.match(/\/users\/\d+\/schedule$/) && method === 'POST':
                     return addSchedule();
-   
+
                 case url.endsWith('/schedule') && method === 'GET':
                     return getSchedules();
                 // //get schedule by id /schedule/supervisor/:scheduleID
@@ -233,15 +235,15 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             if (!isLoggedIn()) return unauthorized();
 
             let params = body;
-            let department = departments.find(x => x.departmentID === idFromUrl());
+            let employee = employees.find(x => x.username === idFromUrl());
             console.log(params)
-            console.log(department.requests.length)
-            params.requestID = department.requests.length + 1;
+            console.log(employee.requests.length)
+            params.requestID = employee.requests.length + 1;
 
-            console.log(department)
+            console.log(employee)
             // update and save department
-            department.requests.push(params);
-            localStorage.setItem(departmentsKey, JSON.stringify(departments));
+            employee.requests.push(params);
+            localStorage.setItem(employeesKey, JSON.stringify(employees));
 
             return ok();
         }
@@ -249,8 +251,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         function getRequestById() {
             if (!isLoggedIn()) return unauthorized();
 
-            const department = departments.find(x => x.departmentID === idFromUrl());
-            const request = department.requests.find(x => x.requestID === idFromUrl());
+            const employee = employees.find(x => x.username === idFromUrl());
+            const request = employee.requests.find(x => x.requestID === idFromUrl());
             return ok(request);
         }
 
@@ -284,7 +286,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
             //get userID from url without idFromUrl()
             let uID = url.split('/')[4];
- 
+
             let params = body;
             let user = users.find(x => x.id === parseInt(uID));
             let schedule = params as Schedule;

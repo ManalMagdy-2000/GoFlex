@@ -3,7 +3,7 @@ Student Name : Elissa A/P Vaasu
 Student ID : B2000015
 */
 
-const Review = require("../models/review.model.js");
+const Review = require("../models/review-request.model.js");
 
 // Create and save a new review
 exports.create = (req, res) => {
@@ -15,11 +15,10 @@ exports.create = (req, res) => {
   // Create a new review
   const review = new Review({
     reviewID: req.body.reviewID,
-    reviewStatus: req.body.reviewStatus,
-    reason: req.body.reason,
-    reviewDate: req.body.reviewDate,
-    supervisor: req.body.supervisor,
-    request: req.body.request,
+    status: req.body.status,
+    supervisorCode: req.body.supervisorCode,
+    requestCode: req.body.requestCode,
+    remark : req.body.remark ,
   });
 
   // Save the review in the database
@@ -79,9 +78,9 @@ exports.update = (req, res) => {
     id,
     {
       reviewID: req.body.reviewID,
-      reviewStatus: req.body.reviewStatus,
+      status: req.body.status,
       reason: req.body.reason,
-      reviewDate: req.body.reviewDate,
+      date: new Date(),
       supervisor: req.body.supervisor,
       request: req.body.request,
     },
@@ -103,14 +102,30 @@ exports.update = (req, res) => {
     }
   );
 };
-/*
-// Delete a review with the specified ID in the request
+
+
+
+// Delete a Department with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
 
-  Review.findByIdAndRemove(id, (err, review) => {
-    if (err) {
-      console.error(err);
-      if (err.kind === "ObjectId") {
-        return res.status(404).send({ message: `Review not found with id ${id}` });
-*/
+  Review.findByIdAndRemove(id)
+      .then((data) => {
+      if (!data) {
+          res.status(404).send({
+          message: `Cannot delete Request  with id=${id}. Maybe Request was not found!`,
+          });
+      } else {
+          res.send({
+          message: "Request was deleted successfully!",
+          });
+      }
+      }
+      )
+      .catch((err) => {
+      res.status(500).send({
+          message: "Could not delete Request with id=" + id,
+      });
+      }
+      );
+}
