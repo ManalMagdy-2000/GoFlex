@@ -5,7 +5,18 @@ Student ID : B1901825
 const db = require("../models");
 const User = db.users;
 const Request = db.requests;
-
+/*
+{
+  "username": "admin",
+  "email": "admin@support.com",
+  "password": "admin",
+  "fullname": "HR Admin",
+  "role": "HRAdmin",
+  "departmentCode": "none",
+  "position": "Manager",
+  "status": "Active"
+}
+*/
 //hard coded data for HR Admin
 const HRAdmin = new User({
   username: "admin",

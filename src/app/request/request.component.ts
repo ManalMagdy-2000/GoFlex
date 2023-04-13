@@ -91,6 +91,7 @@ export class RequestComponent implements OnInit {
         this.loading = true;
 
             this.addRequest();
+            
         // } else {
         //     this.updateUser();
         // }
