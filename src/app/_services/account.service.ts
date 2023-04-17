@@ -4,10 +4,10 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map,catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
-
+import { Subject } from 'rxjs';
 import { environment } from '@environments/environment';
 import { User } from '@app/_models';
-
+import { tap } from 'rxjs/operators';
 @Injectable({ providedIn: 'root' })
 export class AccountService {
     private userSubject: BehaviorSubject<User>;
@@ -20,7 +20,10 @@ export class AccountService {
         this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
         this.user = this.userSubject.asObservable();
     }
-
+    private _refreshrequired = new Subject<void>();
+    get requiredRefresh(){
+      return this._refreshrequired;
+    }
     public get userValue(): User {
         return this.userSubject.value;
     }
@@ -111,12 +114,27 @@ console.log("api called successfully" , res)   ;
 
 
 
+  addRequestNew( request: Request) {
+
+    let username = this.userValue.username;
+
+    console.log( " call end point create req new for user " , username);
+
+      return this.http.post(`${environment.apiUrl}/api/request/${username}/addreq`, request).pipe(
+        tap(() => {
+          this._refreshrequired.next(); // pipe and tap to trigger the next processa and show the departments without refreshing the page
+        })
+      );
+
+     }
+
  addRequest( request: Request , id : string) {
-      console.log(request, id)
       return this.http.post(`${environment.apiUrl}/api/request/${id}`, request);
      }
+
   getAllRequests() {
-      return this.http.get<{ allreqs :any}>(`${environment.apiUrl}/api/requests/getall`);
+
+      return this.http.get<{ allreqs :any}>(`${environment.apiUrl}/api/request/getall`);
   }
   getRequestByEmployeeID(id: number) {
     return this.http.get<Request[]>(`${environment.apiUrl}/request/${id}`);

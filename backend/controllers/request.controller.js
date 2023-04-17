@@ -5,6 +5,8 @@ Student ID : B1901825
 const db = require("../models");
 const Request = db.requests;
 const User = db.users;
+
+
 // Create a new request
 exports.create = (req, res) => {
   const request = new Request({
@@ -23,19 +25,33 @@ exports.create = (req, res) => {
     }
   });
 };
-
+/*
 exports.submitRequest = (req, res) => {
-  try {
-    // Insert or update the document with a potentially duplicate "requestID"
-    const request = new Request({
-      workType : req.body.workType ,
-      description : req.body.description,
-      reason : req.body.reason ,
-      date : new Date() ,// system date
-      status: 'PENDING',
-    });
 
-      request.save();
+      var count = 0;
+      Request.find().count().then((data) => {
+        count = data;
+      }).then (  () =>{
+        const request = new Request();
+        workType = req.body.workType ;
+        description = req.body.description;
+        reason =  req.body.reason ;
+        date  = new Date() ;// system date
+        status = 'PENDING';
+        request.requestID =  "D" + (count + 1);
+
+   // Save Request in the database
+          request
+          .save(request)
+          .then((data) => {
+            res.send(data);
+          }
+              )
+          .catch((err) => {
+            res.status(500).send({
+            message: err.message || "Some error occurred while creating the Request.",
+          });
+        });
       const id = req.params.id;
 
       User.findById(id)
@@ -55,20 +71,64 @@ exports.submitRequest = (req, res) => {
           }
           );
 
-    // Handle the successful insertion or update
-    //res.status(200).send(request);
-  } catch (error) {
-    if (error.code === 11000) {
-      // Handle the duplicate key error
-      res.status(400).send('Request ID already exists');
-    } else {
-      // Handle other errors
-      console.error(error);
-      res.status(500).send('Internal server error');
-    }
   }
 
+
+      )
+
 };
+*/
+
+exports.submitRequestNew = (req, res) => {
+  console.log("Create new request based on username", req.params.username);
+
+
+  var count = 0;
+  Request.find()
+    .count()
+    .then((data) => {
+      count = data;
+    })
+    .then(() => {
+      const request = new Request();
+      request.requestID = "R" + (count + 1);
+      request.workType = req.body.workType;
+      request.description = req.body.description;
+      request.reason = req.body.reason;
+      request.date = new Date(); // system date
+      request.status = 'PENDING';
+      request.save();
+      const username = req.params.username;
+      User.findOne({username: username})
+        .then((data) => {
+          if (!data)
+            res.status(404).send({ message: "Not found User with name " + username });
+          else {
+
+              // Save request in the database
+              data.requests.push(request._id);
+              data.save().then(() => {
+              res.send(data);
+              });
+
+          }
+        })
+        .catch((err) => {
+          res.status(500).send({ message: "Error retrieving User with id=" + username });
+        });
+
+    });
+
+
+};
+
+
+
+
+
+
+
+
 /*
 // Create and Save a new Request
 exports.submitRequest = (req, res) => {
@@ -186,12 +246,19 @@ exports.submitRequest = (req, res) => {
 
 
 
+exports.test = (req, res) => {
 
+
+  console.log ( " testing end point");
+
+}
 
 
 // Retrieve all Requests from the database.
 exports.findAll = (req, res) => {
   // Fetch all data
+
+  console.log(" get all reqs")
   Request.find().then(
     reqs=> {
       res.status(200).json({

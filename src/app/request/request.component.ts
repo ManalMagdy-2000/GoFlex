@@ -6,8 +6,15 @@ import { FormBuilder, FormGroup, UntypedFormBuilder, UntypedFormGroup, Validator
 import { Department, Request } from '@app/_models';
 import { ActivatedRoute, Router } from '@angular/router';
 
+import { map } from 'rxjs/operators';
+
 @Component({ templateUrl: 'request.component.html' })
 export class RequestComponent implements OnInit {
+
+  selectedOption: string;
+  disabledOptions = [];
+
+
     departments = null;
     form: FormGroup;
     id : string;
@@ -34,11 +41,48 @@ export class RequestComponent implements OnInit {
 
 
     ngOnInit() {
+
+      // Read disabled options from local storage
+     const disabledOptionsStr = localStorage.getItem('disabledOptions');
+      if (disabledOptionsStr) {
+        this.disabledOptions = JSON.parse(disabledOptionsStr);
+      }
+
+
+
       this.id = this.route.snapshot.params['id'];
       this.isAddMode = !this.id;
-        console.log(this.accountService.userValue);
-        this.accountService.getAllRequests().pipe(first())
-        .subscribe(x => this.requests = x);
+      this.accountService.getAllRequests()
+      .pipe( map ((resp) => {
+       return resp.allreqs.map( req => {
+         return {
+           date : req.date,
+           requestID : req.requestID ,
+
+
+         }
+       }
+       );
+     }))
+       .subscribe(x =>  {this.requests = x ; console.log("****reqs" , this.requests)});
+
+
+       
+      this.accountService.requiredRefresh.subscribe( r => { //list new departments without refreshing the page
+        this.accountService.getAllRequests()
+       .pipe( map ((resp) => {
+        return resp.allreqs.map( req => {
+          return {
+            date : req.date,
+            requestID : req.requestID ,
+
+
+          }
+        }
+        );
+      }))
+        .subscribe(x =>  {this.requests = x ; console.log("****reqs" , this.requests)});
+    });
 
         this.requests = this.accountService.userValue.requests;
         this.departmentID = this.accountService.userValue.department;
@@ -52,6 +96,7 @@ export class RequestComponent implements OnInit {
         }
 
         this.form = this.formBuilder.group({
+            requestID : [this.requestID ] ,
             description: ['', Validators.required],
             status: "NEW",
             workType: ['', Validators.required ],
@@ -77,6 +122,22 @@ export class RequestComponent implements OnInit {
     onSubmit() {
 
         this.submitted = true;
+             // Check if the option is disabled
+          const selectedOption = this.f.workType.value;
+             if (this.disabledOptions.includes(selectedOption)) {
+               alert('This option is disabled');
+               return;
+             }
+
+
+
+            // Disable the option and save to local storage
+             this.disabledOptions.push(selectedOption);
+             localStorage.setItem('disabledOptions', JSON.stringify(this.disabledOptions));
+
+
+                  //localStorage.clear();
+
         console.log(this.form.value)
         // reset alerts on submit
         this.alertService.clear();
@@ -91,6 +152,7 @@ export class RequestComponent implements OnInit {
         this.loading = true;
 
             this.addRequest();
+
         // } else {
         //     this.updateUser();
         // }
@@ -137,7 +199,9 @@ export class RequestComponent implements OnInit {
 
 
     private addRequest() {
-        this.accountService.addRequest(this.form.value , this.id)
+      console.log(" id passed" , this.id)
+       // this.accountService.addRequest(this.form.value , this.id)
+       this.accountService.addRequestNew(this.form.value)
             .pipe(first())
             .subscribe({
                 next: () => {
@@ -154,4 +218,3 @@ export class RequestComponent implements OnInit {
     }
 
 }
-

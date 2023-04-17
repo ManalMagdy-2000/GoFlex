@@ -7,6 +7,7 @@
   <button [cModalToggle]="scrollableLongContentModal.id"  cButton size="lg" ><img width="20px" src="../../assets/user-svgrepo-com (1).svg" alt="arrow" loading="lazy">Register Supervisor</button>
 </div>
 
+<h4 *ngIf="departments == '' " class="space">There is no departments in the system yet</h4> <!--why cannot show this line anymore ?-->
 <c-modal #scrollableLongContentModal id="scrollableLongContentModal" alignment="center" scrollable>
   <c-modal-header>
     <h5 cModalTitle>Register Supervisor</h5>
@@ -21,6 +22,24 @@
         <div *ngIf="submitted && f.fullname.errors" class="invalid-feedback">
             <div *ngIf="f.fullname.errors.required">Fullname is required</div>
         </div>
+    </div>
+
+    <div class="form-group " >
+      <label for="departmentCode">Department</label>
+      <select formControlName="departmentCode" [ngClass]="{ 'is-invalid': submitted && f.departmentCode.errors }"
+       class="form-control"
+       aria-label="Default select example" cSelect>
+       <option  defualt disabled value="Select Option">Select Option</option>
+       <option (click)="setDepID(department.departmentID)"
+       *ngFor="let department of departments" [value]="department.departmentID">
+         <div >
+           {{department.departmentID}} - {{department.name}}
+         </div>
+       </option>
+      </select>
+      <div *ngIf="submitted && f.fullname.errors" class="invalid-feedback">
+        <div *ngIf="f.fullname.errors.required">Department is required</div>
+    </div>
     </div>
     <div class="form-group" >
         <label for="email">Email</label>
@@ -57,19 +76,17 @@
 </form>
 </c-modal>
 
-<table class="table table-striped"  >
+<table class="table table-striped" *ngIf="departments != '' ">
   <thead>
       <tr>
-          <th style="width: 20%">Employee ID</th>
           <th style="width: 20%">Full Name</th>
-          <th style="width: 20%">Position</th>
+          <th style="width: 20%">Department</th>
       </tr>
   </thead>
   <tbody>
-      <tr *ngFor="let employee of supervisors">
-          <td *ngIf="employee.position == 'Supervisor'">{{employee.username}}</td>
-          <td *ngIf="employee.position == 'Supervisor'">{{employee.fullname}}</td>
-          <td *ngIf="employee.position == 'Supervisor'"> Supervisor</td>
-      </tr>
-  </tbody>
+    <tr *ngFor="let employee of supervisors">
+        <td *ngIf="employee.position == 'Supervisor'">{{employee.fullname}}</td>
+        <td *ngIf="employee.position == 'Supervisor'">{{employee.departmentCode}}</td>
+    </tr>
+</tbody>
 </table>

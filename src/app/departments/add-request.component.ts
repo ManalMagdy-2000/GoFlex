@@ -59,6 +59,7 @@ export class AddRequestComponent implements OnInit {
     get f() { return this.form.controls; }
 
     onSubmit() {
+      console.log("**********submit req***************")
         this.submitted = true;
 
         // reset alerts on submit
@@ -79,6 +80,7 @@ export class AddRequestComponent implements OnInit {
     }
 
     private addRequest() {
+      console.log("**********call addreq serv***************")
         this.accountService.addRequest(this.form.value , this.id)
             .pipe(first())
             .subscribe({

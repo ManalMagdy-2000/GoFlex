@@ -49,7 +49,7 @@
                         <!-----
                           <td colSpan="7" *ngIf="department.employees?.length == 0"> in assignment 1
                         -->
-                        <td colSpan="7" *ngIf="employees?.length == 0">
+                        <td colSpan="7" *ngIf="employees?.length == 1">
                           <h5 id="departmentErrMsg" class="infotext">No employee has been assigned yet!</h5>
                         </td>
                         <!--
@@ -57,7 +57,7 @@
                             ---->
                     <tr *ngFor="let Employee of employees">
                         <!-- <ng-container  *ngIf="Employee.position !='Supervisor'"> -->
-                          <ng-container *ngIf="Employee.departmentCode ==department.departmentID">
+                          <ng-container *ngIf="Employee.departmentCode ==department.departmentID && Employee.position != 'Supervisor'">
                           <td>{{Employee.username}}</td>
                           <td>{{Employee.fullname}}</td>
                           <td>{{Employee.email}}</td>
@@ -166,19 +166,22 @@
   </div>
 
 
-<div class="form-group col" *ngIf="!isSupervisor">
-  <label for="supervisorCode">Supervisor</label>
-  <select formControlName="supervisorCode" [ngClass]="{ 'is-invalid': submitted && f.supervisorCode.errors }"
-   class="form-control"
-   aria-label="Default select example" cSelect>
-   <option (click)="setSupID(supervisor.username)"
-   *ngFor="let supervisor of employees" [value]="supervisor.username">
-     <div *ngIf="supervisor.position =='Supervisor'">
-       {{supervisor.username}}
-     </div>
-   </option>
-  </select>
-</div>
+  <div class="form-group" *ngIf="!isSupervisor" >
+    <label for="supervisorCode">Supervisor</label>
+    <select formControlName="supervisorCode"
+     class="form-control"
+     aria-label="Default select example" cSelect required>
+     <option  defualt disabled value="Select Option">Select Option</option>
+     <option [value]="None" default >None</option>
+     <option (click)="setSupID(supervisor.username)"
+     *ngFor="let supervisor of employees" [value]="supervisor.username">
+       <div *ngIf="supervisor.position=='Supervisor'">
+         {{supervisor.username}}
+       </div>
+     </option>
+    </select>
+  </div>
+
 
 
     </ng-container>

@@ -5,14 +5,14 @@ Student ID : B1901825
 module.exports = mongoose => {
   var request = mongoose.Schema(
     {
-      //requestID: { type: String},
-      workType: { type: String, required: true },
-      description: { type: String, required: true },
-      status: { type: String, required: true },
-      reason: { type: String, required: true },
+      requestID: { type: String},
+      workType: { type: String},
+      description: { type: String },
+      status: { type: String },
+      reason: { type: String },
       //user: { type: mongoose.Schema.Types.ObjectId, ref: 'users' }, // array of references to User model
       //reviewID : {type : String , ref : "reviews"},
-      date: { type: Date, required: true, default: Date.now }//system date
+      date: { type: Date, default: Date.now }//system date
     },
     { timestamps: true }
   );

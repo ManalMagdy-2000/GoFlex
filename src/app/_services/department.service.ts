@@ -82,4 +82,11 @@ console.log("api called successfully" , res)   ;
         console.log(departmentID, requestID, reviewID, status);
         return this.http.post(`${environment.apiUrl}/departments/${departmentID}/request/${requestID}/review/${reviewID}`, { status });
     }
+
+    addRequest(id: string, request: Request) {
+      console.log (" add req")
+        console.log("dept id" , id)
+        console.log ("req ", request )
+        return this.http.post(`${environment.apiUrl}/departments/request/${id}`, request);
+    }
 }
