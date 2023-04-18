@@ -5,7 +5,7 @@
 */
 import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
-
+import { map } from 'rxjs/operators';
 import { AccountService, AlertService, DepartmentService } from '@app/_services';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Department, User } from '@app/_models';
@@ -14,12 +14,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Component({ templateUrl: 'review-request.component.html' })
 export class ReviewRequestComponent implements OnInit {
     departments = null;
+    employees = null;
+    username : string;
     form: UntypedFormGroup;
     departmentID: string;
+    requests = null;
     requestID: string;
     isAddMode: boolean;
     department: Department;
-    requests: Request[];
+    request: Request[];
     loading = false;
     requestsCount: number;
     countNewReq: number;
@@ -37,16 +40,55 @@ export class ReviewRequestComponent implements OnInit {
 
 
     ngOnInit() {
-        this.departmentService.getAllDepartments()
-            .pipe(first())
-            .subscribe(departments => this.departments = departments);
+      this.accountService.getAll()
+      .pipe( map ((userList) => {
+         return userList.allusers.map( user => {
+           return {
+             username: user.username,
+             fullname : user.fullname,
+             password : user.password ,
+             email : user.email ,
+             requests : user.requests ,
+             position : user.position ,
+             status : "NEW",
+             departmentCode : user.departmentCode,
+             supervisorCode : user.supervisorCode,
+           }
+         }
+         );
+       })
+       )
+       .subscribe(employees => {this.employees = employees
+       });
+
+
+       this.accountService.getAllRequests()
+       .pipe( map ((resp) => {
+        return resp.allreqs.map( req => {
+          return {
+            date : req.date,
+            requestID : req.requestID ,
+            workType : req.workType,
+            reason  : req.reason ,
+            status : req.status ,
+            description : req.description
+          }
+        }
+        );
+      }))
+        .subscribe(x =>  {this.requests = x ; console.log("****reqs" , this.requests)});
+
+
+
+
+
 
         this.user = this.accountService.userValue;
-
+        this.request = this.accountService.userValue.requests;
 
         // this.departmentID = this.route.snapshot.params['departmentID'];
         // this.requestID = this.route.snapshot.params['requestID'];
-        this.isAddMode = !this.departmentID;
+        this.isAddMode = !this.username;
 
         // password not required in edit mode
         const passwordValidators = [Validators.minLength(6)];
@@ -56,12 +98,12 @@ export class ReviewRequestComponent implements OnInit {
 
         this.form = this.formBuilder.group({
             remarks: ['', Validators.required],
-            user: this.accountService.userValue, //supervisor
+            user: this.accountService.userValue, //employee
             request: [this.requestID]
         });
 
         if (!this.isAddMode) {
-            this.departmentService.getDepartmentById(this.departmentID)
+            this.accountService.getById(this.username)
                 .pipe(first())
                 .subscribe(x => this.form.patchValue(x));
         }
@@ -71,32 +113,33 @@ export class ReviewRequestComponent implements OnInit {
     get f() { return this.form.controls; }
 
     onSubmit() {
-        this.submitted = true;
-        console.log(this.form)
-        // reset alerts on submit
-        this.alertService.clear();
+      console.log("review submitted");
+      this.submitted = true;
+      console.log(this.form)
+      // reset alerts on submit
+      this.alertService.clear();
 
-        // stop here if form is invalid
-        if (this.form.invalid) {
-            return;
-        }
+      // stop here if form is invalid
+      if (this.form.invalid) {
+          return;
+      }
 
 
 
-        this.loading = true;
+      this.loading = true;
 
-            this.addReview();
-        // } else {
-        //     this.updateUser();
-        // }
+          this.addReview();
+      // } else {
+      //     this.updateUser();
+      // }
 
-    }
+  }
 
     countRequests() {
         let count = 0;
-        for(let i = 0; i < this.departments.length; i++) {
-            for(let j = 0; j < this.departments[i].requests.length; j++) {
-                if(this.departments[i].requests[j].status != "CLOSED") {
+        for(let i = 0; i < this.employees.length; i++) {
+            for(let j = 0; j < this.employees[i].requests.length; j++) {
+                if(this.employees[i].requests[j].status != "CLOSED") {
                     count++;
                 }
             }
@@ -104,6 +147,25 @@ export class ReviewRequestComponent implements OnInit {
         return count;
     }
 
+
+
+    //get number of requests for employee with status NEW
+    countNewRequests(username) {
+      let count = 0;
+      for(let i = 0; i < this.employees.length; i++) {
+          if(this.employees[i].username == username) {
+              for(let j = 0; j < this.employees[i].requests.length; j++) {
+                //  if(this.employees[i].requests[j].status == "PENDING")
+                  if(this.employees[i].requests[j].status == "PENDING") {
+                      count++;
+                  }
+              }
+          }
+      }
+      console.log(count);
+      return count;
+  }
+/*
     countPastRequests() {
         let count = 0;
         for(let i = 0; i < this.departments.length; i++) {
@@ -115,23 +177,14 @@ export class ReviewRequestComponent implements OnInit {
         }
         return count;
     }
+    */
 
-    //get number of requests for department with status NEW
-    countNewRequests(departmentID) {
-        let count = 0;
-        for(let i = 0; i < this.departments.length; i++) {
-            if(this.departments[i].departmentID == departmentID) {
-                for(let j = 0; j < this.departments[i].requests.length; j++) {
-                    if(this.departments[i].requests[j].status == "NEW") {
-                        count++;
-                    }
-                }
-            }
-        }
-        console.log(count);
-        return count;
-    }
 
+
+
+
+
+/*
     //get number of requests for department with status CLOSED
     countClosedRequests(departmentID) {
         let count = 0;
@@ -147,11 +200,12 @@ export class ReviewRequestComponent implements OnInit {
         console.log(count);
         return count;
     }
+    */
 
 
-    setID(departmentID, requestID) {
+    setID(username, requestID) {
         if(this.user) {
-            this.departmentID = departmentID;
+            this.username = username;
             this.requestID = requestID;
         }
         else {
@@ -161,11 +215,11 @@ export class ReviewRequestComponent implements OnInit {
     }
 
     private addReview() {
-        this.departmentService.addReview(this.departmentID, this.requestID, this.form.value)
+        this.accountService.addReviewNew(this.form.value)
             .pipe(first())
             .subscribe({
                 next: () => {
-                    this.alertService.success('Request added successfully', { keepAfterRouteChange: true });
+                    this.alertService.success('Review added successfully', { keepAfterRouteChange: true });
                     this.router.navigate(['../'], { relativeTo: this.route });
                 },
                 error: error => {

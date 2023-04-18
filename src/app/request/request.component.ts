@@ -19,6 +19,7 @@ export class RequestComponent implements OnInit {
     form: FormGroup;
     id : string;
     departmentID: string;
+    username : string;
     requests : any;
     requestID: string;
     reviewID: string;
@@ -67,7 +68,7 @@ export class RequestComponent implements OnInit {
        .subscribe(x =>  {this.requests = x ; console.log("****reqs" , this.requests)});
 
 
-       
+
       this.accountService.requiredRefresh.subscribe( r => { //list new departments without refreshing the page
         this.accountService.getAllRequests()
        .pipe( map ((resp) => {
@@ -166,23 +167,10 @@ export class RequestComponent implements OnInit {
         this.updateStatus(status);
     }
 
-    private addReview() {
-        this.departmentService.addReview(this.departmentID, this.requestID, this.form.value)
-            .pipe(first())
-            .subscribe({
-                next: () => {
-                    this.alertService.success('Request added successfully', { keepAfterRouteChange: true });
-                    this.router.navigate(['/request'], { relativeTo: this.route });
-                },
-                error: error => {
-                    this.alertService.error(error);
-                    this.loading = false;
-                }
-            });
-    }
+
 
     private updateStatus(status: string) {
-        this.departmentService.updateStatus(this.departmentID, this.requestID, this.reviewID, status)
+        this.accountService.updateStatus(this.username, this.requestID, this.reviewID, status)
             .pipe(first())
             .subscribe({
                 next: () => {

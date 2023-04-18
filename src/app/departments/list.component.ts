@@ -87,24 +87,6 @@ export class ListComponent implements OnInit {
 
 
         this.accountService.getAll()
-       /*.pipe( map ((userList) => {
-        console.log("code");
-        console.log(this.department.departmentID);
-
-        this.test = userList.allusers.map( user => {
-          return {
-            username: user.username,
-            fullname : user.fullname,
-            password : user.password ,
-            email : user.email ,
-            position : user.position ,
-            //supervisorID : user.supervisorID ,
-            status : "NEW",
-            departmentCode : user.departmentCode,
-          }
-        });
-        return this.test.filter( user=>{ return user.departmentCode==this.departmentCode} )}
-        )*/
        .pipe( map ((userList) => {
           return userList.allusers.map( user => {
             return {

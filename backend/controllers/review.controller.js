@@ -1,11 +1,89 @@
 
 /*
-Student Name : Elissa A/P Vaasu
-Student ID : B2000015
+Student Name : Elissa A/P Vaasu , Student ID : B2000015
+Student Name : Manal Magdy , Student ID : B1901825
 */
 
-const Review = require("../models/review.model.js");
 
+
+
+//Student Name : Manal Magdy (usecase 3 : Review FWA Request)
+const Review = require("../models/review.model.js");
+exports.submitReviewNew = (req, res) => {
+  console.log("Create new review  based on username and request ID", req.params.username  ,  req.params.requestID);
+  var count = 0;
+  Request.find()
+    .count()
+    .then((data) => {
+      count = data;
+    })
+    .then(() => {
+      const review = new Review();
+      review.reviewID = "Rev" + (count + 1);
+      review.remark = req.body.remark;
+      review.date = new Date(); // system date
+      review.status = req.body.status;
+      review.save();
+      const username = req.params.username;
+      const requestID = req.params.requestID;
+      User.findOne({username: username})
+        .then((data) => {
+          if (!data)
+            res.status(404).send({ message: "Not found User with name " + username });
+          else {
+             // Save review in the database
+              data.reviews.push(review._id);
+              data.save().then(() => {
+              res.send(data);
+              });
+          }
+        })
+        .catch((err) => {
+          res.status(500).send({ message: "Error retrieving User with id=" + username });
+        });
+        Request.findOne({requestID: requestID})
+        .then((data) => {
+          if (!data)
+            res.status(404).send({ message: "Not found Request with ID " + requestID });
+          else {
+              // Save review in the database
+              data.reviews.push(review._id);
+              data.save().then(() => {
+              res.send(data);
+              });
+
+          }
+        })
+        .catch((err) => {
+          res.status(500).send({ message: "Error retrieving Request with id=" + requestID });
+        });
+
+    });
+
+
+};
+
+
+// Retrieve all Reviews from the database.
+exports.findAll = (req, res) => {
+  // Fetch all data
+
+  console.log(" get all revs")
+  Request.find().then(
+    revs=> {
+      res.status(200).json({
+        allrevs : revs
+      })
+    }
+  );
+ }
+
+
+
+
+
+
+/*
 // Create and save a new review
 exports.create = (req, res) => {
   // Validate request body

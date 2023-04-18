@@ -6,7 +6,7 @@ import { map,catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { Subject } from 'rxjs';
 import { environment } from '@environments/environment';
-import { User } from '@app/_models';
+import { User , Review } from '@app/_models';
 import { tap } from 'rxjs/operators';
 @Injectable({ providedIn: 'root' })
 export class AccountService {
@@ -141,5 +141,30 @@ console.log("api called successfully" , res)   ;
 }
   getRequestById(username: string, requestID: string) {
       return this.http.get<Request>(`${environment.apiUrl}/api/requests/${username}/request/${requestID}`);
+  }
+
+
+
+  addReviewNew( review: Review) {
+
+    let username = this.userValue.username;
+    let requestID = this.userValue.requests;
+
+    console.log( " call end point add rev to this request " , requestID , "  made by " , username);
+
+      return this.http.post(`${environment.apiUrl}/api/review/${username}/${requestID}`, review)
+
+     }
+
+
+
+  getAllReviews() {
+
+      return this.http.get<{ allrevs :any}>(`${environment.apiUrl}/api/review/getall`);
+  }
+
+  updateStatus(username: string, requestID: string, reviewID: string, status: string) {
+      console.log(username, requestID, reviewID, status);
+      return this.http.post(`${environment.apiUrl}/request/${username}/request/${requestID}/review/${reviewID}`, { status });
   }
 }

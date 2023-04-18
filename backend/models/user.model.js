@@ -17,7 +17,7 @@ module.exports = mongoose => {
       department: {type: mongoose.Schema.Types.ObjectId, ref: 'departments'},
       schedules: [{type: mongoose.Schema.Types.ObjectId, ref: 'schedules'}],
       requests : [{ type: mongoose.Schema.Types.ObjectId, ref: 'requests'}], // each employee able to submit only one request
-      //reviews: [{type: mongoose.Schema.Types.ObjectId, ref: 'reviews'}],
+      reviews: [{type: mongoose.Schema.Types.ObjectId, ref: 'reviews'}],
       departmentCode : String,
       supervisorCode : String,
       position: String,

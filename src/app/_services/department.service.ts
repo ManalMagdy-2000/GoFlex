@@ -78,10 +78,7 @@ console.log("api called successfully" , res)   ;
     }
 
 
-    updateStatus(departmentID: string, requestID: string, reviewID: string, status: string) {
-        console.log(departmentID, requestID, reviewID, status);
-        return this.http.post(`${environment.apiUrl}/departments/${departmentID}/request/${requestID}/review/${reviewID}`, { status });
-    }
+
 
     addRequest(id: string, request: Request) {
       console.log (" add req")
