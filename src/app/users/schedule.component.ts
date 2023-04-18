@@ -101,10 +101,13 @@ export class ScheduleComponent implements OnInit {
         }
         this.schedules = this.accountService.userValue.schedules;
         console.log(this.schedules);
-        this.selectedSchedule = this.schedules.find(x => x.date === this.form2.value.date);
-       
+        // this.selectedSchedule = this.schedules.find(x => x.date === this.form2.value.date);
+        this.getScheduleByEmployeeId();
     }
 
+    setID() {
+        this.form.value.employeeId = this.id;
+    }
 
     private addSchedule() {
         this.scheduleService.addSchedule(this.form.value, this.id)
@@ -120,6 +123,16 @@ export class ScheduleComponent implements OnInit {
                 }
             });
     }
+
+    private getScheduleByEmployeeId() {
+        return this.scheduleService.getScheduleByEmployeeId(this.id)
+            .subscribe(schedules => {
+                schedules = schedules.filter(x => x.date === this.form2.value.date);
+                this.selectedSchedule = schedules;
+            });
+    }
+
+
 
     private updateUser() {
         this.accountService.update(this.id, this.form.value)

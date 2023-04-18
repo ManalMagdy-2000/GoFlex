@@ -13,10 +13,10 @@
   </div>
 
   <h3 *ngIf="selectedSchedule == null" class="space">There is no schedules in the system!</h3>
-  <div *ngIf="selectedSchedule == null" class="space" style="display: flex; justify-content: center;">
+  <div class="space" style="display: flex; justify-content: center;">
     <button [cModalToggle]="scrollableLongContentModal.id" cButton size="lg" style="text-align: center;"><img width="20px" src="../../assets/plus-svgrepo-com.svg" alt="arrow" loading="lazy">Record Daily Schedule</button>
   </div>
-
+<p>&nbsp;</p>
 <div *ngIf="selectedSchedule != null" style="width: 100%;">
   <table
           [hover]="false"
@@ -40,13 +40,15 @@
                       </tr>
                       </thead>
                       <tbody>
-   
+                        <tr *ngFor="let selectedSchedule of selectedSchedule">
                         <td>{{selectedSchedule.date}}</td>
                         <td>{{selectedSchedule.workHours}}</td>
                         <td>{{selectedSchedule.workLocation}}</td>
                         <td>{{selectedSchedule.workReport}}</td>
                         <td>{{selectedSchedule.supervisorComments}}</td>
-                        <td><button [cModalToggle]="addEmployee.id" class="btn btn-sm btn-primary mr-1" cButton (click)="setID(department.departmentID, request.requestID)">Edit</button></td>
+                        <td><button [cModalToggle]="selectedSchedule.id" class="btn btn-sm btn-primary mr-1" cButton
+                            (click)="setID(departments.departmentID)">Edit</button></td>
+                        </tr>
 
                 </tbody>
                 </table>

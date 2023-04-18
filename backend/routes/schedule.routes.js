@@ -19,7 +19,8 @@ module.exports = app => {
   // Update a schedule by ID
   router.put("/schedule/:id", schedules.update);
 
-
+  // get all schedules by user id
+  router.get("/user/:id", schedules.findAllByUserId);
 
   app.use("/api/schedule", router);
 };

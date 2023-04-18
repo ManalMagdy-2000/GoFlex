@@ -35,26 +35,26 @@ exports.addSchedule = (req, res) => {
     supervisorComments: req.body.supervisorComments,
   });
 
-    schedule.save();
-    const id = req.params.id;
+  schedule.save();
+  const id = req.params.id;
 
-    User.findById(id)
-        .then((data) => {
-        if (!data)
-            res.status(404).send({ message: "Not found User with id " + id });
-        else {
-            data.schedules.push(schedule._id);
-            data.save();
-            res.send(data);
-        }
-        }
-        )
-        .catch((err) => {
-        res
-            .status(500)
-            .send({ message: "Error retrieving User with id=" + id });
-        }
-        );
+  User.findById(id)
+    .then((data) => {
+      if (!data)
+        res.status(404).send({ message: "Not found User with id " + id });
+      else {
+        data.schedules.push(schedule._id);
+        data.save();
+        res.send(data);
+      }
+    }
+    )
+    .catch((err) => {
+      res
+        .status(500)
+        .send({ message: "Error retrieving User with id=" + id });
+    }
+    );
 };
 
 // Retrieve all schedules
@@ -81,6 +81,24 @@ exports.findOne = (req, res) => {
   });
 };
 
+exports.findAllByUserId = (req, res) => {
+  User.findById(req.params.id).then((data) => {
+    if (!data) {
+      res.status(404).send({ message: "Schedule not found" });
+    } else {
+      var schedules = data.schedules;
+      Schedule.find({ _id: { $in: schedules } }).then((data) => {
+        res.send(data);
+      }
+      ).catch((err) => {
+        res.status(500).send({ message: err });
+      });
+    }
+  }
+  ).catch((err) => {
+    res.status(500).send({ message: err });
+  });
+};
 // Update a schedule by id
 exports.update = (req, res) => {
   Schedule.findByIdAndUpdate(
