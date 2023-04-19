@@ -102,7 +102,8 @@ export class ScheduleComponent implements OnInit {
         this.schedules = this.accountService.userValue.schedules;
         console.log(this.schedules);
         // this.selectedSchedule = this.schedules.find(x => x.date === this.form2.value.date);
-        this.getScheduleByEmployeeId();
+        
+            this.getScheduleByEmployeeId();
     }
 
     setID() {
@@ -114,7 +115,7 @@ export class ScheduleComponent implements OnInit {
             .pipe(first())
             .subscribe({
                 next: () => {
-                    this.alertService.success('User added successfully', { keepAfterRouteChange: true });
+                    this.alertService.success('Schedule added successfully', { keepAfterRouteChange: true });
                     this.router.navigate(['../'], { relativeTo: this.route });
                 },
                 error: error => {
@@ -131,8 +132,6 @@ export class ScheduleComponent implements OnInit {
                 this.selectedSchedule = schedules;
             });
     }
-
-
 
     private updateUser() {
         this.accountService.update(this.id, this.form.value)
