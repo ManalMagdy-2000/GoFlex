@@ -77,7 +77,6 @@ export class RequestComponent implements OnInit {
             date : req.date,
             requestID : req.requestID ,
 
-
           }
         }
         );
@@ -135,9 +134,7 @@ export class RequestComponent implements OnInit {
             // Disable the option and save to local storage
              this.disabledOptions.push(selectedOption);
              localStorage.setItem('disabledOptions', JSON.stringify(this.disabledOptions));
-
-
-                  //localStorage.clear();
+             //localStorage.clear();
 
         console.log(this.form.value)
         // reset alerts on submit

@@ -101,23 +101,35 @@ export class ScheduleComponent implements OnInit {
         }
         this.schedules = this.accountService.userValue.schedules;
         console.log(this.schedules);
-        this.selectedSchedule = this.schedules.find(x => x.date === this.form2.value.date);
-       
+        // this.selectedSchedule = this.schedules.find(x => x.date === this.form2.value.date);
+
+            this.getScheduleByEmployeeId();
     }
 
+    setID() {
+        this.form.value.employeeId = this.id;
+    }
 
     private addSchedule() {
         this.scheduleService.addSchedule(this.form.value, this.id)
             .pipe(first())
             .subscribe({
                 next: () => {
-                    this.alertService.success('User added successfully', { keepAfterRouteChange: true });
+                    this.alertService.success('Schedule added successfully', { keepAfterRouteChange: true });
                     this.router.navigate(['../'], { relativeTo: this.route });
                 },
                 error: error => {
                     this.alertService.error(error);
                     this.loading = false;
                 }
+            });
+    }
+
+    private getScheduleByEmployeeId() {
+        return this.scheduleService.getScheduleByEmployeeId(this.id)
+            .subscribe(schedules => {
+                schedules = schedules.filter(x => x.date === this.form2.value.date);
+                this.selectedSchedule = schedules;
             });
     }
 

@@ -23,12 +23,16 @@ export class ScheduleService {
         return this.http.get<Schedule[]>(`${environment.apiUrl}/schedule`);
     }
 
-    getScheduleBySupervisorId(id: string) {
-        return this.http.get<Schedule[]>(`${environment.apiUrl}/schedule/${id}`);
+    getScheduleBySupervisorId(SupID: string) {
+        return this.http.get<Schedule[]>(`${environment.apiUrl}/api/schedule/user/${SupID}`);
     }
 
-    getScheduleByEmployeeId(id: number) {
-        return this.http.get<Schedule[]>(`${environment.apiUrl}/schedule/${id}`);
+    getScheduleByEmployeeId(empid: string) {
+        return this.http.get<Schedule[]>(`${environment.apiUrl}/api/schedule/user/${empid}`);
+    }
+
+    getScheduleById(id: number) {
+        return this.http.get<Schedule>(`${environment.apiUrl}/schedule/${id}`);
     }
 
     updateSchedule(schedule: Schedule) {

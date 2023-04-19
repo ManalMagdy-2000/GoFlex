@@ -19,6 +19,7 @@ export class ReviewRequestComponent implements OnInit {
     form: UntypedFormGroup;
     departmentID: string;
     requests = null;
+    reviewID : string;
     requestID: string;
     isAddMode: boolean;
     department: Department;
@@ -71,7 +72,8 @@ export class ReviewRequestComponent implements OnInit {
             workType : req.workType,
             reason  : req.reason ,
             status : req.status ,
-            description : req.description
+            description : req.description ,
+            revieID : req.revieID
           }
         }
         );
@@ -202,7 +204,7 @@ export class ReviewRequestComponent implements OnInit {
     }
     */
 
-
+/*
     setID(username, requestID) {
         if(this.user) {
             this.username = username;
@@ -213,6 +215,27 @@ export class ReviewRequestComponent implements OnInit {
             this.router.navigate(['/account/login']);
         }
     }
+    */
+    setID(reviewID) {
+      this.reviewID = reviewID;
+  }
+
+
+
+  private updateStatus(status: string) {
+      this.accountService.updateStatus(this.username, this.requestID, this.reviewID, status)
+          .pipe(first())
+          .subscribe({
+              next: () => {
+                  this.alertService.success('Status updated', { keepAfterRouteChange: true });
+                  this.router.navigate(['../'], { relativeTo: this.route });
+              },
+              error: error => {
+                  this.alertService.error(error);
+                  this.loading = false;
+              }
+          });
+  }
 
     private addReview() {
         this.accountService.addReviewNew(this.form.value)
