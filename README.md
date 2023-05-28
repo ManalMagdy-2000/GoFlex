@@ -7,7 +7,7 @@ FlexIS is an information system that has been proposed to record and manage empl
                 2. Register Departments
                 3. Register Supervisor .
                 4. Register Employees to department and assign supervisor.
-                3. Submit FWA Request by employees .
-                3. Review employee FWA Request by supervisor .
+                5. Submit FWA Request by employees .
+                6. Review employee FWA Request by supervisor .
       
  
